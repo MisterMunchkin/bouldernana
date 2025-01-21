@@ -1,23 +1,11 @@
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    Keyboard,
-    KeyboardAvoidingView,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View,
-} from "react-native";
+import { Text, TextInput, TouchableOpacity } from "react-native";
 import { z } from "zod";
-import DropDownPicker from "react-native-dropdown-picker";
 import React from "react";
 import { DropDownField, TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
-import dayjs from "dayjs";
 import { day, DayJsUtils } from "@/utils/day-js.util";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import KeyboardView from "@/components/higher-order/keyboard-view";
 
 /**
