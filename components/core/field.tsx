@@ -2,7 +2,7 @@ import { cn } from "@/utils/cn.util";
 import { ClassValue } from "clsx";
 import React, { ComponentProps, useCallback, useRef, useState } from "react";
 import { Controller, ControllerProps, FieldValues } from "react-hook-form";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export type FieldProps<TFieldValues extends FieldValues> = {

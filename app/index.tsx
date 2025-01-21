@@ -1,10 +1,13 @@
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+    Keyboard,
     KeyboardAvoidingView,
     ScrollView,
     Text,
     TextInput,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
     View,
 } from "react-native";
 import { z } from "zod";
@@ -14,6 +17,8 @@ import { DropDownField, TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import dayjs from "dayjs";
 import { day, DayJsUtils } from "@/utils/day-js.util";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import KeyboardView from "@/components/higher-order/keyboard-view";
 
 /**
  * An app that allows climbers to track there progress by grades.
@@ -44,20 +49,12 @@ export default function Index() {
             grade: "V0",
             description: "",
             date: day().toISOString(),
-            // notes: "",
+            notes: "",
         },
     });
 
     return (
-        // <ScrollView>
-        <KeyboardAvoidingView
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-            className="px-4"
-        >
+        <KeyboardView className="px-4" contentContainerClassName="gap-8">
             <DropDownField
                 control={control}
                 name="grade"
@@ -85,11 +82,22 @@ export default function Index() {
                 name="description"
                 title="Description"
                 control={control}
-                inputProps={{ multiline: true }}
+                className="h-32"
+                inputProps={{ multiline: true, numberOfLines: 5 }}
             />
 
             <DateTimeField control={control} name="date" />
-        </KeyboardAvoidingView>
-        // {/* </ScrollView> */}
+            <TextField
+                control={control}
+                name="notes"
+                title="Notes"
+                className="h-32"
+                inputProps={{ multiline: true, numberOfLines: 5 }}
+            />
+
+            <TouchableOpacity className="px-2 py-4 border-[1px] rounded-lg w-full items-center">
+                <Text>Submit</Text>
+            </TouchableOpacity>
+        </KeyboardView>
     );
 }
