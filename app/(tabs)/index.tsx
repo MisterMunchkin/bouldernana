@@ -1,8 +1,11 @@
-import AppText from "@/components/core/app-text";
-import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
+import ClimbCard from "@/components/climbs/climb-card";
+import {
+    ClimbSchema,
+    useUserClimbRecordStore,
+} from "@/stores/user-climb-record.store";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { FlashList } from "@shopify/flash-list";
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -13,19 +16,21 @@ const Tab = ({}: Props) => {
     const bottomTabBarHeight = useBottomTabBarHeight();
     const { top, bottom } = useSafeAreaInsets();
 
+    const renderItem = useCallback(
+        (item: ClimbSchema) => <ClimbCard {...item} />,
+        [climbs]
+    );
+
     return (
-        <View className="flex-1 px-4">
+        <View className="flex-1 px-2">
             <FlashList
                 data={climbs}
                 contentContainerClassName="pt-safe-offset-20"
                 contentContainerStyle={{
                     paddingBottom: bottom + bottomTabBarHeight,
                 }}
-                renderItem={({ item }) => (
-                    <View className="bg-red-500">
-                        <AppText color={"black"}>{item.description}</AppText>
-                    </View>
-                )}
+                ItemSeparatorComponent={() => <View className="h-4" />}
+                renderItem={({ item }) => renderItem(item)}
                 estimatedItemSize={200}
             />
         </View>
