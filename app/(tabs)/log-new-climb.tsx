@@ -40,7 +40,7 @@ export default function Tab() {
     return (
         <KeyboardAwareScrollView className="px-4">
             <View
-                className="gap-8 flex-grow pt-8 "
+                className="gap-8 flex-grow pt-safe-offset-20 "
                 style={{ paddingBottom: bottomTabBarHeight + 20 }}
             >
                 <FormProvider {...form}>

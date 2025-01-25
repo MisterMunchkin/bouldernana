@@ -13,6 +13,20 @@ const TabLayout = ({}: Props) => {
     return (
         <Tabs
             screenOptions={{
+                headerTransparent: true,
+                headerBackground: () => (
+                    <BlurView
+                        intensity={40}
+                        tint="default"
+                        style={{
+                            ...StyleSheet.absoluteFillObject,
+                            borderTopLeftRadius: 20,
+                            borderTopRightRadius: 20,
+                            backgroundColor: "rgba(101, 92, 155, 0.4)",
+                            overflow: "hidden",
+                        }}
+                    />
+                ),
                 tabBarActiveTintColor: "blue",
                 tabBarStyle: {
                     position: "absolute",
