@@ -32,7 +32,14 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to allow you to log them to your sends."
+        }
+      ],
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true
