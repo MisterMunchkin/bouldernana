@@ -14,10 +14,12 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
-export default function Index() {
+export default function Tab() {
+    const bottomTabBarHeight = useBottomTabBarHeight();
     const form = useForm({
         resolver: zodResolver(addClimbSchema),
         defaultValues: {
@@ -37,7 +39,10 @@ export default function Index() {
 
     return (
         <KeyboardAwareScrollView className="px-4">
-            <View className="gap-8 flex-grow pt-8 pb-safe-offset-14">
+            <View
+                className="gap-8 flex-grow pt-8 "
+                style={{ paddingBottom: bottomTabBarHeight + 20 }}
+            >
                 <FormProvider {...form}>
                     <DropDownField
                         control={control}

@@ -7,7 +7,12 @@ export default function RootLayout() {
     return (
         <GestureHandlerRootView>
             <BottomSheetModalProvider>
-                <Stack />
+                <Stack>
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                    />
+                </Stack>
             </BottomSheetModalProvider>
         </GestureHandlerRootView>
     );
