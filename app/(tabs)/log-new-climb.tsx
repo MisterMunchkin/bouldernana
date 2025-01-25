@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Text, View } from "react-native";
 import { z } from "zod";
 import React from "react";
-import { DropDownField, TextField } from "@/components/core/field";
+import { TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import { day } from "@/utils/day-js.util";
 import VideoField from "@/components/core/video-field";
@@ -15,6 +15,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import DropDownField from "@/components/core/dropdown-field";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 

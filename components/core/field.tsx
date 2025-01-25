@@ -56,39 +56,4 @@ const TextField = <TFieldValues extends FieldValues>({
 };
 TextField.displayname = "TextField";
 
-type DropDownFieldProps<
-    TFieldValues extends FieldValues,
-    TItemValues extends string
-> = {
-    items: { label: string; value: TItemValues }[];
-} & Omit<FieldProps<TFieldValues>, "render">;
-/**
- * DropDown using Field
- */
-const DropDownField = <
-    TFieldValues extends FieldValues,
-    TItemValues extends string
->({
-    items,
-    ...fieldProps
-}: DropDownFieldProps<TFieldValues, TItemValues>) => {
-    const [open, setOpen] = useState<boolean>(false);
-
-    return (
-        <Field
-            render={({ field: { onChange, value, ref } }) => (
-                <DropDownPicker
-                    open={open}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={onChange}
-                />
-            )}
-            {...fieldProps}
-        />
-    );
-};
-DropDownField.displayName = "DropDownField";
-
-export { Field, TextField, DropDownField };
+export { Field, TextField };

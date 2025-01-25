@@ -51,10 +51,10 @@ const AppText = ({
 }: Props) => {
     return (
         <Text
+            {...props}
             textBreakStrategy="highQuality"
             lineBreakStrategyIOS="standard"
             className={cn(textVariants({ size, align }), twClassName)}
-            {...props}
         >
             {children}
         </Text>
