@@ -1,6 +1,6 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { z } from "zod";
 import React from "react";
 import { DropDownField, TextField } from "@/components/core/field";
@@ -9,6 +9,7 @@ import { day } from "@/utils/day-js.util";
 import VideoField from "@/components/core/video-field";
 import { videoSourceSchema } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import PressableOpacity from "@/components/core/pressable-opacity";
 
 /**
  * An app that allows climbers to track there progress by grades.
@@ -90,9 +91,9 @@ export default function Index() {
                     />
                     <VideoField />
 
-                    <TouchableOpacity className="px-2 py-4 border-[1px] rounded-lg w-full items-center">
+                    <PressableOpacity twClassName="px-2 py-4 border-[1px] rounded-lg w-full items-center">
                         <Text>Submit</Text>
-                    </TouchableOpacity>
+                    </PressableOpacity>
                 </FormProvider>
             </View>
         </KeyboardAwareScrollView>

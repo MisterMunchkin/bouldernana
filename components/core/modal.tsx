@@ -1,13 +1,9 @@
 import React, { ReactNode, useCallback, useRef } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import {
-    BottomSheetModalProvider,
-    BottomSheetModal,
-    BottomSheetView,
-} from "@gorhom/bottom-sheet";
-import { TouchableOpacity, Text } from "react-native";
+import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import { Text } from "react-native";
 import { cn } from "@/utils/cn.util";
 import { ClassValue } from "clsx";
+import PressableOpacity from "./pressable-opacity";
 
 type Props = {
     displayText: string;
@@ -27,15 +23,15 @@ const Modal = ({ displayText, className, children }: Props) => {
     }, []);
     return (
         <>
-            <TouchableOpacity
-                className={cn(
+            <PressableOpacity
+                twClassName={cn(
                     "border-[1px]  border-gray-400  px-2 py-4 rounded-lg items-center",
                     className
                 )}
                 onPress={handlePresentModalPress}
             >
                 <Text className="text-black">{displayText}</Text>
-            </TouchableOpacity>
+            </PressableOpacity>
             <BottomSheetModal
                 ref={bottomSheetModalRef}
                 onChange={handleSheetChanges}

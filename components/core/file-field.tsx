@@ -1,6 +1,6 @@
 import { FieldValues } from "react-hook-form";
 import { Field, FieldProps } from "./field";
-import { TouchableOpacity, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { cn } from "@/utils/cn.util";
 import { useImagePicker } from "@/hooks/image-picker.hook";
 import { useVideoPlayer, VideoView } from "expo-video";
