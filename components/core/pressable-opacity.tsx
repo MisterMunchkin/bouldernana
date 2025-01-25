@@ -11,7 +11,7 @@ import {
 type Props = {
     twClassName?: ClassValue;
     children: ReactNode;
-} & Omit<ComponentProps<typeof TouchableOpacity>, "className">;
+} & Omit<ComponentProps<typeof Pressable>, "className">;
 
 const PressableOpacity = ({
     children,
