@@ -1,12 +1,14 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Text, TextInput, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { z } from "zod";
 import React from "react";
 import { DropDownField, TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
-import { day, DayJsUtils } from "@/utils/day-js.util";
-import KeyboardView from "@/components/higher-order/keyboard-view";
+import { day } from "@/utils/day-js.util";
+import VideoField from "@/components/core/video-field";
+import { videoSourceSchema } from "@/constants/zod-schema.const";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 /**
  * An app that allows climbers to track there progress by grades.
@@ -22,70 +24,77 @@ import KeyboardView from "@/components/higher-order/keyboard-view";
 
 const addClimbSchema = z.object({
     grade: z.string(),
-    description: z.string(),
+    description: z.string().optional(),
     date: z.date(),
-    notes: z.string(),
+    notes: z.string().optional(),
+    ...videoSourceSchema,
 });
+
+export type AddClimbSchema = z.infer<typeof addClimbSchema>;
+
 export default function Index() {
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
+    const form = useForm({
         resolver: zodResolver(addClimbSchema),
         defaultValues: {
             grade: "V0",
             description: "",
             date: day().toISOString(),
             notes: "",
+            videoSource: "",
         },
     });
+    const { control } = form;
 
     return (
-        <KeyboardView className="px-4" contentContainerClassName="gap-8">
-            <DropDownField
-                control={control}
-                name="grade"
-                title="Grade"
-                items={[
-                    {
-                        label: "V0",
-                        value: "V0",
-                    },
-                    {
-                        label: "V1",
-                        value: "V1",
-                    },
-                    {
-                        label: "V2",
-                        value: "V2",
-                    },
-                    {
-                        label: "V3",
-                        value: "V3",
-                    },
-                ]}
-            />
-            <TextField
-                name="description"
-                title="Description"
-                control={control}
-                className="h-32"
-                inputProps={{ multiline: true, numberOfLines: 5 }}
-            />
+        <KeyboardAwareScrollView className="px-4">
+            <View className="gap-8 flex-grow pt-8 pb-safe-offset-14">
+                <FormProvider {...form}>
+                    <DropDownField
+                        control={control}
+                        name="grade"
+                        title="Grade"
+                        items={[
+                            {
+                                label: "V0",
+                                value: "V0",
+                            },
+                            {
+                                label: "V1",
+                                value: "V1",
+                            },
+                            {
+                                label: "V2",
+                                value: "V2",
+                            },
+                            {
+                                label: "V3",
+                                value: "V3",
+                            },
+                        ]}
+                    />
+                    <TextField
+                        name="description"
+                        title="Description"
+                        control={control}
+                        className="h-32"
+                        inputProps={{ multiline: true, numberOfLines: 5 }}
+                    />
 
-            <DateTimeField control={control} name="date" />
-            <TextField
-                control={control}
-                name="notes"
-                title="Notes"
-                className="h-32"
-                inputProps={{ multiline: true, numberOfLines: 5 }}
-            />
+                    <DateTimeField control={control} name="date" />
+                    <TextField
+                        control={control}
+                        name="notes"
+                        title="Notes"
+                        className="h-32"
+                        inputProps={{ multiline: true, numberOfLines: 5 }}
+                    />
+                    <VideoField />
 
-            <TouchableOpacity className="px-2 py-4 border-[1px] rounded-lg w-full items-center">
-                <Text>Submit</Text>
-            </TouchableOpacity>
-        </KeyboardView>
+                    <TouchableOpacity className="px-2 py-4 border-[1px] rounded-lg w-full items-center">
+                        <Text>Submit</Text>
+                    </TouchableOpacity>
+                </FormProvider>
+            </View>
+        </KeyboardAwareScrollView>
     );
 }
