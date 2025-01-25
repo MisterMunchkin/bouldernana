@@ -7,7 +7,7 @@ export const videoSourceSchema = {
 export const addClimbSchema = z.object({
     grade: z.string(),
     description: z.string().optional(),
-    date: z.string().date(),
+    date: z.string().datetime(),
     notes: z.string().optional(),
     ...videoSourceSchema,
 });

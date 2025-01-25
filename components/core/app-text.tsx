@@ -10,6 +10,7 @@ export const textVariants = cva("", {
             green: "text-core-green",
             orange: "text-core-orange",
             white: "text-white",
+            black: "text-black",
             "white-80": "text-white/80",
             "white-60": "text-white/60",
         },
@@ -27,7 +28,7 @@ export const textVariants = cva("", {
         },
     },
     defaultVariants: {
-        color: "white",
+        color: "black",
         size: "md",
         align: "left",
     },

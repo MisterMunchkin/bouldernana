@@ -33,10 +33,7 @@ export default function Tab() {
     const { control, handleSubmit } = form;
     const logClimb = useUserClimbRecordStore((store) => store.logClimb);
 
-    const saveRecord = (climb: AddClimbSchema) => {
-        logClimb(climb);
-    };
-
+    const saveRecord = (climb: AddClimbSchema) => logClimb(climb);
     return (
         <KeyboardAwareScrollView className="px-4">
             <View
@@ -44,6 +41,7 @@ export default function Tab() {
                 style={{ paddingBottom: bottomTabBarHeight + 20 }}
             >
                 <FormProvider {...form}>
+                    {/* Need to stop using the drop down, find a better one */}
                     <DropDownField
                         control={control}
                         name="grade"
@@ -86,7 +84,7 @@ export default function Tab() {
                     <VideoField />
 
                     <PressableOpacity
-                        onPress={() => handleSubmit(saveRecord)}
+                        onPress={handleSubmit(saveRecord)}
                         twClassName="px-2 py-4 border-[1px] rounded-lg w-full items-center"
                     >
                         <Text>Submit</Text>
