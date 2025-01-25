@@ -13,9 +13,12 @@ import {
 } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
-import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
+import {
+    useUserClimbRecordStore,
+    VGRADES,
+} from "@/stores/user-climb-record.store";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import DropDownField from "@/components/core/dropdown-field";
+import GradeDropdownField from "@/components/grade-dropdown-field";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
@@ -43,28 +46,11 @@ export default function Tab() {
             >
                 <FormProvider {...form}>
                     {/* Need to stop using the drop down, find a better one */}
-                    <DropDownField
+                    <GradeDropdownField
                         control={control}
                         name="grade"
                         title="Grade"
-                        items={[
-                            {
-                                label: "V0",
-                                value: "V0",
-                            },
-                            {
-                                label: "V1",
-                                value: "V1",
-                            },
-                            {
-                                label: "V2",
-                                value: "V2",
-                            },
-                            {
-                                label: "V3",
-                                value: "V3",
-                            },
-                        ]}
+                        items={VGRADES}
                     />
                     <TextField
                         name="description"

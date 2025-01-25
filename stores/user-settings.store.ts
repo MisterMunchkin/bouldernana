@@ -5,7 +5,23 @@ import { createJSONStorage, persist } from "zustand/middleware";
 export type ClimbType = "Route" | "Boulder";
 type RouteGradeOptions = "YDS" | "French";
 type BoulderGradeOptions = "Font" | "VGrade";
-export type VGradeOptions = "V0" | "V1" | "V2" | "V3" | "V4";
+export type VGradeOptions = `V${
+    | 0
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15}`;
 
 type Settings<T extends string> = {
     gradeSystem: T;

@@ -1,5 +1,5 @@
 import { FieldValues } from "react-hook-form";
-import { Field, FieldProps } from "./field";
+import { Field, FieldProps } from "./core/field";
 import {
     ComponentProps,
     ReactNode,
@@ -14,8 +14,8 @@ import BottomSheet, {
     BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import React from "react";
-import PressableOpacity from "./pressable-opacity";
-import AppText from "./app-text";
+import PressableOpacity from "./core/pressable-opacity";
+import AppText from "./core/app-text";
 import { cn } from "@/utils/cn.util";
 
 export type DropDownItem<TItemValues extends string> = {
@@ -32,7 +32,7 @@ export type DropDownFieldProps<
 /**
  * DropDown using Field
  */
-const DropDownField = <
+const GradeDropdownField = <
     TFieldValues extends FieldValues,
     TItemValues extends string
 >({
@@ -43,7 +43,11 @@ const DropDownField = <
 
     const renderBackdrop = useCallback(
         (props: ComponentProps<typeof BottomSheetBackdrop>) => (
-            <BottomSheetBackdrop {...props} pressBehavior={"close"} />
+            <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={-1}
+                pressBehavior={"close"}
+            />
         ),
         []
     );
@@ -62,19 +66,21 @@ const DropDownField = <
                     </PressableOpacity>
                     <BottomSheetModal
                         ref={bottomSheetRef}
-                        snapPoints={["30%", "50%"]}
+                        snapPoints={["50%"]}
                         backdropComponent={renderBackdrop}
-                        index={1}
+                        // index={1}
+                        enablePanDownToClose
+                        enableDynamicSizing={false}
                     >
                         <BottomSheetScrollView
-                            contentContainerClassName={cn("px-4")}
+                            contentContainerClassName={cn("px-4 py-6")}
                         >
                             {items.map((item, index) => (
                                 <PressableOpacity
                                     key={index}
                                     onPress={() => onChange(item.value)}
                                     twClassName={cn(
-                                        "px-2 py-4 rounded-lg",
+                                        "px-2 py-4 rounded-lg items-center",
                                         item.value === value ? "bg-red-500" : ""
                                     )}
                                 >
@@ -90,4 +96,4 @@ const DropDownField = <
     );
 };
 
-export default DropDownField;
+export default GradeDropdownField;
