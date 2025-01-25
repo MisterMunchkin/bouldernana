@@ -7,29 +7,13 @@ import { DropDownField, TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import { day } from "@/utils/day-js.util";
 import VideoField from "@/components/core/video-field";
-import { videoSourceSchema } from "@/constants/zod-schema.const";
+import {
+    addClimbSchema,
+    videoSourceSchema,
+} from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
-
-/**
- * An app that allows climbers to track there progress by grades.
- *
- * inputs:
- * grade - options
- * description - string
- * date - prefilled to current date
- * notes - string
- * video - blob
- *
- */
-
-const addClimbSchema = z.object({
-    grade: z.string(),
-    description: z.string().optional(),
-    date: z.date(),
-    notes: z.string().optional(),
-    ...videoSourceSchema,
-});
+import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
@@ -44,7 +28,12 @@ export default function Index() {
             videoSource: "",
         },
     });
-    const { control } = form;
+    const { control, handleSubmit } = form;
+    const logClimb = useUserClimbRecordStore((store) => store.logClimb);
+
+    const saveRecord = (climb: AddClimbSchema) => {
+        logClimb(climb);
+    };
 
     return (
         <KeyboardAwareScrollView className="px-4">
@@ -91,7 +80,10 @@ export default function Index() {
                     />
                     <VideoField />
 
-                    <PressableOpacity twClassName="px-2 py-4 border-[1px] rounded-lg w-full items-center">
+                    <PressableOpacity
+                        onPress={() => handleSubmit(saveRecord)}
+                        twClassName="px-2 py-4 border-[1px] rounded-lg w-full items-center"
+                    >
                         <Text>Submit</Text>
                     </PressableOpacity>
                 </FormProvider>
