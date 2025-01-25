@@ -17,7 +17,7 @@ export const VGRADES: DropDownItem<VGradeOptions>[] = Array.from(
     }
 );
 
-type ClimbSchema = z.infer<typeof addClimbSchema>;
+export type ClimbSchema = z.infer<typeof addClimbSchema>;
 
 type State = {
     climbs: ClimbSchema[];
