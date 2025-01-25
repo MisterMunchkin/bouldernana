@@ -5,6 +5,7 @@ import { cn } from "@/utils/cn.util";
 import { useImagePicker } from "@/hooks/image-picker.hook";
 import { useVideoPlayer, VideoView } from "expo-video";
 import React, { ComponentProps, FC } from "react";
+import PressableOpacity from "./pressable-opacity";
 
 type Props<TFieldValues extends FieldValues> = {
     text?: string;
@@ -27,15 +28,15 @@ const FileField = <TFieldValues extends FieldValues>({
     return (
         <Field
             render={({ field: { onChange } }) => (
-                <TouchableOpacity
-                    className={cn(
+                <PressableOpacity
+                    twClassName={cn(
                         "border-[1px] border-gray-400 px-2 py-4 rounded-lg items-center",
                         className
                     )}
                     onPress={() => onPress(onChange)}
                 >
                     <Text>{text ?? "Add a video"}</Text>
-                </TouchableOpacity>
+                </PressableOpacity>
             )}
             {...fieldProps}
         />
