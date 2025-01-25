@@ -34,10 +34,13 @@ export default function Tab() {
             videoSource: "",
         },
     });
-    const { control, handleSubmit } = form;
+    const { control, handleSubmit, reset } = form;
     const logClimb = useUserClimbRecordStore((store) => store.logClimb);
 
-    const saveRecord = (climb: AddClimbSchema) => logClimb(climb);
+    const saveRecord = (climb: AddClimbSchema) => {
+        logClimb(climb);
+        reset();
+    };
     return (
         <KeyboardAwareScrollView className="px-4">
             <View
