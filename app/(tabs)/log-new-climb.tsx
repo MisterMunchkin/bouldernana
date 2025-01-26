@@ -14,6 +14,7 @@ import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import DropdownField from "@/components/dropdown-field";
 import {
+    ASCENT_TYPE,
     CLIMB_FEEL,
     CLIMB_TYPE,
     SKILL_TYPE,
@@ -23,6 +24,7 @@ import {
 } from "@/constants/core.const";
 import { CoreTypesUtil } from "@/utils/core-types.util";
 import { AscentField } from "@/components/log-new-climb/ascent-field";
+import { ClassValue } from "clsx";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
@@ -34,7 +36,7 @@ const DEFAULT_VALUES: AddClimbSchema = {
     ascentType: "Flash",
     attempts: 0,
     howDidItFeel: "Solid",
-    skill: "Athletic",
+    skill: [],
     steepness: "Overhang",
     // rating: "",
     date: day().toISOString(),
@@ -56,6 +58,8 @@ export default function Tab() {
         logClimb(climb);
         reset();
     };
+
+    const selected: ClassValue = "bg-red-500";
     return (
         <KeyboardAwareScrollView className="px-4">
             <View
@@ -70,18 +74,27 @@ export default function Tab() {
                         name="typeOfClimb"
                         title="What did you climb?"
                         items={getInferredDropdownItems(CLIMB_TYPE)}
+                        classNames={{
+                            selected,
+                        }}
                     />
                     <DropdownField
                         control={control}
                         name="whereDidYouClimb"
                         title="Where did you climb?"
                         items={getInferredDropdownItems(WHERE)}
+                        classNames={{
+                            selected,
+                        }}
                     />
                     <DropdownField
                         control={control}
                         name="grade"
                         title="Grade"
                         items={getInferredDropdownItems(VGRADES)}
+                        classNames={{
+                            selected,
+                        }}
                     />
 
                     <AscentField />
@@ -91,6 +104,9 @@ export default function Tab() {
                         name="howDidItFeel"
                         title="How did the climb feel?"
                         items={getInferredDropdownItems(CLIMB_FEEL)}
+                        classNames={{
+                            selected,
+                        }}
                     />
 
                     <DropdownField
@@ -98,12 +114,18 @@ export default function Tab() {
                         name="skill"
                         title="What skill is needed for this climb?"
                         items={getInferredDropdownItems(SKILL_TYPE)}
+                        classNames={{
+                            selected,
+                        }}
                     />
                     <DropdownField
                         control={control}
                         name="steepness"
                         title="How steep was this climb?"
                         items={getInferredDropdownItems(STEEPNESS)}
+                        classNames={{
+                            selected,
+                        }}
                     />
 
                     <DateTimeField title="Date" control={control} name="date" />

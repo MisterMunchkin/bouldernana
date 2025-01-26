@@ -1,9 +1,11 @@
 import { cn } from "@/utils/cn.util";
+import { ErrorMessage } from "@hookform/error-message";
 import { ClassValue } from "clsx";
 import React, { ComponentProps, useCallback, useRef, useState } from "react";
 import { Controller, ControllerProps, FieldValues } from "react-hook-form";
 import { View, Text, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import AppText from "./app-text";
 
 export type FieldProps<TFieldValues extends FieldValues> = {
     title?: string;
@@ -36,19 +38,34 @@ const TextField = <TFieldValues extends FieldValues>({
 }: Omit<FieldProps<TFieldValues>, "render"> & {
     inputProps?: ComponentProps<typeof TextInput>;
 }) => {
+    const { name } = fieldProps;
     return (
         <Field
-            render={({ field: { onChange, value, ref } }) => (
-                <TextInput
-                    className={cn(
-                        "w-full border-[1px] px-2 py-4 rounded-lg border-gray-400",
-                        className
-                    )}
-                    onChangeText={onChange}
-                    value={value}
-                    ref={ref}
-                    {...inputProps}
-                />
+            render={({
+                field: { onChange, value, ref },
+                fieldState: { error },
+            }) => (
+                <>
+                    <TextInput
+                        className={cn(
+                            "w-full border-[1px] px-4 py-2 rounded-lg border-gray-400 text-2xl leading-tight",
+                            className
+                        )}
+                        onChangeText={onChange}
+                        value={value}
+                        ref={ref}
+                        {...inputProps}
+                    />
+                    <ErrorMessage
+                        errors={error}
+                        name={name}
+                        render={({ message }) => (
+                            <AppText size={"xxs"} color={"red"}>
+                                {message}
+                            </AppText>
+                        )}
+                    />
+                </>
             )}
             {...fieldProps}
         />

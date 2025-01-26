@@ -45,6 +45,12 @@ export const CLIMB_TYPE = ["Board", "Boulder", "Route", "Trad"] as const;
 
 export const WHERE = ["Indoor", "Outdoor"] as const;
 
+/**
+ * - Flash: Send a climb in 1 attempt with prior knowledge of beta
+ * - Onsight: Send a climb in 1 attempt without any prior knowledge of beta
+ * - Redpoint: Send a climb in 1 attempt with practice, climbing sections off, and prior knowledge of beta
+ * - Project: Send a climb after multiple attempts
+ */
 export const ASCENT_TYPE = ["Flash", "Onsight", "Redpoint", "Project"] as const;
 
 export const CLIMB_FEEL = ["Hard", "Soft", "Solid"] as const;

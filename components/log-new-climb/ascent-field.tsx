@@ -13,6 +13,10 @@ export const AscentField = () => {
         name: "ascentType",
     });
 
+    useEffect(() => {
+        ascentType !== "Project" && setValue("attempts", 1);
+    }, [ascentType, setValue]);
+
     const getInferredDropdownItems = CoreTypesUtil.getInferredDropdownItems;
     return (
         <>
@@ -21,6 +25,9 @@ export const AscentField = () => {
                 name="ascentType"
                 title="Did you send it?"
                 items={getInferredDropdownItems(ASCENT_TYPE)}
+                classNames={{
+                    selected: "bg-red-500",
+                }}
             />
             {ascentType === "Project" && (
                 <TextField

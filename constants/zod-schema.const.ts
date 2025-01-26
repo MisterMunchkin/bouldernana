@@ -20,9 +20,9 @@ export const addClimbSchema = z.object({
     grade: z.enum(VGRADES), //VGrade for boulder and board, French for route and trad
     //Advanced info
     ascentType: z.enum(ASCENT_TYPE).optional(), //redpoint, onsight, flash, project
-    attempts: z.number().optional(), //Should only show up if ascentType is redpoint or project
+    attempts: z.coerce.number().optional(), //Should only show up if ascentType is redpoint or project
     howDidItFeel: z.enum(CLIMB_FEEL).optional(), //soft, solid, hard
-    skill: z.enum(SKILL_TYPE).optional(), //Cruxy, Athletic, etc..
+    skill: z.enum(SKILL_TYPE).array().optional(), //Cruxy, Athletic, etc..
     steepness: z.enum(STEEPNESS).optional(), // Slab, Overhang, etc.
     //ENDOF Advanced info
     rating: z.string().optional(), // no rating to 5

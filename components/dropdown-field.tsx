@@ -21,6 +21,7 @@ export type DropDownFieldProps<
     items: DropDownItem<TItemValues>[];
     defaultValue?: TItemValues;
     classNames?: ClassValues<"selected" | "item" | "text">;
+    multi?: boolean;
 } & Omit<FieldProps<TFieldValues>, "render" | "defualtValue">;
 /**
  * DropDown using Field
@@ -32,6 +33,7 @@ const DropdownField = <
     items,
     classNames,
     defaultValue,
+    multi,
     ...fieldProps
 }: DropDownFieldProps<TFieldValues, TItemValues>) => {
     // const { defaultValue } = fieldProps;
@@ -47,6 +49,7 @@ const DropdownField = <
             defaultValue={defaultValue}
             render={({ field: { onChange, value } }) => (
                 <>
+                    {/* Wrap thisinto a component and create select and multi select */}
                     <PressableOpacity
                         onPress={() => {
                             bottomSheetRef.current?.present();
