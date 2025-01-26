@@ -4,19 +4,7 @@ import { asyncStorageJSON } from "@/utils/async-storage-json.util";
 import { z } from "zod";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { VGradeOptions } from "./user-settings.store";
 import uuid from "react-native-uuid";
-
-export const VGRADES: DropDownItem<VGradeOptions>[] = Array.from(
-    { length: 16 },
-    (_, i) => {
-        const value = `V${i}` as VGradeOptions;
-        return {
-            label: value,
-            value,
-        };
-    }
-);
 
 export type ClimbSchema = z.infer<typeof addClimbSchema>;
 export type LoggedClimb = ClimbSchema & { id: string };
