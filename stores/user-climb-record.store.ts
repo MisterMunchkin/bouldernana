@@ -1,4 +1,3 @@
-import { DropDownItem } from "@/components/grade-dropdown-field";
 import { addClimbSchema } from "@/constants/zod-schema.const";
 import { asyncStorageJSON } from "@/utils/async-storage-json.util";
 import { z } from "zod";

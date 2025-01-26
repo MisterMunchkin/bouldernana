@@ -13,26 +13,35 @@ import {
 } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
-import {
-    useUserClimbRecordStore,
-    VGRADES,
-} from "@/stores/user-climb-record.store";
+import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import GradeDropdownField from "@/components/grade-dropdown-field";
+import DropdownField from "@/components/dropdown-field";
+import { VGRADES, WHERE } from "@/constants/core.const";
+import { CoreTypesUtil } from "@/utils/core-types.util";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
+
+const DEFAULT_VALUES: AddClimbSchema = {
+    videoSource: "",
+    typeOfClimb: "Boulder",
+    whereDidYouClimb: "Indoor",
+    grade: "V0",
+    ascentType: "Flash",
+    attempts: 0,
+    howDidItFeel: "Solid",
+    skill: "Athletic",
+    steepness: "Overhang",
+    // rating: "",
+    date: day().toISOString(),
+    notes: "",
+    // relativeEffort: ""
+};
 
 export default function Tab() {
     const bottomTabBarHeight = useBottomTabBarHeight();
     const form = useForm({
         resolver: zodResolver(addClimbSchema),
-        defaultValues: {
-            grade: "V0",
-            description: "",
-            date: day().toISOString(),
-            notes: "",
-            videoSource: "",
-        },
+        defaultValues: DEFAULT_VALUES,
     });
     const { control, handleSubmit, reset } = form;
     const logClimb = useUserClimbRecordStore((store) => store.logClimb);
@@ -50,20 +59,20 @@ export default function Tab() {
                 <FormProvider {...form}>
                     <VideoField />
 
-                    <GradeDropdownField
+                    <DropdownField
+                        control={control}
+                        name="typeOfClimb"
+                        title="Where did you climb?"
+                        items={CoreTypesUtil.getInferredDropdownItems(WHERE)}
+                    />
+                    <DropdownField
                         control={control}
                         name="grade"
                         title="Grade"
-                        items={VGRADES}
+                        items={CoreTypesUtil.getInferredDropdownItems(VGRADES)}
                     />
+
                     <DateTimeField title="Date" control={control} name="date" />
-                    <TextField
-                        name="description"
-                        title="Description"
-                        control={control}
-                        className="h-32"
-                        inputProps={{ multiline: true, numberOfLines: 5 }}
-                    />
 
                     <TextField
                         control={control}

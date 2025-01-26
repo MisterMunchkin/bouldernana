@@ -1,155 +1,63 @@
-import { DropDownItem } from "@/components/grade-dropdown-field";
-import {
-    Ascent,
-    Feel,
-    ClimbType,
-    Where,
-    FrenchGrade,
-    VGrade,
-    Skill,
-    Steepness,
-} from "@/types/core.type";
+export const FRENCH_GRADES = [
+    "1",
+    "2",
+    "3",
+    "4a",
+    "4b",
+    "4c",
+    "5a",
+    "5b",
+    "5c",
+    "6a",
+    "6b",
+    "6c",
+    "7a",
+    "7b",
+    "7c",
+    "8a",
+    "8b",
+    "8c",
+    "9a",
+    "9b",
+    "9c",
+] as const;
 
-export const FRENCH_GRADES: DropDownItem<FrenchGrade>[] = [
-    ...["1", "2", "3"].map((value) => ({
-        label: value,
-        value: value as FrenchGrade,
-    })),
-    ...Array.from({ length: 6 }, (_, i) => i + 4).flatMap((n) =>
-        ["a", "b", "c"].map((suffix) => {
-            const value = `${n}${suffix}` as FrenchGrade;
-            return {
-                label: value,
-                value,
-            };
-        })
-    ),
-];
-export const VGRADES: DropDownItem<VGrade>[] = Array.from(
-    { length: 16 },
-    (_, i) => {
-        const value = `V${i}` as VGrade;
-        return {
-            label: value,
-            value,
-        };
-    }
-);
+export const VGRADES = [
+    "V0",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8",
+    "V9",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+] as const;
 
-export const CLIMB_TYPE: DropDownItem<ClimbType>[] = [
-    {
-        value: "Board",
-        label: "Board",
-    },
-    {
-        value: "Boulder",
-        label: "Boulder",
-    },
-    {
-        value: "Route",
-        label: "Route",
-    },
-    {
-        value: "Trad",
-        label: "Trad",
-    },
-];
+export const CLIMB_TYPE = ["Board", "Boulder", "Route", "Trad"] as const;
 
-export const CLIMB_WHERE: DropDownItem<Where>[] = [
-    {
-        value: "Indoor",
-        label: "Indoor",
-    },
-    {
-        value: "Outdoor",
-        label: "Outdoor",
-    },
-];
+export const WHERE = ["Indoor", "Outdoor"] as const;
 
-export const ASCENT_TYPE: DropDownItem<Ascent>[] = [
-    {
-        value: "Flash",
-        label: "Flash",
-    },
-    {
-        value: "Onsight",
-        label: "Onsight",
-    },
-    {
-        value: "Redpoint",
-        label: "Redpoint",
-    },
-    {
-        value: "Project",
-        label: "Project",
-    },
-];
+export const ASCENT_TYPE = ["Flash", "Onsight", "Redpoint", "Project"] as const;
 
-export const CLIMB_FEEL: DropDownItem<Feel>[] = [
-    {
-        value: "Hard",
-        label: "Hard",
-    },
-    {
-        value: "Soft",
-        label: "Soft",
-    },
-    {
-        value: "Solid",
-        label: "Solid",
-    },
-];
+export const CLIMB_FEEL = ["Hard", "Soft", "Solid"] as const;
 
-export const SKILL_TYPE: DropDownItem<Skill>[] = [
-    {
-        value: "Athletic",
-        label: "Athletic",
-    },
-    {
-        value: "Crimpy",
-        label: "Crimpy",
-    },
-    {
-        value: "Cruxy",
-        label: "Cruxy",
-    },
-    {
-        value: "Endurance",
-        label: "Endurance",
-    },
-    {
-        value: "Slopey",
-        label: "Slopey",
-    },
-    {
-        value: "Technical",
-        label: "Technical",
-    },
-    {
-        value: "Power",
-        label: "Power",
-    },
-    {
-        value: "Dyno",
-        label: "Dyno",
-    },
-];
+export const SKILL_TYPE = [
+    "Athletic",
+    "Crimpy",
+    "Cruxy",
+    "Endurance",
+    "Slopey",
+    "Technical",
+    "Power",
+    "Dyno",
+] as const;
 
-export const STEPPNESS: DropDownItem<Steepness>[] = [
-    {
-        value: "Slab",
-        label: "Slab",
-    },
-    {
-        value: "Overhang",
-        label: "Overhang",
-    },
-    {
-        value: "Vert",
-        label: "Vert",
-    },
-    {
-        value: "Roof",
-        label: "Roof",
-    },
-];
+export const STEPPNESS = ["Slab", "Overhang", "Vert", "Roof"] as const;

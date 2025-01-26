@@ -1,58 +1,19 @@
-export type FrenchGrade =
-    | "1"
-    | "2"
-    | "3"
-    | `4${"a" | "b" | "c"}`
-    | `5${"a" | "b" | "c"}`
-    | `6${"a" | "b" | "c"}`
-    | `7${"a" | "b" | "c"}`
-    | `8${"a" | "b" | "c"}`
-    | `9${"a" | "b" | "c"}`;
-export type VGrade = `V${
-    | 0
-    | 1
-    | 2
-    | 3
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12
-    | 13
-    | 14
-    | 15}`;
+import {
+    FRENCH_GRADES,
+    VGRADES,
+    CLIMB_TYPE,
+    WHERE,
+    ASCENT_TYPE,
+    CLIMB_FEEL,
+    SKILL_TYPE,
+    STEPPNESS,
+} from "@/constants/core.const";
 
-export type ClimbType = "Route" | "Boulder" | "Board" | "Trad";
-
-export type Where = "Indoor" | "Outdoor";
-
-/**
- * - Redpoint: Sent a climb after attempts, beta, and other insights
- * - Onsight: Sent a climb without prior knowledge of the beta and flashed it
- * - Flash: Sent a climb on just 1 attempt with prior knowledge of the beta
- * - Project: Currently working on sending the climb, unsent as of yet.
- */
-export type Ascent = "Redpoint" | "Onsight" | "Flash" | "Project";
-
-/**
- * - Soft: Too soft for the grade
- * - Solid: Solid climb for the grade
- * - Hard: Too hard for the grade
- */
-export type Feel = "Soft" | "Solid" | "Hard";
-
-export type Skill =
-    | "Cruxy"
-    | "Athletic"
-    | "Slopey"
-    | "Endurance"
-    | "Technical"
-    | "Crimpy"
-    | "Power"
-    | "Dyno";
-
-export type Steepness = "Slab" | "Vert" | "Overhang" | "Roof";
+export type FrenchGrade = (typeof FRENCH_GRADES)[number];
+export type VGrade = (typeof VGRADES)[number];
+export type ClimbType = (typeof CLIMB_TYPE)[number];
+export type Where = (typeof WHERE)[number];
+export type Ascent = (typeof ASCENT_TYPE)[number];
+export type Feel = (typeof CLIMB_FEEL)[number];
+export type Skill = (typeof SKILL_TYPE)[number];
+export type Steepness = (typeof STEPPNESS)[number];
