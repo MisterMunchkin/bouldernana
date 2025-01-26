@@ -48,13 +48,15 @@ export default function Tab() {
                 style={{ paddingBottom: bottomTabBarHeight + 20 }}
             >
                 <FormProvider {...form}>
-                    {/* Need to stop using the drop down, find a better one */}
+                    <VideoField />
+
                     <GradeDropdownField
                         control={control}
                         name="grade"
                         title="Grade"
                         items={VGRADES}
                     />
+                    <DateTimeField title="Date" control={control} name="date" />
                     <TextField
                         name="description"
                         title="Description"
@@ -63,15 +65,13 @@ export default function Tab() {
                         inputProps={{ multiline: true, numberOfLines: 5 }}
                     />
 
-                    <DateTimeField control={control} name="date" />
                     <TextField
                         control={control}
                         name="notes"
-                        title="Notes"
+                        title="Private Notes"
                         className="h-32"
                         inputProps={{ multiline: true, numberOfLines: 5 }}
                     />
-                    <VideoField />
 
                     <PressableOpacity
                         onPress={handleSubmit(saveRecord)}

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { VGradeOptions } from "./user-settings.store";
+import uuid from "react-native-uuid";
 
 export const VGRADES: DropDownItem<VGradeOptions>[] = Array.from(
     { length: 16 },
@@ -18,13 +19,15 @@ export const VGRADES: DropDownItem<VGradeOptions>[] = Array.from(
 );
 
 export type ClimbSchema = z.infer<typeof addClimbSchema>;
+export type LoggedClimb = ClimbSchema & { id: string };
 
 type State = {
-    climbs: ClimbSchema[];
+    climbs: LoggedClimb[];
 };
 
 type Actions = {
     logClimb: (climb: ClimbSchema) => void;
+    reset: () => void;
 };
 
 export const useUserClimbRecordStore = create<State & Actions>()(
@@ -33,7 +36,11 @@ export const useUserClimbRecordStore = create<State & Actions>()(
             climbs: [],
             logClimb: (climb) =>
                 set((state) => ({
-                    climbs: [...state.climbs, climb],
+                    climbs: [...state.climbs, { ...climb, id: uuid.v4() }],
+                })),
+            reset: () =>
+                set(() => ({
+                    climbs: [],
                 })),
         }),
         {

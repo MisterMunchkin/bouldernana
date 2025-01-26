@@ -12,6 +12,10 @@ export default function RootLayout() {
                         name="(tabs)"
                         options={{ headerShown: false }}
                     />
+                    <Stack.Screen
+                        name="climb-log"
+                        options={{ headerShown: false }}
+                    />
                 </Stack>
             </BottomSheetModalProvider>
         </GestureHandlerRootView>

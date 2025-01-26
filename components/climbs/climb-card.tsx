@@ -1,4 +1,4 @@
-import { ClimbSchema } from "@/stores/user-climb-record.store";
+import { ClimbSchema, LoggedClimb } from "@/stores/user-climb-record.store";
 import { View } from "react-native";
 import VideoThumbnailView from "../video-thumbnail-view";
 import { useCreateThumbnail } from "@/hooks/create-thumbnail.hook";
@@ -9,9 +9,9 @@ import { day, DayJsUtils } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
 
-type Props = {} & ClimbSchema;
+type Props = {} & LoggedClimb;
 
-const ClimbCard = ({ date, grade, videoSource }: Props) => {
+const ClimbCard = ({ date, grade, videoSource, id }: Props) => {
     const { thumbnail } = useCreateThumbnail({
         videoSource: videoSource ?? "",
     });
@@ -19,7 +19,7 @@ const ClimbCard = ({ date, grade, videoSource }: Props) => {
     return (
         <PressableOpacity
             twClassName="flex-col flex-1"
-            onPress={() => router.push("/climb-log")}
+            onPress={() => router.push(`/climb-log/${id}`)}
         >
             {/* {videoSource && <VideoThumbnailView videoSource={videoSource} />} */}
             <Image
