@@ -6,7 +6,7 @@ import {
     ASCENT_TYPE,
     CLIMB_FEEL,
     SKILL_TYPE,
-    STEPPNESS,
+    STEEPNESS,
 } from "@/constants/core.const";
 
 export type FrenchGrade = (typeof FRENCH_GRADES)[number];
@@ -16,4 +16,4 @@ export type Where = (typeof WHERE)[number];
 export type Ascent = (typeof ASCENT_TYPE)[number];
 export type Feel = (typeof CLIMB_FEEL)[number];
 export type Skill = (typeof SKILL_TYPE)[number];
-export type Steepness = (typeof STEPPNESS)[number];
+export type Steepness = (typeof STEEPNESS)[number];

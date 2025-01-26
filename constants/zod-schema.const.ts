@@ -4,7 +4,7 @@ import {
     CLIMB_FEEL,
     CLIMB_TYPE,
     SKILL_TYPE,
-    STEPPNESS,
+    STEEPNESS,
     VGRADES,
     WHERE,
 } from "./core.const";
@@ -23,7 +23,7 @@ export const addClimbSchema = z.object({
     attempts: z.number().optional(), //Should only show up if ascentType is redpoint or project
     howDidItFeel: z.enum(CLIMB_FEEL).optional(), //soft, solid, hard
     skill: z.enum(SKILL_TYPE).optional(), //Cruxy, Athletic, etc..
-    steepness: z.enum(STEPPNESS).optional(), // Slab, Overhang, etc.
+    steepness: z.enum(STEEPNESS).optional(), // Slab, Overhang, etc.
     //ENDOF Advanced info
     rating: z.string().optional(), // no rating to 5
     date: z.string().datetime(),

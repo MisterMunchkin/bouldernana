@@ -60,4 +60,4 @@ export const SKILL_TYPE = [
     "Dyno",
 ] as const;
 
-export const STEPPNESS = ["Slab", "Overhang", "Vert", "Roof"] as const;
+export const STEEPNESS = ["Slab", "Overhang", "Vert", "Roof"] as const;
