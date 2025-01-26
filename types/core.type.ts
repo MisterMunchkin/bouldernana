@@ -1,4 +1,4 @@
-export type FrenchGradeOptions =
+export type FrenchGrade =
     | "1"
     | "2"
     | "3"
@@ -8,7 +8,7 @@ export type FrenchGradeOptions =
     | `7${"a" | "b" | "c"}`
     | `8${"a" | "b" | "c"}`
     | `9${"a" | "b" | "c"}`;
-export type VGradeOptions = `V${
+export type VGrade = `V${
     | 0
     | 1
     | 2
@@ -28,8 +28,31 @@ export type VGradeOptions = `V${
 
 export type ClimbType = "Route" | "Boulder" | "Board" | "Trad";
 
-export type ClimbWhere = "Indoor" | "Outdoor";
+export type Where = "Indoor" | "Outdoor";
 
-export type AscentType = "Redpoint" | "Onsight" | "Flash";
+/**
+ * - Redpoint: Sent a climb after attempts, beta, and other insights
+ * - Onsight: Sent a climb without prior knowledge of the beta and flashed it
+ * - Flash: Sent a climb on just 1 attempt with prior knowledge of the beta
+ * - Project: Currently working on sending the climb, unsent as of yet.
+ */
+export type Ascent = "Redpoint" | "Onsight" | "Flash" | "Project";
 
-export type ClimbFeel = "Soft" | "Solid" | "Hard";
+/**
+ * - Soft: Too soft for the grade
+ * - Solid: Solid climb for the grade
+ * - Hard: Too hard for the grade
+ */
+export type Feel = "Soft" | "Solid" | "Hard";
+
+export type Skill =
+    | "Cruxy"
+    | "Athletic"
+    | "Slopey"
+    | "Endurance"
+    | "Technical"
+    | "Crimpy"
+    | "Power"
+    | "Dyno";
+
+export type Steepness = "Slab" | "Vert" | "Overhang" | "Roof";
