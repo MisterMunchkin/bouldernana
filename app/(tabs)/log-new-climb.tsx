@@ -7,17 +7,22 @@ import { TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import { day } from "@/utils/day-js.util";
 import VideoField from "@/components/core/video-field";
-import {
-    addClimbSchema,
-    videoSourceSchema,
-} from "@/constants/zod-schema.const";
+import { addClimbSchema } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import DropdownField from "@/components/dropdown-field";
-import { VGRADES, WHERE } from "@/constants/core.const";
+import {
+    CLIMB_FEEL,
+    CLIMB_TYPE,
+    SKILL_TYPE,
+    STEEPNESS,
+    VGRADES,
+    WHERE,
+} from "@/constants/core.const";
 import { CoreTypesUtil } from "@/utils/core-types.util";
+import { AscentField } from "@/components/log-new-climb/ascent-field";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
@@ -45,6 +50,7 @@ export default function Tab() {
     });
     const { control, handleSubmit, reset } = form;
     const logClimb = useUserClimbRecordStore((store) => store.logClimb);
+    const getInferredDropdownItems = CoreTypesUtil.getInferredDropdownItems;
 
     const saveRecord = (climb: AddClimbSchema) => {
         logClimb(climb);
@@ -62,14 +68,42 @@ export default function Tab() {
                     <DropdownField
                         control={control}
                         name="typeOfClimb"
+                        title="What did you climb?"
+                        items={getInferredDropdownItems(CLIMB_TYPE)}
+                    />
+                    <DropdownField
+                        control={control}
+                        name="whereDidYouClimb"
                         title="Where did you climb?"
-                        items={CoreTypesUtil.getInferredDropdownItems(WHERE)}
+                        items={getInferredDropdownItems(WHERE)}
                     />
                     <DropdownField
                         control={control}
                         name="grade"
                         title="Grade"
-                        items={CoreTypesUtil.getInferredDropdownItems(VGRADES)}
+                        items={getInferredDropdownItems(VGRADES)}
+                    />
+
+                    <AscentField />
+
+                    <DropdownField
+                        control={control}
+                        name="howDidItFeel"
+                        title="How did the climb feel?"
+                        items={getInferredDropdownItems(CLIMB_FEEL)}
+                    />
+
+                    <DropdownField
+                        control={control}
+                        name="skill"
+                        title="What skill is needed for this climb?"
+                        items={getInferredDropdownItems(SKILL_TYPE)}
+                    />
+                    <DropdownField
+                        control={control}
+                        name="steepness"
+                        title="How steep was this climb?"
+                        items={getInferredDropdownItems(STEEPNESS)}
                     />
 
                     <DateTimeField title="Date" control={control} name="date" />
