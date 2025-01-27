@@ -6,10 +6,11 @@ import { StyleProp, ViewStyle } from "react-native";
 
 type Props = {
     videoSource: string;
+    width?: number;
     style?: StyleProp<ViewStyle>;
 };
 
-const VideoPreview = ({ videoSource, style }: Props) => {
+const VideoPreview = ({ videoSource, style, width }: Props) => {
     const [thumbnail, setThumbnail] = useState<VideoThumbnail | null>(null);
     const player = useVideoPlayer(videoSource);
 
@@ -34,7 +35,7 @@ const VideoPreview = ({ videoSource, style }: Props) => {
             width: thumbnail.width,
             height: thumbnail.height,
         },
-        width: 200,
+        width: width ?? 200,
     });
 
     return (

@@ -9,10 +9,11 @@ export const textVariants = cva("", {
         color: {
             white: "text-white",
             black: "text-black",
+            "black-50": "text-black/50",
             "white-80": "text-white/80",
             "white-60": "text-white/60",
-            red: "text-core-imperial_red",
-            blue: "text-core-caribbean_current",
+            red: "text-core-imperial-red-500",
+            blue: "text-core-caribbean-current-400",
         },
         size: {
             xxs: "text-sm",
@@ -46,6 +47,7 @@ const AppText = ({
     // font,
     size,
     align,
+    color,
     ...props
 }: Props) => {
     return (
@@ -53,7 +55,7 @@ const AppText = ({
             {...props}
             textBreakStrategy="highQuality"
             lineBreakStrategyIOS="standard"
-            className={cn(textVariants({ size, align }), twClassName)}
+            className={cn(textVariants({ size, align, color }), twClassName)}
         >
             {children}
         </Text>
