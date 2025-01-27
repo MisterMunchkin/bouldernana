@@ -46,13 +46,15 @@ const PressableOpacity = ({
     ...props
 }: Props) => {
     const handleOnPress = async (event: GestureResponderEvent) => {
-        HapticsUtil.mediumImpactAsync();
+        // HapticsUtil.mediumImpactAsync();
         onPress && onPress(event);
     };
 
     return (
         <Pressable
             {...props}
+            onPressIn={() => HapticsUtil.mediumImpactAsync()}
+            onPressOut={() => HapticsUtil.rigidImpactAsync()}
             onPress={handleOnPress}
             className={cn(
                 pressableVariants({ rounded, color, border }),
