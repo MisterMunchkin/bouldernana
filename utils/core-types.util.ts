@@ -1,4 +1,4 @@
-import { DropDownItem } from "@/components/dropdown-field";
+import { DropDownItem } from "@/components/core/dropdown-field";
 
 export namespace CoreTypesUtil {
     export const getInferredDropdownItems = <T extends readonly string[]>(

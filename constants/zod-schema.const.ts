@@ -25,8 +25,9 @@ export const addClimbSchema = z.object({
     skill: z.enum(SKILL_TYPE).array().optional(), //Cruxy, Athletic, etc..
     steepness: z.enum(STEEPNESS).optional(), // Slab, Overhang, etc.
     //ENDOF Advanced info
-    rating: z.string().optional(), // no rating to 5
+    // rating: z.string().optional(), // no rating to 5
     date: z.string().datetime(),
     notes: z.string().optional(),
-    relativeEffort: z.string().optional(), //strava effort input
+    link: z.string().optional(),
+    // relativeEffort: z.string().optional(), //strava effort input
 });

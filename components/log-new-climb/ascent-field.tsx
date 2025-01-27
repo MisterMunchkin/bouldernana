@@ -1,7 +1,7 @@
 import { AddClimbSchema } from "@/app/(tabs)/log-new-climb";
 import React, { useEffect } from "react";
 import { Control, useFormContext, useWatch } from "react-hook-form";
-import DropdownField from "../dropdown-field";
+import DropdownField from "../core/dropdown-field";
 import { CoreTypesUtil } from "@/utils/core-types.util";
 import { ASCENT_TYPE } from "@/constants/core.const";
 import { TextField } from "../core/field";

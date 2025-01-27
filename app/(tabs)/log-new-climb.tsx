@@ -12,7 +12,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import DropdownField from "@/components/dropdown-field";
+import DropdownField from "@/components/core/dropdown-field";
 import {
     ASCENT_TYPE,
     CLIMB_FEEL,
@@ -117,6 +117,7 @@ export default function Tab() {
                         classNames={{
                             selected,
                         }}
+                        multi
                     />
                     <DropdownField
                         control={control}
@@ -133,9 +134,15 @@ export default function Tab() {
                     <TextField
                         control={control}
                         name="notes"
-                        title="Private Notes"
+                        title="Notes of the climb."
                         className="h-32"
                         inputProps={{ multiline: true, numberOfLines: 5 }}
+                    />
+
+                    <TextField
+                        control={control}
+                        name="link"
+                        title="Links or resources of the climb, like TheCrag links"
                     />
 
                     <PressableOpacity

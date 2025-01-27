@@ -14,6 +14,10 @@ export const pressableVariants = cva("px-2 py-4 items-center", {
             red: "bg-core-imperial-red",
             blue: "bg-core-caribbean-current bg-core",
         },
+        border: {
+            none: "",
+            gray: "border-gray-400 border-[1px]",
+        },
         rounded: {
             lg: "rounded-lg",
             full: "rounded-full",
@@ -21,6 +25,7 @@ export const pressableVariants = cva("px-2 py-4 items-center", {
         defaultVariants: {
             color: "red",
             rounded: "lg",
+            border: "none",
         },
     },
 });
@@ -34,6 +39,7 @@ type Props = {
 const PressableOpacity = ({
     rounded,
     color,
+    border,
     children,
     twClassName,
     onPress,
@@ -48,7 +54,10 @@ const PressableOpacity = ({
         <Pressable
             {...props}
             onPress={handleOnPress}
-            className={cn(pressableVariants({ rounded, color }), twClassName)}
+            className={cn(
+                pressableVariants({ rounded, color, border }),
+                twClassName
+            )}
             style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
         >
             {children}
