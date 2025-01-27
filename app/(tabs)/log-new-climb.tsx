@@ -147,7 +147,7 @@ export default function Tab() {
 
                     <PressableOpacity
                         onPress={handleSubmit(saveRecord)}
-                        twClassName="bg-core-imperial-red "
+                        color={"red"}
                         rounded={"lg"}
                     >
                         <Text>Submit</Text>
