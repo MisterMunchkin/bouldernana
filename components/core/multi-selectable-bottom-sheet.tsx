@@ -44,6 +44,7 @@ const MultiSelectableBottomSheet = <TItemValue extends string>({
                 onPress={() => bottomSheetRef.current?.present()}
                 border={"gray"}
                 rounded={"lg"}
+                haptics={false}
             >
                 <AppText size={"xs"}>{valuesProp.join(", ")}</AppText>
             </PressableOpacity>

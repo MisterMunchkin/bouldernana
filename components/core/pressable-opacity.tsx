@@ -33,6 +33,7 @@ export const pressableVariants = cva("px-2 py-4 items-center", {
 type Props = {
     twClassName?: ClassValue;
     children: ReactNode;
+    haptics?: boolean;
 } & Omit<ComponentProps<typeof Pressable>, "className"> &
     VariantProps<typeof pressableVariants>;
 
@@ -43,6 +44,7 @@ const PressableOpacity = ({
     children,
     twClassName,
     onPress,
+    haptics = true,
     ...props
 }: Props) => {
     const [isPressedIn, setIsPressedIn] = useState<boolean>(false);
@@ -57,11 +59,11 @@ const PressableOpacity = ({
             {...props}
             onPressIn={() => {
                 setIsPressedIn(true);
-                HapticsUtil.mediumImpactAsync();
+                haptics && HapticsUtil.mediumImpactAsync();
             }}
             onPressOut={() => {
                 setIsPressedIn(false);
-                HapticsUtil.rigidImpactAsync();
+                haptics && HapticsUtil.rigidImpactAsync();
             }}
             onPress={handleOnPress}
             className={cn(

@@ -33,6 +33,7 @@ const SelectableBottomSheet = <TItemValue extends string>({
                     bottomSheetRef.current?.present();
                 }}
                 twClassName="px-4 py-2 border-[1px] border-gray-400 rounded-lg"
+                haptics={false}
             >
                 <AppText size={"xs"}>{value}</AppText>
             </PressableOpacity>
