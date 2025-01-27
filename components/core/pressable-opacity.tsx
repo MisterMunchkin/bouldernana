@@ -2,7 +2,7 @@ import { cn } from "@/utils/cn.util";
 import { HapticsUtil } from "@/utils/expo-haptics.util";
 import { cva, VariantProps } from "class-variance-authority";
 import { ClassValue } from "clsx";
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode, useState } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 
 export const pressableVariants = cva("px-2 py-4 items-center", {
@@ -45,22 +45,30 @@ const PressableOpacity = ({
     onPress,
     ...props
 }: Props) => {
+    const [isPressedIn, setIsPressedIn] = useState<boolean>(false);
     const handleOnPress = async (event: GestureResponderEvent) => {
-        // HapticsUtil.mediumImpactAsync();
+        // HapticsUtil
+        // .mediumImpactAsync();
         onPress && onPress(event);
     };
 
     return (
         <Pressable
             {...props}
-            onPressIn={() => HapticsUtil.mediumImpactAsync()}
-            onPressOut={() => HapticsUtil.rigidImpactAsync()}
+            onPressIn={() => {
+                setIsPressedIn(true);
+                HapticsUtil.mediumImpactAsync();
+            }}
+            onPressOut={() => {
+                setIsPressedIn(false);
+                HapticsUtil.rigidImpactAsync();
+            }}
             onPress={handleOnPress}
             className={cn(
                 pressableVariants({ rounded, color, border }),
-                twClassName
+                twClassName,
+                isPressedIn ? "opacity-50" : ""
             )}
-            style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
         >
             {children}
         </Pressable>
