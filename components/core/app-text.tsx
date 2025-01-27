@@ -7,13 +7,12 @@ import { cn } from "@/utils/cn.util";
 export const textVariants = cva("", {
     variants: {
         color: {
-            green: "text-core-green",
-            orange: "text-core-orange",
             white: "text-white",
             black: "text-black",
             "white-80": "text-white/80",
             "white-60": "text-white/60",
-            red: "text-red-500",
+            red: "text-core-imperial_red",
+            blue: "text-core-caribbean_current",
         },
         size: {
             xxs: "text-sm",
@@ -45,7 +44,6 @@ const AppText = ({
     twClassName,
     children,
     // font,
-    // color,
     size,
     align,
     ...props

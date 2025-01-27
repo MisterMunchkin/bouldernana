@@ -1,3 +1,5 @@
+import { COLORS } from "./constants/colors.const";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
@@ -6,7 +8,9 @@ module.exports = {
     ],
     presets: [require("nativewind/preset")],
     theme: {
-        extend: {},
+        extend: {
+            COLORS,
+        },
     },
     plugins: [],
 };

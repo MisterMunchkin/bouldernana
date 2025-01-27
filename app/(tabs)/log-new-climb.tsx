@@ -140,7 +140,8 @@ export default function Tab() {
 
                     <PressableOpacity
                         onPress={handleSubmit(saveRecord)}
-                        twClassName="px-2 py-4 border-[1px] rounded-lg w-full items-center"
+                        twClassName="bg-core-imperial-red "
+                        rounded={"lg"}
                     >
                         <Text>Submit</Text>
                     </PressableOpacity>
