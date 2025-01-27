@@ -15,20 +15,22 @@ type State = {
 type Actions = {
     logClimb: (climb: ClimbSchema) => void;
     reset: () => void;
+    getLog: (id: string) => LoggedClimb | undefined;
 };
 
 export const useUserClimbRecordStore = create<State & Actions>()(
     persist(
-        (set) => ({
-            climbs: [],
+        (set, get) => ({
+            climbs: Array<LoggedClimb>(),
             logClimb: (climb) =>
                 set((state) => ({
                     climbs: [...state.climbs, { ...climb, id: uuid.v4() }],
                 })),
             reset: () =>
                 set(() => ({
-                    climbs: [],
+                    climbs: Array<LoggedClimb>(),
                 })),
+            getLog: (id) => get().climbs.find((log) => log.id === id),
         }),
         {
             name: "user-climb-record",

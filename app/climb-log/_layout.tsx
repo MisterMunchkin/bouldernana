@@ -14,7 +14,7 @@ const Layout = ({}: Props) => {
         <>
             {Platform.OS === "ios" && (
                 <BlurView
-                    tint="default"
+                    tint="systemThinMaterialDark"
                     className={cn("absolute w-full z-50")}
                     style={{ height: insets.top }}
                 />
