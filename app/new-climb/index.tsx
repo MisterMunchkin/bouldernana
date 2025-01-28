@@ -60,7 +60,7 @@ export default function Index() {
     const selected: ClassValue = "bg-red-500";
     return (
         <KeyboardAwareScrollView className="px-4">
-            <View className="gap-8 flex-grow pt-4 pb-safe-offset-20">
+            <View className="gap-8 flex-grow py-safe-offset-20">
                 <FormProvider {...form}>
                     <VideoField />
 
