@@ -1,10 +1,8 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
-import BlurTabBarBackground from "../../app-example/components/ui/TabBarBackground.ios";
 import { BlurView } from "expo-blur";
 import { Pressable, StyleSheet, View } from "react-native";
 import PressableOpacity from "@/components/core/pressable-opacity";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS } from "@/constants/colors.const";
 import PressableIcon from "@/components/ui/pressable-icon";
 
@@ -58,6 +56,19 @@ const TabLayout = ({}: Props) => {
                             color={tintColor}
                             className="pr-4"
                             onPress={() => router.push("/new-climb")}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="analytics"
+                options={{
+                    title: "Analytics",
+                    tabBarIcon: ({ color }) => (
+                        <PressableIcon
+                            name="pie-chart"
+                            size={26}
+                            color={color}
                         />
                     ),
                 }}
