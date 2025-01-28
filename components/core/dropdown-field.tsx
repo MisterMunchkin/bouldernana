@@ -34,8 +34,6 @@ const DropdownField = <
     multi,
     ...fieldProps
 }: DropDownFieldProps<TFieldValues, TItemValues>) => {
-    const bottomSheetRef = useRef<BottomSheetModal>(null);
-
     return (
         <Field
             defaultValue={defaultValue}

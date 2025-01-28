@@ -12,6 +12,7 @@ export const textVariants = cva("", {
             "black-50": "text-black/50",
             "white-80": "text-white/80",
             "white-60": "text-white/60",
+            gray: "text-gray-400",
             red: "text-core-imperial-red-500",
             blue: "text-core-caribbean-current-400",
         },

@@ -1,11 +1,15 @@
 import AppText from "@/components/core/app-text";
+import PressableOpacity from "@/components/core/pressable-opacity";
+import Dividers from "@/components/ui/dividers";
 import VideoPreview from "@/components/video-preview";
+import { COLORS } from "@/constants/colors.const";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { cn } from "@/utils/cn.util";
 import { day, DayJsUtils } from "@/utils/day-js.util";
-import { useLocalSearchParams } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Dimensions, ScrollView, View } from "react-native";
+import { Alert, Dimensions, ScrollView, View } from "react-native";
 
 type Props = {};
 
@@ -28,6 +32,27 @@ const index = ({}: Props) => {
         notes,
         link,
     } = useUserClimbRecordStore((store) => store.getLog(id)) ?? {};
+    const destroyLog = useUserClimbRecordStore((store) => store.destroy);
+
+    const confirmDeleteLog = () =>
+        Alert.alert(
+            "This action cannot be undone",
+            `Are you sure you want to delete this climb? \n\nBrother... please reconsider.`,
+            [
+                {
+                    text: "Nevermind",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete Climb",
+                    style: "destructive",
+                    onPress: () => {
+                        router.back();
+                        destroyLog(id);
+                    },
+                },
+            ]
+        );
 
     return (
         <ScrollView className={cn("flex-1")}>
@@ -82,14 +107,46 @@ const index = ({}: Props) => {
                         <AppText size={"xxs"} twClassName="pb-4">
                             Notes
                         </AppText>
-                        <AppText size={"xs"}>{notes ?? "no notes"}</AppText>
+                        <AppText size={"xs"}>
+                            {notes || (
+                                <AppText
+                                    size={"xs"}
+                                    twClassName="italic"
+                                    color={"gray"}
+                                >
+                                    no notes
+                                </AppText>
+                            )}
+                        </AppText>
                     </View>
                     <View className="rounded-lg bg-gray-200 px-4 py-2">
                         <AppText size={"xxs"} twClassName="pb-4">
                             Link
                         </AppText>
-                        <AppText size={"xs"}>{link ?? "no link"}</AppText>
+                        <AppText size={"xs"}>
+                            {link || (
+                                <AppText
+                                    size={"xs"}
+                                    twClassName="italic"
+                                    color={"gray"}
+                                >
+                                    no link
+                                </AppText>
+                            )}
+                        </AppText>
                     </View>
+                    <Dividers text="Danger Zone" color={"danger"} />
+                    <PressableOpacity
+                        color={"red"}
+                        rounded={"lg"}
+                        onPress={confirmDeleteLog}
+                    >
+                        <FontAwesome
+                            name="trash"
+                            size={30}
+                            color={COLORS.core.vanilla[900]}
+                        />
+                    </PressableOpacity>
                 </View>
             </View>
         </ScrollView>

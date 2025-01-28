@@ -15,6 +15,7 @@ type State = {
 type Actions = {
     logClimb: (climb: ClimbSchema) => void;
     reset: () => void;
+    destroy: (id: string) => void;
     getLog: (id: string) => LoggedClimb | undefined;
 };
 
@@ -31,6 +32,10 @@ export const useUserClimbRecordStore = create<State & Actions>()(
                     climbs: Array<LoggedClimb>(),
                 })),
             getLog: (id) => get().climbs.find((log) => log.id === id),
+            destroy: (id) =>
+                set((state) => ({
+                    climbs: state.climbs.filter((climb) => climb.id !== id),
+                })),
         }),
         {
             name: "user-climb-record",
