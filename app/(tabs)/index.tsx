@@ -15,7 +15,6 @@ type Props = {};
 
 const Tab = ({}: Props) => {
     const climbs = useUserClimbRecordStore((store) => store.climbs);
-    const reset = useUserClimbRecordStore((store) => store.reset);
     const bottomTabBarHeight = useBottomTabBarHeight();
     const { top, bottom } = useSafeAreaInsets();
 
@@ -32,11 +31,6 @@ const Tab = ({}: Props) => {
                         new Date(b.date).getTime() - new Date(a.date).getTime()
                 )}
                 contentContainerClassName="pt-safe-offset-20"
-                ListHeaderComponent={() => (
-                    <PressableOpacity onPress={() => reset()}>
-                        <AppText>Reset</AppText>
-                    </PressableOpacity>
-                )}
                 contentContainerStyle={{
                     paddingBottom: bottom + bottomTabBarHeight,
                 }}
