@@ -10,11 +10,20 @@ export default function RootLayout() {
                 <Stack>
                     <Stack.Screen
                         name="(tabs)"
-                        options={{ headerShown: false }}
+                        options={{
+                            headerShown: false,
+                        }}
                     />
                     <Stack.Screen
                         name="climb-log"
                         options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="new-climb/index"
+                        options={{
+                            presentation: "modal",
+                            title: "Log Climb",
+                        }}
                     />
                 </Stack>
             </BottomSheetModalProvider>

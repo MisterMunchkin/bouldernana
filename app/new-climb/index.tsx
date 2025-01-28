@@ -11,10 +11,8 @@ import { addClimbSchema } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import DropdownField from "@/components/core/dropdown-field";
 import {
-    ASCENT_TYPE,
     CLIMB_FEEL,
     CLIMB_TYPE,
     SKILL_TYPE,
@@ -44,8 +42,8 @@ const DEFAULT_VALUES: AddClimbSchema = {
     // relativeEffort: ""
 };
 
-export default function Tab() {
-    const bottomTabBarHeight = useBottomTabBarHeight();
+export default function Index() {
+    // const bottomTabBarHeight = useBottomTabBarHeight();
     const form = useForm({
         resolver: zodResolver(addClimbSchema),
         defaultValues: DEFAULT_VALUES,
@@ -62,10 +60,7 @@ export default function Tab() {
     const selected: ClassValue = "bg-red-500";
     return (
         <KeyboardAwareScrollView className="px-4">
-            <View
-                className="gap-8 flex-grow pt-safe-offset-20 "
-                style={{ paddingBottom: bottomTabBarHeight + 20 }}
-            >
+            <View className="gap-8 flex-grow pt-4 pb-safe-offset-20">
                 <FormProvider {...form}>
                     <VideoField />
 

@@ -1,11 +1,12 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import BlurTabBarBackground from "../../app-example/components/ui/TabBarBackground.ios";
 import { BlurView } from "expo-blur";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS } from "@/constants/colors.const";
+import PressableIcon from "@/components/ui/pressable-icon";
 
 type Props = {};
 
@@ -16,8 +17,6 @@ const TabLayout = ({}: Props) => {
             tint="systemThinMaterialDark"
             style={{
                 ...StyleSheet.absoluteFillObject,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
                 overflow: "hidden",
             }}
         />
@@ -52,17 +51,13 @@ const TabLayout = ({}: Props) => {
                     tabBarIcon: ({ color }) => (
                         <FontAwesome size={28} name="home" color={color} />
                     ),
-                }}
-            />
-            <Tabs.Screen
-                name="log-new-climb"
-                options={{
-                    title: "Log Climb",
-                    tabBarIcon: ({ color }) => (
-                        <FontAwesome
-                            size={28}
+                    headerRight: ({ tintColor }) => (
+                        <PressableIcon
                             name="plus-square-o"
-                            color={color}
+                            size={28}
+                            color={tintColor}
+                            className="pr-4"
+                            onPress={() => router.push("/new-climb")}
                         />
                     ),
                 }}
