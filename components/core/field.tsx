@@ -2,24 +2,36 @@ import { cn } from "@/utils/cn.util";
 import { ErrorMessage } from "@hookform/error-message";
 import { ClassValue } from "clsx";
 import React, { ComponentProps, useCallback, useRef, useState } from "react";
-import { Controller, ControllerProps, FieldValues } from "react-hook-form";
+import {
+    Controller,
+    ControllerProps,
+    FieldPath,
+    FieldValues,
+} from "react-hook-form";
 import { View, Text, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import AppText from "./app-text";
 
-export type FieldProps<TFieldValues extends FieldValues> = {
+export type FieldProps<
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = {
     title?: string;
     className?: ClassValue;
-} & ControllerProps<TFieldValues>;
+} & ControllerProps<TFieldValues, TName>;
 
 /**
  * Base component for creating fields
  */
-const Field = <TFieldValues extends FieldValues>({
+const Field = <
+    TFieldValues extends FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
     title,
     ...controllerProps
-}: FieldProps<TFieldValues>) => {
+}: FieldProps<TFieldValues, TName>) => {
     return (
+        //NOTE: Type of value in field gets fucked up. shows value as type of all types in the schema instead of the type from the name
         <View className="flex-col  w-full gap-4">
             <Text>{title}</Text>
             <Controller {...controllerProps} />
