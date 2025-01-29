@@ -7,7 +7,7 @@ import { ClassValues, cn } from "@/utils/cn.util";
 import SelectableBottomSheet from "./selectable-bottom-sheet";
 import MultiSelectableBottomSheet from "./multi-selectable-bottom-sheet";
 
-export type DropDownItem<TItemValues extends string> = {
+export type DropDownItem<TItemValues extends string | number> = {
     label: string;
     value: TItemValues;
 };
