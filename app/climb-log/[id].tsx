@@ -31,6 +31,7 @@ const index = ({}: Props) => {
         howDidItFeel,
         notes,
         link,
+        hasBeenSent,
     } = useUserClimbRecordStore((store) => store.getLog(id)) ?? {};
     const destroyLog = useUserClimbRecordStore((store) => store.destroy);
 
@@ -71,6 +72,7 @@ const index = ({}: Props) => {
                     width={Dimensions.get("screen").width - 16}
                     style={{ borderRadius: 12, alignSelf: "center" }}
                 />
+                {/* TODO: Should componetize this, or make it dynamic somehow */}
                 <View className="flex-row px-4 gap-2 flex-wrap flex-1">
                     <View className="rounded-lg bg-core-vanilla-600 px-4 py-2 ">
                         <AppText size={"xxs"} twClassName="pb-4">
@@ -82,6 +84,12 @@ const index = ({}: Props) => {
                             Attemps
                         </AppText>
                         <AppText color={"black-50"}>{attempts}</AppText>
+                        <AppText size={"xxs"} twClassName="pb-4">
+                            Has this been sent?
+                        </AppText>
+                        <AppText color={"black-50"}>
+                            {hasBeenSent ? "Sent!" : "Not yet..."}
+                        </AppText>
                     </View>
                     <View className="rounded-lg bg-core-nyanza-400 px-4 py-2 flex-1 ">
                         <AppText size={"xxs"} twClassName="pb-4">
@@ -100,7 +108,15 @@ const index = ({}: Props) => {
                             Skills Needed
                         </AppText>
                         <AppText color={"black-50"}>
-                            {skill?.join(", ")}
+                            {skill?.join(", ") || (
+                                <AppText
+                                    size={"xs"}
+                                    color={"black-50"}
+                                    twClassName="italic"
+                                >
+                                    no skill needed
+                                </AppText>
+                            )}
                         </AppText>
                     </View>
                     <View className="rounded-lg bg-gray-200 px-4 py-2">
