@@ -1,14 +1,15 @@
-import AppText from "@/components/core/app-text";
+import AppText, { textVariants } from "@/components/core/app-text";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import Dividers from "@/components/ui/dividers";
 import VideoPreview from "@/components/video-preview";
 import { COLORS } from "@/constants/colors.const";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
+import { ClimbLogUtil } from "@/utils/climb-log.util";
 import { cn } from "@/utils/cn.util";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { ComponentProps, Fragment, ReactNode } from "react";
 import { Alert, Dimensions, ScrollView, View } from "react-native";
 
 type Props = {};
@@ -18,21 +19,9 @@ type LocalParams = {
 };
 const index = ({}: Props) => {
     const { id } = useLocalSearchParams<LocalParams>();
-    const {
-        videoSource,
-        date,
-        grade,
-        typeOfClimb,
-        whereDidYouClimb,
-        ascentType,
-        attempts,
-        skill,
-        steepness,
-        howDidItFeel,
-        notes,
-        link,
-        hasBeenSent,
-    } = useUserClimbRecordStore((store) => store.getLog(id)) ?? {};
+    const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
+    const { date, grade, whereDidYouClimb, typeOfClimb, videoSource } =
+        climbLog ?? {};
     const destroyLog = useUserClimbRecordStore((store) => store.destroy);
 
     const confirmDeleteLog = () =>
@@ -55,6 +44,8 @@ const index = ({}: Props) => {
             ]
         );
 
+    const climbDetails = ClimbLogUtil.getClimbLogDataStructure(climbLog);
+
     return (
         <ScrollView className={cn("flex-1")}>
             <View className="pt-safe-offset-4 pb-safe-offset-4 gap-4">
@@ -66,6 +57,7 @@ const index = ({}: Props) => {
                         twClassName="font-semibold text-core-caribbean-current-300"
                         size={"sm"}
                     >{`${grade} ${whereDidYouClimb} ${typeOfClimb}`}</AppText>
+                    <FontAwesome name="pencil-square-o" size={32} />
                 </View>
                 <VideoPreview
                     videoSource={videoSource ?? ""}
@@ -75,82 +67,57 @@ const index = ({}: Props) => {
                 {/* TODO: Should componetize this, or make it dynamic somehow */}
                 <View className="flex-row px-4 gap-2 flex-wrap flex-1">
                     <View className="rounded-lg bg-core-vanilla-600 px-4 py-2 ">
-                        <AppText size={"xxs"} twClassName="pb-4">
-                            Ascent Type
-                        </AppText>
-                        <AppText color={"black-50"}>{ascentType} </AppText>
-
-                        <AppText size={"xxs"} twClassName="pb-4">
-                            Attemps
-                        </AppText>
-                        <AppText color={"black-50"}>{attempts}</AppText>
-                        <AppText size={"xxs"} twClassName="pb-4">
-                            Has this been sent?
-                        </AppText>
-                        <AppText color={"black-50"}>
-                            {hasBeenSent ? "Sent!" : "Not yet..."}
-                        </AppText>
+                        {climbDetails["block-1"].map(
+                            ({ label, value }, index) => (
+                                <Fragment key={index}>
+                                    <AppText size={"xxs"} twClassName="pb-4">
+                                        {label}
+                                    </AppText>
+                                    <AppText color={"black-50"}>
+                                        {value}
+                                    </AppText>
+                                </Fragment>
+                            )
+                        )}
                     </View>
                     <View className="rounded-lg bg-core-nyanza-400 px-4 py-2 flex-1 ">
-                        <AppText size={"xxs"} twClassName="pb-4">
-                            Steepness
-                        </AppText>
-                        <AppText color={"black-50"}>{steepness}</AppText>
-                        <AppText size={"xxs"} twClassName="pb-4">
-                            How did it feel?
-                        </AppText>
-                        <AppText color={"black-50"}>{howDidItFeel}</AppText>
+                        {climbDetails["block-2"].map(
+                            ({ label, value }, index) => (
+                                <Fragment key={index}>
+                                    <AppText size={"xxs"} twClassName="pb-4">
+                                        {label}
+                                    </AppText>
+                                    <AppText color={"black-50"}>
+                                        {value}
+                                    </AppText>
+                                </Fragment>
+                            )
+                        )}
                     </View>
                 </View>
                 <View className="flex-col px-4 gap-4">
-                    <View className="rounded-lg bg-core-imperial-red-800 px-4 py-2">
-                        <AppText size={"xxs"} twClassName={"pb-4"}>
-                            Skills Needed
-                        </AppText>
-                        <AppText color={"black-50"}>
-                            {skill?.join(", ") || (
-                                <AppText
-                                    size={"xs"}
-                                    color={"black-50"}
-                                    twClassName="italic"
+                    {climbDetails["last-block"].map(
+                        ({ bgColor, label, noData, value, size }, index) => (
+                            <Fragment key={index}>
+                                <View
+                                    className={cn(
+                                        "rounded-lg px-4 py-2",
+                                        bgColor
+                                    )}
                                 >
-                                    no skill needed
-                                </AppText>
-                            )}
-                        </AppText>
-                    </View>
-                    <View className="rounded-lg bg-gray-200 px-4 py-2">
-                        <AppText size={"xxs"} twClassName="pb-4">
-                            Notes
-                        </AppText>
-                        <AppText size={"xs"}>
-                            {notes || (
-                                <AppText
-                                    size={"xs"}
-                                    twClassName="italic"
-                                    color={"gray"}
-                                >
-                                    no notes
-                                </AppText>
-                            )}
-                        </AppText>
-                    </View>
-                    <View className="rounded-lg bg-gray-200 px-4 py-2">
-                        <AppText size={"xxs"} twClassName="pb-4">
-                            Link
-                        </AppText>
-                        <AppText size={"xs"}>
-                            {link || (
-                                <AppText
-                                    size={"xs"}
-                                    twClassName="italic"
-                                    color={"gray"}
-                                >
-                                    no link
-                                </AppText>
-                            )}
-                        </AppText>
-                    </View>
+                                    <AppText size={"xxs"} twClassName={"pb-4"}>
+                                        {label}
+                                    </AppText>
+                                    <AppText
+                                        color={"black-50"}
+                                        {...(size && { size })}
+                                    >
+                                        {value || noData}
+                                    </AppText>
+                                </View>
+                            </Fragment>
+                        )
+                    )}
                     <Dividers text="Danger Zone" color={"danger"} />
                     <PressableOpacity
                         color={"red"}
