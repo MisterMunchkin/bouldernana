@@ -9,7 +9,7 @@ import { cn } from "@/utils/cn.util";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { ComponentProps, Fragment, ReactNode } from "react";
+import React, { Fragment } from "react";
 import { Alert, Dimensions, ScrollView, View } from "react-native";
 
 type Props = {};
@@ -49,22 +49,33 @@ const index = ({}: Props) => {
     return (
         <ScrollView className={cn("flex-1")}>
             <View className="pt-safe-offset-4 pb-safe-offset-4 gap-4">
-                <View className="px-4 gap-2">
-                    <AppText size={"xxs"} color={"black-50"}>
-                        {day(date).format(DayJsUtils.DEFAULT_FORMAT)}
-                    </AppText>
-                    <AppText
-                        twClassName="font-semibold text-core-caribbean-current-300"
-                        size={"sm"}
-                    >{`${grade} ${whereDidYouClimb} ${typeOfClimb}`}</AppText>
-                    <FontAwesome name="pencil-square-o" size={32} />
-                </View>
+                <PressableOpacity
+                    onPress={() => console.log("here.")}
+                    twClassName="flex-row items-center pt-0 pb-0"
+                >
+                    <View className="px-4 gap-2">
+                        <AppText size={"xxs"} color={"black-50"}>
+                            {day(date).format(DayJsUtils.DEFAULT_FORMAT)}
+                        </AppText>
+                        <AppText
+                            twClassName="font-semibold text-core-caribbean-current-300"
+                            size={"sm"}
+                        >
+                            {`${grade} ${whereDidYouClimb} ${typeOfClimb}`}
+                        </AppText>
+                    </View>
+                    <FontAwesome
+                        name="pencil-square-o"
+                        size={32}
+                        color={COLORS.core["caribbean-current"][300]}
+                    />
+                </PressableOpacity>
+
                 <VideoPreview
                     videoSource={videoSource ?? ""}
                     width={Dimensions.get("screen").width - 16}
                     style={{ borderRadius: 12, alignSelf: "center" }}
                 />
-                {/* TODO: Should componetize this, or make it dynamic somehow */}
                 <View className="flex-row px-4 gap-2 flex-wrap flex-1">
                     <View className="rounded-lg bg-core-vanilla-600 px-4 py-2 ">
                         {climbDetails["block-1"].map(
