@@ -10,7 +10,7 @@ import {
 } from "./core.const";
 
 export const videoSourceSchema = {
-    videoSource: z.string().optional(),
+    videoSources: z.array(z.string()),
 };
 
 export const addClimbSchema = z.object({

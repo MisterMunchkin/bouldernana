@@ -1,7 +1,9 @@
+import UpdateVideoList from "@/components/climb-log/update-video-list";
 import AppText, { textVariants } from "@/components/core/app-text";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import Dividers from "@/components/ui/dividers";
 import VideoPreview from "@/components/video-preview";
+import VideoList from "@/components/video/video-list";
 import { COLORS } from "@/constants/colors.const";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { ClimbLogUtil } from "@/utils/climb-log.util";
@@ -20,7 +22,7 @@ type LocalParams = {
 const index = ({}: Props) => {
     const { id } = useLocalSearchParams<LocalParams>();
     const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
-    const { date, grade, whereDidYouClimb, typeOfClimb, videoSource } =
+    const { date, grade, whereDidYouClimb, typeOfClimb, videoSources } =
         climbLog ?? {};
     const destroyLog = useUserClimbRecordStore((store) => store.destroy);
 
@@ -70,12 +72,22 @@ const index = ({}: Props) => {
                         color={COLORS.core["caribbean-current"][300]}
                     />
                 </PressableOpacity>
+                <UpdateVideoList id={id} videoSources={videoSources ?? []} />
+                {/* <VideoList
+                    videoUris={videoSources ?? []}
+                    thumbnailHeight={500}
+                    // ListHeaderComponent={() => (
+                    //     <PressableOpacity
+                    //         onPress={addVideo}
+                    //         twClassName={cn(
+                    //             "border-[1px] border-dashed px-8 rounded-lg justify-center h-[320px]"
+                    //         )}
+                    //     >
+                    //         <AppText size={"xs"}>{"Add a video"}</AppText>
+                    //     </PressableOpacity>
+                    // )}
+                /> */}
 
-                <VideoPreview
-                    videoSource={videoSource ?? ""}
-                    width={Dimensions.get("screen").width - 16}
-                    style={{ borderRadius: 12, alignSelf: "center" }}
-                />
                 <View className="flex-row px-4 gap-2 flex-wrap flex-1">
                     <View className="rounded-lg bg-core-vanilla-600 px-4 py-2 ">
                         {climbDetails["block-1"].map(

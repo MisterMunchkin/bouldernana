@@ -6,7 +6,7 @@ import React from "react";
 import { TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import { day } from "@/utils/day-js.util";
-import VideoField from "@/components/core/video-field";
+import VideoField from "@/components/video/video-field";
 import { addClimbSchema } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
@@ -27,7 +27,7 @@ import { ClassValue } from "clsx";
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
 const DEFAULT_VALUES: AddClimbSchema = {
-    videoSource: "",
+    videoSources: [],
     typeOfClimb: "Boulder",
     whereDidYouClimb: "Indoor",
     grade: "V0",
@@ -63,7 +63,7 @@ export default function Index() {
         <KeyboardAwareScrollView className="px-4">
             <View className="gap-8 flex-grow py-safe-offset-20">
                 <FormProvider {...form}>
-                    <VideoField />
+                    <VideoField control={control} name="videoSources" />
 
                     <DropdownField
                         control={control}

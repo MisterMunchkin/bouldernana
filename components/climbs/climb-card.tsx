@@ -1,19 +1,17 @@
 import { ClimbSchema, LoggedClimb } from "@/stores/user-climb-record.store";
 import { View } from "react-native";
-import VideoThumbnailView from "../video-thumbnail-view";
 import { useCreateThumbnail } from "@/hooks/create-thumbnail.hook";
 import { Image } from "expo-image";
 import AppText from "../core/app-text";
-import { BlurView } from "expo-blur";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
 
 type Props = {} & LoggedClimb;
 
-const ClimbCard = ({ date, grade, videoSource, id }: Props) => {
+const ClimbCard = ({ date, grade, videoSources, id }: Props) => {
     const { thumbnail } = useCreateThumbnail({
-        videoSource: videoSource ?? "",
+        videoSource: videoSources?.at(0) ?? "",
     });
 
     return (
@@ -21,7 +19,6 @@ const ClimbCard = ({ date, grade, videoSource, id }: Props) => {
             twClassName="flex-col flex-1"
             onPress={() => router.push(`/climb-log/${id}`)}
         >
-            {/* {videoSource && <VideoThumbnailView videoSource={videoSource} />} */}
             <Image
                 source={
                     thumbnail?.uri ??

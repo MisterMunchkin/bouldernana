@@ -7,8 +7,6 @@ type Args = {
 };
 
 export const useCreateThumbnail = ({ videoSource, timeMs }: Args) => {
-    if (!videoSource) return { thumbnail: undefined };
-
     const [thumbnail, setThumbnail] =
         useState<VideoThumbnails.VideoThumbnailsResult>();
 
@@ -29,5 +27,6 @@ export const useCreateThumbnail = ({ videoSource, timeMs }: Args) => {
         videoSource && generate(videoSource);
     }, [videoSource]);
 
+    if (!videoSource) return { thumbnail: undefined };
     return { thumbnail };
 };
