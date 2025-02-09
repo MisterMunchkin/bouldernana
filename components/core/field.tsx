@@ -64,7 +64,7 @@ const TextField = <TFieldValues extends FieldValues>({
                             className
                         )}
                         onChangeText={onChange}
-                        value={value}
+                        value={`${value}`} //NOTE: Quick way to coerce non string values to string
                         ref={ref}
                         {...inputProps}
                     />

@@ -75,23 +75,15 @@ const index = ({}: Props) => {
                     />
                 </PressableOpacity>
                 <UpdateVideoList id={id} videoSources={videoSources ?? []} />
-                {/* <VideoList
-                    videoUris={videoSources ?? []}
-                    thumbnailHeight={500}
-                    // ListHeaderComponent={() => (
-                    //     <PressableOpacity
-                    //         onPress={addVideo}
-                    //         twClassName={cn(
-                    //             "border-[1px] border-dashed px-8 rounded-lg justify-center h-[320px]"
-                    //         )}
-                    //     >
-                    //         <AppText size={"xs"}>{"Add a video"}</AppText>
-                    //     </PressableOpacity>
-                    // )}
-                /> */}
-
                 <View className="flex-row px-4 gap-2 flex-wrap flex-1">
-                    <View className="rounded-lg bg-core-vanilla-600 px-4 py-2 ">
+                    <PressableOpacity
+                        onPress={() =>
+                            router.navigate(
+                                `/climb-log/${id}/update-ascent-info`
+                            )
+                        }
+                        twClassName="rounded-lg bg-core-vanilla-600 px-4 py-2 items-start"
+                    >
                         {climbDetails["block-1"].map(
                             ({ label, value }, index) => (
                                 <Fragment key={index}>
@@ -104,7 +96,7 @@ const index = ({}: Props) => {
                                 </Fragment>
                             )
                         )}
-                    </View>
+                    </PressableOpacity>
                     <View className="rounded-lg bg-core-nyanza-400 px-4 py-2 flex-1 ">
                         {climbDetails["block-2"].map(
                             ({ label, value }, index) => (
