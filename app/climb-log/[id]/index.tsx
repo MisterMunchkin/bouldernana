@@ -121,25 +121,37 @@ const index = ({}: Props) => {
                 </View>
                 <View className="flex-col px-4 gap-4">
                     {climbDetails["last-block"].map(
-                        ({ bgColor, label, noData, value, size }, index) => (
-                            <Fragment key={index}>
-                                <View
-                                    className={cn(
-                                        "rounded-lg px-4 py-2",
-                                        bgColor
-                                    )}
+                        (
+                            {
+                                bgColor,
+                                label,
+                                noData,
+                                value,
+                                size,
+                                getHref: getHref,
+                            },
+                            index
+                        ) => (
+                            <PressableOpacity
+                                onPress={() =>
+                                    getHref && router.navigate(getHref(id))
+                                }
+                                twClassName={cn(
+                                    "rounded-lg px-4 py-2 items-start",
+                                    bgColor
+                                )}
+                                key={index}
+                            >
+                                <AppText size={"xxs"} twClassName={"pb-4"}>
+                                    {label}
+                                </AppText>
+                                <AppText
+                                    color={"black-50"}
+                                    {...(size && { size })}
                                 >
-                                    <AppText size={"xxs"} twClassName={"pb-4"}>
-                                        {label}
-                                    </AppText>
-                                    <AppText
-                                        color={"black-50"}
-                                        {...(size && { size })}
-                                    >
-                                        {value || noData}
-                                    </AppText>
-                                </View>
-                            </Fragment>
+                                    {value || noData}
+                                </AppText>
+                            </PressableOpacity>
                         )
                     )}
                     <Dividers text="Danger Zone" color={"danger"} />

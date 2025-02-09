@@ -1,6 +1,7 @@
 import AppText, { textVariants } from "@/components/core/app-text";
 import { LoggedClimb } from "@/stores/user-climb-record.store";
 import { VariantProps } from "class-variance-authority";
+import { Href } from "expo-router";
 import { ReactNode } from "react";
 
 export namespace ClimbLogUtil {
@@ -14,6 +15,7 @@ export namespace ClimbLogUtil {
             noData?: ReactNode;
             bgColor?: string;
             size?: VariantProps<typeof textVariants>["size"];
+            getHref?: (id: string) => Href;
         }[]
     > => {
         const {
@@ -66,6 +68,8 @@ export namespace ClimbLogUtil {
                         </AppText>
                     ),
                     bgColor: "bg-core-imperial-red-800",
+                    getHref: (id: string) =>
+                        `/climb-log/${id}/update-skills-needed`,
                 },
                 {
                     label: "Notes",
@@ -81,6 +85,7 @@ export namespace ClimbLogUtil {
                     ),
                     bgColor: "bg-gray-200",
                     size: "xs",
+                    getHref: (id) => `/climb-log/${id}/update-notes`,
                 },
                 {
                     label: "Link",
@@ -96,6 +101,7 @@ export namespace ClimbLogUtil {
                     ),
                     bgColor: "bg-gray-200",
                     size: "xs",
+                    getHref: (id) => `/climb-log/${id}/update-link`,
                 },
             ],
         };
