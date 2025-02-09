@@ -12,7 +12,8 @@ export const pressableVariants = cva("px-2 py-4 items-center", {
             white: "bg-white",
             black: "bg-black",
             red: "bg-core-imperial-red",
-            blue: "bg-core-caribbean-current bg-core",
+            blue: "bg-core-caribbean-current",
+            submit: "bg-core-nyanza-300",
         },
         border: {
             none: "",

@@ -14,6 +14,8 @@ import { CLIMB_TYPE, VGRADES, WHERE } from "@/constants/core.const";
 import { ClassValue } from "clsx";
 import { CoreTypesUtil } from "@/utils/core-types.util";
 import { useEffect } from "react";
+import PressableOpacity from "@/components/core/pressable-opacity";
+import { z } from "zod";
 
 const schema = addClimbSchema.pick({
     date: true,
@@ -27,17 +29,22 @@ type Props = {};
 const UpdateHeader = ({}: Props) => {
     const { id } = useLocalSearchParams<ClimbLogLocalParams>();
     const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
+    const updateLog = useUserClimbRecordStore((store) => store.updateClimb);
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: schema.parse(climbLog),
     });
 
-    const { control } = form;
+    const { control, handleSubmit } = form;
+    const updateRecord = (update: z.infer<typeof schema>) => {
+        updateLog(id, update);
+        router.back();
+    };
 
     const selected: ClassValue = "bg-red-500";
     return (
         <ScrollView className={cn("flex-1")}>
-            <View className="pt-safe-offset-4">
+            <View className="pt-safe-offset-4 gap-6 px-4">
                 <DateTimeField control={control} name="date" title="Date" />
                 <DropdownField
                     control={control}
@@ -66,6 +73,14 @@ const UpdateHeader = ({}: Props) => {
                         selected,
                     }}
                 />
+
+                <PressableOpacity
+                    onPress={handleSubmit(updateRecord)}
+                    color={"submit"}
+                    rounded={"lg"}
+                >
+                    <AppText size={"xs"}>Submit</AppText>
+                </PressableOpacity>
             </View>
         </ScrollView>
     );

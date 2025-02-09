@@ -23,6 +23,7 @@ import {
 import { CoreTypesUtil } from "@/utils/core-types.util";
 import { AscentField } from "@/components/log-new-climb/ascent-field";
 import { ClassValue } from "clsx";
+import AppText from "@/components/core/app-text";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
@@ -143,10 +144,10 @@ export default function Index() {
 
                     <PressableOpacity
                         onPress={handleSubmit(saveRecord)}
-                        color={"red"}
+                        color={"submit"}
                         rounded={"lg"}
                     >
-                        <Text>Submit</Text>
+                        <AppText size={"xs"}>Submit</AppText>
                     </PressableOpacity>
                 </FormProvider>
             </View>

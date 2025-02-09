@@ -20,6 +20,7 @@ type State = {
 
 type Actions = {
     logClimb: (climb: ClimbSchema) => void;
+    updateClimb: (id: string, update: Partial<ClimbSchema>) => void;
     reset: () => void;
     destroy: (id: string) => void;
     getLog: (id: string) => LoggedClimb | undefined;
@@ -34,6 +35,23 @@ export const useUserClimbRecordStore = create<State & Actions>()(
                 set((state) => ({
                     climbs: [...state.climbs, { ...climb, id: uuid.v4() }],
                 })),
+            updateClimb: (id, update) => {
+                const index = get().climbs.findIndex(
+                    (climb) => climb.id === id
+                );
+                if (index) {
+                    console.warn(`Could not find logged climb with id: ${id}`);
+                    return;
+                }
+                set(
+                    produce((state: State) => {
+                        state.climbs[index] = {
+                            ...state.climbs[index],
+                            ...update,
+                        };
+                    })
+                );
+            },
             reset: () =>
                 set(() => ({
                     climbs: Array<LoggedClimb>(),
