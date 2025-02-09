@@ -97,7 +97,14 @@ const index = ({}: Props) => {
                             )
                         )}
                     </PressableOpacity>
-                    <View className="rounded-lg bg-core-nyanza-400 px-4 py-2 flex-1 ">
+                    <PressableOpacity
+                        onPress={() =>
+                            router.navigate(
+                                `/climb-log/${id}/update-climb-feel`
+                            )
+                        }
+                        twClassName="rounded-lg bg-core-nyanza-400 px-4 py-2 flex-1 items-start"
+                    >
                         {climbDetails["block-2"].map(
                             ({ label, value }, index) => (
                                 <Fragment key={index}>
@@ -110,7 +117,7 @@ const index = ({}: Props) => {
                                 </Fragment>
                             )
                         )}
-                    </View>
+                    </PressableOpacity>
                 </View>
                 <View className="flex-col px-4 gap-4">
                     {climbDetails["last-block"].map(

@@ -39,7 +39,7 @@ export const useUserClimbRecordStore = create<State & Actions>()(
                 const index = get().climbs.findIndex(
                     (climb) => climb.id === id
                 );
-                if (index) {
+                if (index === -1) {
                     console.warn(`Could not find logged climb with id: ${id}`);
                     return;
                 }
