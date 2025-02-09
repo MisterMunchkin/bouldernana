@@ -1,4 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { router, Tabs } from "expo-router";
 import { BlurView } from "expo-blur";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -67,7 +68,20 @@ const TabLayout = ({}: Props) => {
                     tabBarIcon: ({ color }) => (
                         <PressableIcon
                             name="pie-chart"
-                            size={26}
+                            size={24}
+                            color={color}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: "Profile",
+                    tabBarIcon: ({ color }) => (
+                        <FontAwesome6
+                            name="mountain-sun"
+                            size={20}
                             color={color}
                         />
                     ),
