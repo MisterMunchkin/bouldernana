@@ -55,8 +55,8 @@ const VideoField = <
                                 <PressableIcon
                                     name="remove"
                                     size={18}
-                                    color={"black"}
-                                    className="absolute top-2 right-2 px-2.5 py-2 rounded-full bg-white/70"
+                                    color={"white"}
+                                    className="absolute top-1 right-1 px-2.5 py-2"
                                     onPress={() => removeVideo(uri)}
                                 />
                             )}

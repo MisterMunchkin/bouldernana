@@ -138,7 +138,9 @@ const index = ({}: Props) => {
                                 }
                                 twClassName={cn(
                                     "rounded-lg px-4 py-2 items-start",
-                                    bgColor
+                                    label === "Skills Needed"
+                                        ? "bg-core-imperial-red-800"
+                                        : "bg-gray-200"
                                 )}
                                 key={index}
                             >
