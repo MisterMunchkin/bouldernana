@@ -15,9 +15,9 @@ export const videoSourceSchema = {
 
 export const addClimbSchema = z.object({
     ...videoSourceSchema,
-    typeOfClimb: z.enum(CLIMB_TYPE), //boulder, route, board, trad
-    whereDidYouClimb: z.enum(WHERE), //indoor, outdoor
-    grade: z.enum(VGRADES), //VGrade for boulder and board, French for route and trad
+    typeOfClimb: z.enum(CLIMB_TYPE).default("Boulder"), //boulder, route, board, trad
+    whereDidYouClimb: z.enum(WHERE).default("Indoor"), //indoor, outdoor
+    grade: z.enum(VGRADES).default("V0"), //VGrade for boulder and board, French for route and trad
     //Advanced info
     ascentType: z.enum(ASCENT_TYPE).optional(), //redpoint, onsight, flash, project
     attempts: z.coerce.number().optional(), //Should only show up if ascentType is redpoint or project

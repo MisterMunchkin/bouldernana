@@ -16,11 +16,11 @@ import { Alert, Dimensions, ScrollView, View } from "react-native";
 
 type Props = {};
 
-type LocalParams = {
+export type ClimbLogLocalParams = {
     id: string;
 };
 const index = ({}: Props) => {
-    const { id } = useLocalSearchParams<LocalParams>();
+    const { id } = useLocalSearchParams<ClimbLogLocalParams>();
     const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
     const { date, grade, whereDidYouClimb, typeOfClimb, videoSources } =
         climbLog ?? {};
@@ -52,7 +52,9 @@ const index = ({}: Props) => {
         <ScrollView className={cn("flex-1")}>
             <View className="pt-safe-offset-4 pb-safe-offset-4 gap-4">
                 <PressableOpacity
-                    onPress={() => console.log("here.")}
+                    onPress={() =>
+                        router.navigate(`/climb-log/${id}/update-header`)
+                    }
                     twClassName="flex-row items-center pt-0 pb-0"
                 >
                     <View className="px-4 gap-2">
