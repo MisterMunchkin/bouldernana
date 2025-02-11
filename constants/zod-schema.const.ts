@@ -37,6 +37,10 @@ export const RouteGradeSystemEnum = z.enum(["YDS", "French"]);
 export const BoulderGradeSystemEnum = z.enum(["Font", "VGrade"]);
 
 export const settingsSchema = z.object({
-    routeGradeSystem: RouteGradeSystemEnum.default("French"),
-    boulderGradeSystem: BoulderGradeSystemEnum.default("VGrade"),
+    routeSettings: z.object({
+        gradeSystem: RouteGradeSystemEnum.default("French"),
+    }),
+    boulderSettings: z.object({
+        gradeSystem: BoulderGradeSystemEnum.default("VGrade"),
+    }),
 });

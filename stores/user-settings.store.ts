@@ -20,8 +20,7 @@ type States = {
 };
 
 type Actions = {
-    updateRouteGradeSystem: (grade: RouteGradeOptions) => void;
-    updateBoulderGradeSystem: (grade: BoulderGradeOptions) => void;
+    updateSettings: (settings: States) => void;
 };
 
 export const useUserSettingsStore = create<States & Actions>()(
@@ -29,19 +28,9 @@ export const useUserSettingsStore = create<States & Actions>()(
         (set) => ({
             boulderSettings: { gradeSystem: "VGrade" },
             routeSettings: { gradeSystem: "French" },
-            updateBoulderGradeSystem: (grade) =>
-                set((state) => ({
-                    ...state,
-                    boulderSettings: {
-                        gradeSystem: grade,
-                    },
-                })),
-            updateRouteGradeSystem: (grade) =>
-                set((state) => ({
-                    ...state,
-                    routeSettings: {
-                        gradeSystem: grade,
-                    },
+            updateSettings: (settings) =>
+                set((_) => ({
+                    ...settings,
                 })),
         }),
         {

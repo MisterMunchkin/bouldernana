@@ -1,4 +1,3 @@
-import AppText from "@/components/core/app-text";
 import DropdownField from "@/components/core/dropdown-field";
 import {
     BoulderGradeSystemEnum,
@@ -6,55 +5,73 @@ import {
     settingsSchema,
 } from "@/constants/zod-schema.const";
 import { useUserSettingsStore } from "@/stores/user-settings.store";
-import { useBottomSheet } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ClassValue } from "clsx";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { z } from "zod";
 
 type Props = {};
 
 const profile = ({}: Props) => {
-    //NOTE: Causing infinite looping
-    // const { boulderSettings, routeSettings } = useUserSettingsStore(
-    //     (store) => ({
-    //         boulderSettings: store.boulderSettings,
-    //         routeSettings: store.routeSettings,
-    //     })
-    // );
+    const boulderSettings = useUserSettingsStore(
+        (store) => store.boulderSettings
+    );
+    const routeSettings = useUserSettingsStore((store) => store.routeSettings);
+    const updateSettings = useUserSettingsStore(
+        (store) => store.updateSettings
+    );
+
     const form = useForm({
         resolver: zodResolver(settingsSchema),
         defaultValues: settingsSchema.parse({
-            // routeGradeSystem: routeSettings.gradeSystem,
-            // boulderGradeSystem: boulderSettings.gradeSystem,
+            boulderSettings,
+            routeSettings,
         }),
     });
 
-    const { control } = form;
+    const { control, watch, handleSubmit } = form;
+
+    const onSubmit = (values: z.infer<typeof settingsSchema>) =>
+        updateSettings(values);
+
+    useEffect(() => {
+        const watchSubscribe = watch(() => handleSubmit(onSubmit)());
+        return () => watchSubscribe.unsubscribe();
+    }, [watch, handleSubmit]);
 
     const boulderGradeOptions = BoulderGradeSystemEnum.options;
     const routeGradeOptions = RouteGradeSystemEnum.options;
+    const selected: ClassValue = "bg-red-500";
     return (
         <KeyboardAwareScrollView className="px-4">
             <View className="gap-8 flex-grow py-safe-offset-20">
                 <FormProvider {...form}>
                     <DropdownField
                         control={control}
-                        name="boulderGradeSystem"
+                        name="boulderSettings.gradeSystem"
                         title="Boulder Grading System"
                         items={boulderGradeOptions.map((value) => ({
                             label: value,
                             value,
                         }))}
+                        classNames={{
+                            selected,
+                        }}
                     />
                     <DropdownField
                         control={control}
-                        name="routeGradeSystem"
+                        name="routeSettings.gradeSystem"
                         title="Route Grading System"
                         items={routeGradeOptions.map((value) => ({
                             label: value,
                             value,
                         }))}
+                        classNames={{
+                            selected,
+                        }}
                     />
                 </FormProvider>
             </View>
