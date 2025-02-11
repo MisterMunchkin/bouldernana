@@ -1,9 +1,14 @@
 import { asyncStorageJSON } from "@/utils/async-storage-json.util";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import {
+    BoulderGradeSystemEnum,
+    RouteGradeSystemEnum,
+} from "../constants/zod-schema.const";
+import { z } from "zod";
 
-type RouteGradeOptions = "YDS" | "French";
-type BoulderGradeOptions = "Font" | "VGrade";
+type RouteGradeOptions = z.infer<typeof RouteGradeSystemEnum>;
+type BoulderGradeOptions = z.infer<typeof BoulderGradeSystemEnum>;
 
 type Settings<T extends string> = {
     gradeSystem: T;
