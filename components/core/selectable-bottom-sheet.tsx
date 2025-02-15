@@ -11,6 +11,7 @@ type Props<TItemValue extends string> = {
     value: TItemValue;
     items: DropDownItem<TItemValue>[];
     classNames?: ClassValues<"selected" | "item" | "text">;
+    placeholder?: string;
 };
 
 const SelectableBottomSheet = <TItemValue extends string>({
@@ -18,6 +19,7 @@ const SelectableBottomSheet = <TItemValue extends string>({
     value,
     items,
     classNames,
+    placeholder,
 }: Props<TItemValue>) => {
     const {
         item: itemClassname,
@@ -35,7 +37,11 @@ const SelectableBottomSheet = <TItemValue extends string>({
                 twClassName="px-4 py-2 border-[1px] border-gray-400 rounded-lg"
                 haptics={false}
             >
-                <AppText size={"xs"}>{value}</AppText>
+                <AppText size={"xs"}>
+                    {items.find((item) => item.value === value)?.label ||
+                        value ||
+                        placeholder}
+                </AppText>
             </PressableOpacity>
             <ScrollableBottomSheet ref={bottomSheetRef}>
                 {items.map((item, index) => (

@@ -26,8 +26,8 @@ type Actions = {
 export const useUserSettingsStore = create<States & Actions>()(
     persist(
         (set) => ({
-            boulderSettings: { gradeSystem: "VGrade" },
-            routeSettings: { gradeSystem: "French" },
+            boulderSettings: { gradeSystem: "VSCALE" },
+            routeSettings: { gradeSystem: "FRENCH" },
             updateSettings: (settings) =>
                 set((_) => ({
                     ...settings,

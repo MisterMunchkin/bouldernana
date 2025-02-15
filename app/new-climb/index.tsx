@@ -1,6 +1,6 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { z } from "zod";
 import React from "react";
 import { TextField } from "@/components/core/field";
@@ -14,7 +14,7 @@ import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import DropdownField from "@/components/core/dropdown-field";
 import {
     CLIMB_FEEL,
-    CLIMB_TYPE,
+    FRENCH_GRADES,
     SKILL_TYPE,
     STEEPNESS,
     VGRADES,
@@ -24,6 +24,7 @@ import { CoreTypesUtil } from "@/utils/core-types.util";
 import { AscentField } from "@/components/log-new-climb/ascent-field";
 import { ClassValue } from "clsx";
 import AppText from "@/components/core/app-text";
+import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
@@ -31,7 +32,7 @@ const DEFAULT_VALUES: AddClimbSchema = {
     videoSources: [],
     typeOfClimb: "Boulder",
     whereDidYouClimb: "Indoor",
-    grade: "V0",
+    grade: "",
     ascentType: "Flash",
     hasBeenSent: true,
     attempts: 1,
@@ -66,29 +67,12 @@ export default function Index() {
                 <FormProvider {...form}>
                     <VideoField control={control} name="videoSources" />
 
-                    <DropdownField
-                        control={control}
-                        name="typeOfClimb"
-                        title="What did you climb?"
-                        items={getInferredDropdownItems(CLIMB_TYPE)}
-                        classNames={{
-                            selected,
-                        }}
-                    />
+                    <ClimbTypeGrade />
                     <DropdownField
                         control={control}
                         name="whereDidYouClimb"
                         title="Where did you climb?"
                         items={getInferredDropdownItems(WHERE)}
-                        classNames={{
-                            selected,
-                        }}
-                    />
-                    <DropdownField
-                        control={control}
-                        name="grade"
-                        title="Grade"
-                        items={getInferredDropdownItems(VGRADES)}
                         classNames={{
                             selected,
                         }}

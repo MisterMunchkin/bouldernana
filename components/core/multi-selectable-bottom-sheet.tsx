@@ -13,12 +13,14 @@ type Props<TItemValue extends string> = {
     value: TItemValue[];
     items: DropDownItem<TItemValue>[];
     classNames?: ClassValues<"selected" | "item" | "text">;
+    placeholder?: string;
 };
 const MultiSelectableBottomSheet = <TItemValue extends string>({
     items,
     onChange,
     value: valuesProp,
     classNames,
+    placeholder,
 }: Props<TItemValue>) => {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
     // const [values, setValues] = useState<TItemValue[]>(value);
@@ -46,7 +48,9 @@ const MultiSelectableBottomSheet = <TItemValue extends string>({
                 rounded={"lg"}
                 haptics={false}
             >
-                <AppText size={"xs"}>{valuesProp.join(", ")}</AppText>
+                <AppText size={"xs"}>
+                    {valuesProp.join(", ") || placeholder}
+                </AppText>
             </PressableOpacity>
             <ScrollableBottomSheet ref={bottomSheetRef}>
                 {items.map((item, index) => (
