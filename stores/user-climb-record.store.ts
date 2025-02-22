@@ -1,4 +1,4 @@
-import { addClimbSchema } from "@/constants/zod-schema.const";
+import { addClimbSchema, jsonExportSchema } from "@/constants/zod-schema.const";
 import { asyncStorageJSON } from "@/utils/async-storage-json.util";
 import { z } from "zod";
 import { create } from "zustand";
@@ -25,6 +25,9 @@ type Actions = {
     destroy: (id: string) => void;
     getLog: (id: string) => LoggedClimb | undefined;
     setVideos: (args: SetVideosArgs) => void;
+    flashRecordFromJSON: (
+        climbLog: Pick<z.infer<typeof jsonExportSchema>, "climbLogs">
+    ) => void;
 };
 
 export const useUserClimbRecordStore = create<State & Actions>()(
@@ -76,6 +79,10 @@ export const useUserClimbRecordStore = create<State & Actions>()(
                     })
                 );
             },
+            flashRecordFromJSON: ({ climbLogs: climbs }) =>
+                set(() => ({
+                    climbs,
+                })),
         }),
         {
             name: "user-climb-record",

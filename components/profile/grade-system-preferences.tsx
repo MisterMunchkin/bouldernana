@@ -11,22 +11,17 @@ import { z } from "zod";
 import DropdownField from "@/components/core/dropdown-field";
 import { ClassValue } from "clsx";
 
-type Props = {};
+type Props = {
+    defaultValues: z.infer<typeof settingsSchema>;
+};
 
-const GradeSystemPreferences = ({}: Props) => {
-    const boulderSettings = useUserSettingsStore(
-        (store) => store.boulderSettings
-    );
-    const routeSettings = useUserSettingsStore((store) => store.routeSettings);
+const GradeSystemPreferences = ({ defaultValues }: Props) => {
     const updateSettings = useUserSettingsStore(
         (store) => store.updateSettings
     );
     const form = useForm({
         resolver: zodResolver(settingsSchema),
-        defaultValues: settingsSchema.parse({
-            boulderSettings,
-            routeSettings,
-        }),
+        defaultValues,
     });
 
     const { control, watch, handleSubmit } = form;

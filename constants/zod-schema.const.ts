@@ -48,3 +48,8 @@ export const settingsSchema = z.object({
         gradeSystem: BoulderGradeSystemEnum.default("VSCALE"),
     }),
 });
+
+export const jsonExportSchema = z.object({
+    climbLogs: z.array(z.object({ ...addClimbSchema.shape, id: z.string() })),
+    ...settingsSchema.shape,
+});

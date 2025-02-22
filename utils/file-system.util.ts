@@ -1,6 +1,9 @@
 import { File, Paths } from "expo-file-system/next";
 import { day, DayJsUtils } from "./day-js.util";
 import * as Sharing from "expo-sharing";
+import * as DocumentPicker from "expo-document-picker";
+import { z } from "zod";
+import { jsonExportSchema } from "@/constants/zod-schema.const";
 
 export namespace FileSystemUtil {
     /**
@@ -21,7 +24,7 @@ export namespace FileSystemUtil {
                 fileName ??
                     `${day().format(
                         DayJsUtils.DEFAULT_FORMAT
-                    )} - bouldernana JSON export`
+                    )} - bouldernana export.json`
             );
             file.create();
             file.write(data);
@@ -30,6 +33,31 @@ export namespace FileSystemUtil {
             if (!canShare) return;
 
             await Sharing.shareAsync(file.uri);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    /**
+     * Import a JSON object from the device's file directory.
+     */
+    export const importJSON = async (): Promise<
+        z.infer<typeof jsonExportSchema> | undefined
+    > => {
+        try {
+            const result = await DocumentPicker.getDocumentAsync({
+                type: "application/json",
+            });
+
+            if (result.canceled) return;
+
+            const fileResponse = await fetch(result.assets[0].uri);
+            const json = (await fileResponse.json()) as z.infer<
+                typeof jsonExportSchema
+            >;
+
+            const data = jsonExportSchema.parse(json);
+            return data;
         } catch (err) {
             console.error(err);
         }
