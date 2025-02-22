@@ -7,9 +7,11 @@ import { day, DayJsUtils } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
 
-type Props = {} & LoggedClimb;
+type Props = {
+    displayedGrade: string;
+} & Pick<LoggedClimb, "date" | "videoSources" | "id">;
 
-const ClimbCard = ({ date, grade, videoSources, id }: Props) => {
+const ClimbCard = ({ date, displayedGrade, videoSources, id }: Props) => {
     const { thumbnail } = useCreateThumbnail({
         videoSource: videoSources?.at(0) ?? "",
     });
@@ -33,7 +35,7 @@ const ClimbCard = ({ date, grade, videoSources, id }: Props) => {
                 }}
             />
             <View className="w-full py-2 flex-col items-start gap-2 px-4">
-                <AppText size={"xs"}>{grade}</AppText>
+                <AppText size={"xs"}>{displayedGrade}</AppText>
                 <AppText size={"xxs"}>
                     {day(date).format(DayJsUtils.DEFAULT_FORMAT)}
                 </AppText>

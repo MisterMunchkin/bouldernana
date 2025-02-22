@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
     ASCENT_TYPE,
     CLIMB_FEEL,
-    CLIMB_TYPE,
+    FRENCH_GRADES,
     SKILL_TYPE,
     STEEPNESS,
     VGRADES,
@@ -13,11 +13,13 @@ export const videoSourceSchema = {
     videoSources: z.array(z.string()),
 };
 
+export const ClimbTypeEnum = z.enum(["Board", "Boulder", "Route", "Trad"]);
+
 export const addClimbSchema = z.object({
     ...videoSourceSchema,
-    typeOfClimb: z.enum(CLIMB_TYPE).default("Boulder"), //boulder, route, board, trad
+    typeOfClimb: ClimbTypeEnum.default("Boulder"), //boulder, route, board, trad
     whereDidYouClimb: z.enum(WHERE).default("Indoor"), //indoor, outdoor
-    grade: z.enum(VGRADES).default("V0"), //VGrade for boulder and board, French for route and trad
+    grade: z.string(),
     //Advanced info
     ascentType: z.enum(ASCENT_TYPE).optional(), //redpoint, onsight, flash, project
     attempts: z.coerce.number().optional(), //Should only show up if ascentType is redpoint or project
@@ -31,4 +33,23 @@ export const addClimbSchema = z.object({
     notes: z.string().optional(),
     link: z.string().optional(),
     // relativeEffort: z.string().optional(), //strava effort input
+});
+
+const SupportedRouteGrades = ["YDS", "FRENCH"] as const;
+const SupportedBoulderGrades = ["FONT", "VSCALE"] as const;
+export const RouteGradeSystemEnum = z.enum(SupportedRouteGrades);
+export const BoulderGradeSystemEnum = z.enum(SupportedBoulderGrades);
+
+export const settingsSchema = z.object({
+    routeSettings: z.object({
+        gradeSystem: RouteGradeSystemEnum.default("FRENCH"),
+    }),
+    boulderSettings: z.object({
+        gradeSystem: BoulderGradeSystemEnum.default("VSCALE"),
+    }),
+});
+
+export const jsonExportSchema = z.object({
+    climbLogs: z.array(z.object({ ...addClimbSchema.shape, id: z.string() })),
+    ...settingsSchema.shape,
 });

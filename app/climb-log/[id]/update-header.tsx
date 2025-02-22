@@ -5,17 +5,16 @@ import { ScrollView, View } from "react-native";
 import { cn } from "@/utils/cn.util";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { addClimbSchema } from "@/constants/zod-schema.const";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { day } from "@/utils/day-js.util";
 import DropdownField from "@/components/core/dropdown-field";
 import DateTimeField from "@/components/core/date-time-field";
-import { CLIMB_TYPE, VGRADES, WHERE } from "@/constants/core.const";
+import { WHERE } from "@/constants/core.const";
 import { ClassValue } from "clsx";
 import { CoreTypesUtil } from "@/utils/core-types.util";
-import { useEffect } from "react";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { z } from "zod";
+import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
 
 const schema = addClimbSchema.pick({
     date: true,
@@ -45,42 +44,27 @@ const UpdateHeader = ({}: Props) => {
     return (
         <ScrollView className={cn("flex-1")}>
             <View className="pt-safe-offset-4 gap-6 px-4">
-                <DateTimeField control={control} name="date" title="Date" />
-                <DropdownField
-                    control={control}
-                    name="grade"
-                    title="Grade"
-                    items={CoreTypesUtil.getInferredDropdownItems(VGRADES)}
-                    classNames={{
-                        selected,
-                    }}
-                />
-                <DropdownField
-                    control={control}
-                    name="whereDidYouClimb"
-                    title="Where did you climb?"
-                    items={CoreTypesUtil.getInferredDropdownItems(WHERE)}
-                    classNames={{
-                        selected,
-                    }}
-                />
-                <DropdownField
-                    control={control}
-                    name="typeOfClimb"
-                    title="What did you climb?"
-                    items={CoreTypesUtil.getInferredDropdownItems(CLIMB_TYPE)}
-                    classNames={{
-                        selected,
-                    }}
-                />
+                <FormProvider {...form}>
+                    <DateTimeField control={control} name="date" title="Date" />
+                    <ClimbTypeGrade />
+                    <DropdownField
+                        control={control}
+                        name="whereDidYouClimb"
+                        title="Where did you climb?"
+                        items={CoreTypesUtil.getInferredDropdownItems(WHERE)}
+                        classNames={{
+                            selected,
+                        }}
+                    />
 
-                <PressableOpacity
-                    onPress={handleSubmit(updateRecord)}
-                    color={"submit"}
-                    rounded={"lg"}
-                >
-                    <AppText size={"xs"}>Submit</AppText>
-                </PressableOpacity>
+                    <PressableOpacity
+                        onPress={handleSubmit(updateRecord)}
+                        color={"submit"}
+                        rounded={"lg"}
+                    >
+                        <AppText size={"xs"}>Submit</AppText>
+                    </PressableOpacity>
+                </FormProvider>
             </View>
         </ScrollView>
     );

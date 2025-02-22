@@ -1,6 +1,5 @@
 import ClimbCard from "@/components/climbs/climb-card";
-import AppText from "@/components/core/app-text";
-import PressableOpacity from "@/components/core/pressable-opacity";
+import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import {
     LoggedClimb,
     useUserClimbRecordStore,
@@ -16,10 +15,16 @@ type Props = {};
 const Tab = ({}: Props) => {
     const climbs = useUserClimbRecordStore((store) => store.climbs);
     const bottomTabBarHeight = useBottomTabBarHeight();
-    const { top, bottom } = useSafeAreaInsets();
+    const { bottom } = useSafeAreaInsets();
+    const { getUserGrade } = useUserGradeOptions();
 
     const renderItem = useCallback(
-        (item: LoggedClimb) => <ClimbCard {...item} />,
+        (climb: LoggedClimb) => (
+            <ClimbCard
+                {...climb}
+                displayedGrade={getUserGrade({ grade: climb.grade })}
+            />
+        ),
         [climbs]
     );
 

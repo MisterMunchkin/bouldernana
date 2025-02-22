@@ -1,18 +1,17 @@
 import UpdateVideoList from "@/components/climb-log/update-video-list";
-import AppText, { textVariants } from "@/components/core/app-text";
+import AppText from "@/components/core/app-text";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import Dividers from "@/components/ui/dividers";
-import VideoPreview from "@/components/video-preview";
-import VideoList from "@/components/video/video-list";
 import { COLORS } from "@/constants/colors.const";
+import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { ClimbLogUtil } from "@/utils/climb-log.util";
 import { cn } from "@/utils/cn.util";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { Fragment } from "react";
-import { Alert, Dimensions, ScrollView, View } from "react-native";
+import React, { Fragment, useMemo } from "react";
+import { Alert, ScrollView, View } from "react-native";
 
 type Props = {};
 
@@ -22,9 +21,10 @@ export type ClimbLogLocalParams = {
 const index = ({}: Props) => {
     const { id } = useLocalSearchParams<ClimbLogLocalParams>();
     const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
-    const { date, grade, whereDidYouClimb, typeOfClimb, videoSources } =
+    const { date, whereDidYouClimb, typeOfClimb, videoSources } =
         climbLog ?? {};
     const destroyLog = useUserClimbRecordStore((store) => store.destroy);
+    const { getUserGrade } = useUserGradeOptions();
 
     const confirmDeleteLog = () =>
         Alert.alert(
@@ -45,6 +45,11 @@ const index = ({}: Props) => {
                 },
             ]
         );
+
+    const grade = useMemo(
+        () => getUserGrade({ grade: climbLog?.grade ?? "" }),
+        [climbLog?.grade]
+    );
 
     const climbDetails = ClimbLogUtil.getClimbLogDataStructure(climbLog);
 

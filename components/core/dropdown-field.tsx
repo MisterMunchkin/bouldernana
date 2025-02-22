@@ -20,6 +20,7 @@ export type DropDownFieldProps<
     defaultValue?: TItemValues;
     classNames?: ClassValues<"selected" | "item" | "text">;
     multi?: boolean;
+    placeholder?: string;
 } & Omit<FieldProps<TFieldValues>, "render" | "defualtValue">;
 /**
  * DropDown using Field
@@ -32,6 +33,7 @@ const DropdownField = <
     classNames,
     defaultValue,
     multi,
+    placeholder,
     ...fieldProps
 }: DropDownFieldProps<TFieldValues, TItemValues>) => {
     return (
@@ -45,6 +47,7 @@ const DropdownField = <
                             value={value}
                             classNames={classNames}
                             items={items}
+                            placeholder={placeholder}
                         />
                     ) : (
                         <SelectableBottomSheet
@@ -52,6 +55,7 @@ const DropdownField = <
                             value={value}
                             classNames={classNames}
                             items={items}
+                            placeholder={placeholder}
                         />
                     )}
                 </>
