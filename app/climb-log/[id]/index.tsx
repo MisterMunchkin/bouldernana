@@ -60,24 +60,25 @@ const index = ({}: Props) => {
                     onPress={() =>
                         router.navigate(`/climb-log/${id}/update-header`)
                     }
-                    twClassName="flex-row items-center pt-0 pb-0"
+                    twClassName="items-start pt-0 pb-0 px-4"
+                    haptics={false}
                 >
-                    <View className="px-4 gap-2">
-                        <AppText size={"xxs"} color={"black-50"}>
-                            {day(date).format(DayJsUtils.DEFAULT_FORMAT)}
-                        </AppText>
+                    <AppText size={"xxs"} color={"black-50"}>
+                        {day(date).format(DayJsUtils.DEFAULT_FORMAT)}
+                    </AppText>
+                    <View className="flex-row items-start gap-4 w-full justify-between">
                         <AppText
                             twClassName="font-semibold text-core-caribbean-current-300"
                             size={"sm"}
                         >
-                            {`${grade} ${whereDidYouClimb} ${typeOfClimb}`}
+                            {`${grade}\n${whereDidYouClimb} ${typeOfClimb}`}
                         </AppText>
+                        <FontAwesome
+                            name="pencil-square-o"
+                            size={32}
+                            color={COLORS.core["caribbean-current"][300]}
+                        />
                     </View>
-                    <FontAwesome
-                        name="pencil-square-o"
-                        size={32}
-                        color={COLORS.core["caribbean-current"][300]}
-                    />
                 </PressableOpacity>
                 <UpdateVideoList id={id} videoSources={videoSources ?? []} />
                 <View className="flex-row px-4 gap-2 flex-wrap flex-1">
@@ -88,6 +89,7 @@ const index = ({}: Props) => {
                             )
                         }
                         twClassName="rounded-lg bg-core-vanilla-600 px-4 py-2 items-start"
+                        haptics={false}
                     >
                         {climbDetails["block-1"].map(
                             ({ label, value }, index) => (
@@ -109,6 +111,7 @@ const index = ({}: Props) => {
                             )
                         }
                         twClassName="rounded-lg bg-core-nyanza-400 px-4 py-2 flex-1 items-start"
+                        haptics={false}
                     >
                         {climbDetails["block-2"].map(
                             ({ label, value }, index) => (
@@ -148,6 +151,7 @@ const index = ({}: Props) => {
                                         : "bg-gray-200"
                                 )}
                                 key={index}
+                                haptics={false}
                             >
                                 <AppText size={"xxs"} twClassName={"pb-4"}>
                                     {label}

@@ -6,6 +6,7 @@ import Loader from "@/components/ui/loader";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { useUserSettingsStore } from "@/stores/user-settings.store";
 import { FileSystemUtil } from "@/utils/file-system.util";
+import { router } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -68,14 +69,14 @@ const profile = ({}: Props) => {
                                     })
                                 }
                             >
-                                <AppText size={"xs"}>Export as JSON</AppText>
+                                <AppText size={"xs"}>Export as Data</AppText>
                             </PressableOpacity>
                             <PressableOpacity
                                 twClassName="bg-core-caribbean-current-600"
                                 rounded={"lg"}
                                 onPress={handleImport}
                             >
-                                <AppText size={"xs"}>Import as JSON</AppText>
+                                <AppText size={"xs"}>Import as Data</AppText>
                             </PressableOpacity>
                         </View>
                     </>

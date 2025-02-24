@@ -14,10 +14,8 @@ import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import DropdownField from "@/components/core/dropdown-field";
 import {
     CLIMB_FEEL,
-    FRENCH_GRADES,
     SKILL_TYPE,
     STEEPNESS,
-    VGRADES,
     WHERE,
 } from "@/constants/core.const";
 import { CoreTypesUtil } from "@/utils/core-types.util";
@@ -25,6 +23,7 @@ import { AscentField } from "@/components/log-new-climb/ascent-field";
 import { ClassValue } from "clsx";
 import AppText from "@/components/core/app-text";
 import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
+import { router } from "expo-router";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
@@ -58,6 +57,7 @@ export default function Index() {
     const saveRecord = (climb: AddClimbSchema) => {
         logClimb(climb);
         reset();
+        router.back();
     };
 
     const selected: ClassValue = "bg-red-500";
