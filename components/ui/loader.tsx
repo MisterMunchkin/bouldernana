@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { ViewStyle, StyleProp, View } from "react-native";
 import Animated, {
     Easing,
@@ -19,7 +19,9 @@ type LoaderItemProps<T extends string> = {
         end: T;
     };
     duration?: number;
-} & ViewStyle;
+    height?: number;
+    width?: number;
+} & ComponentProps<typeof View>;
 
 const DEFAULT = {
     easing: Easing.bezier(0.64, 0.14, 0.62, 0.87),
@@ -38,6 +40,7 @@ Loader.Item = <T extends string>({
     children,
     pulseColors,
     duration,
+    style,
     height,
     width,
     ...props
@@ -62,14 +65,14 @@ Loader.Item = <T extends string>({
     return (
         <Animated.View
             style={[
-                props,
+                style,
                 animatedStyles,
                 {
                     height: height ?? "100%",
                     width: width ?? "100%",
-                    backgroundColor: "red",
                 },
             ]}
+            {...props}
         >
             {children}
         </Animated.View>
