@@ -5,7 +5,6 @@ import { settingsSchema } from "@/constants/zod-schema.const";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { useUserSettingsStore } from "@/stores/user-settings.store";
 import { FileSystemUtil } from "@/utils/file-system.util";
-import { useMemo } from "react";
 import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -32,18 +31,15 @@ const profile = ({}: Props) => {
         });
     };
 
-    const defaultGradePrefereces = useMemo(() => {
-        return settingsSchema.parse({
-            boulderSettings,
-            routeSettings,
-        });
-    }, [boulderSettings, routeSettings]);
-
     return (
         <KeyboardAwareScrollView className="px-4">
             <View className="gap-8 flex-grow py-safe-offset-20">
                 <GradeSystemPreferences
-                    defaultValues={defaultGradePrefereces}
+                    defaultValues={{
+                        boulderSettings,
+                        routeSettings,
+                    }}
+                    onSubmit={updateSettings}
                 />
                 <View className="gap-4">
                     <PressableOpacity

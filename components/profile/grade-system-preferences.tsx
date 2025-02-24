@@ -3,7 +3,6 @@ import {
     RouteGradeSystemEnum,
     settingsSchema,
 } from "@/constants/zod-schema.const";
-import { useUserSettingsStore } from "@/stores/user-settings.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -13,21 +12,16 @@ import { ClassValue } from "clsx";
 
 type Props = {
     defaultValues: z.infer<typeof settingsSchema>;
+    onSubmit: (values: z.infer<typeof settingsSchema>) => void;
 };
 
-const GradeSystemPreferences = ({ defaultValues }: Props) => {
-    const updateSettings = useUserSettingsStore(
-        (store) => store.updateSettings
-    );
+const GradeSystemPreferences = ({ defaultValues, onSubmit }: Props) => {
     const form = useForm({
         resolver: zodResolver(settingsSchema),
-        defaultValues,
+        defaultValues: { ...defaultValues },
     });
 
     const { control, watch, handleSubmit } = form;
-
-    const onSubmit = (values: z.infer<typeof settingsSchema>) =>
-        updateSettings(values);
 
     useEffect(() => {
         const watchSubscribe = watch(() => handleSubmit(onSubmit)());
