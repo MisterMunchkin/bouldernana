@@ -28,9 +28,10 @@ export const useUserSettingsStore = create<States & Actions>()(
         (set) => ({
             boulderSettings: { gradeSystem: "VSCALE" },
             routeSettings: { gradeSystem: "FRENCH" },
-            updateSettings: (settings) =>
+            updateSettings: ({ boulderSettings, routeSettings }) =>
                 set((_) => ({
-                    ...settings,
+                    boulderSettings,
+                    routeSettings,
                 })),
         }),
         {

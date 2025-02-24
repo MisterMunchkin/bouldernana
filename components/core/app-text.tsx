@@ -54,7 +54,7 @@ const AppText = ({
     return (
         <Text
             {...props}
-            textBreakStrategy="highQuality"
+            textBreakStrategy="simple"
             lineBreakStrategyIOS="standard"
             className={cn(textVariants({ size, align, color }), twClassName)}
         >
