@@ -25,7 +25,7 @@ const Tab = ({}: Props) => {
                 displayedGrade={getUserGrade({ grade: climb.grade })}
             />
         ),
-        [climbs]
+        [climbs, getUserGrade]
     );
 
     return (
@@ -42,6 +42,7 @@ const Tab = ({}: Props) => {
                 ItemSeparatorComponent={() => <View className="h-4" />}
                 renderItem={({ item }) => renderItem(item)}
                 estimatedItemSize={200}
+                extraData={{ getUserGrade }}
             />
         </View>
     );
