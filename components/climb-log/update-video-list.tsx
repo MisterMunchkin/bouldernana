@@ -5,7 +5,6 @@ import { videoSourceSchema } from "@/constants/zod-schema.const";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { View } from "react-native";
 
 type Props = {
     videoSources: string[];
