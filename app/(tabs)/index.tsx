@@ -1,9 +1,12 @@
 import ClimbCard from "@/components/climbs/climb-card";
+import AppText from "@/components/core/app-text";
+import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import {
     LoggedClimb,
     useUserClimbRecordStore,
 } from "@/stores/user-climb-record.store";
+import { FileSystemUtil } from "@/utils/file-system.util";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { FlashList } from "@shopify/flash-list";
 import { useCallback } from "react";
@@ -41,6 +44,11 @@ const Tab = ({}: Props) => {
                 }}
                 ItemSeparatorComponent={() => <View className="h-4" />}
                 renderItem={({ item }) => renderItem(item)}
+                ListFooterComponent={() => (
+                    <PressableOpacity onPress={() => FileSystemUtil.test()}>
+                        <AppText>Log video dir_</AppText>
+                    </PressableOpacity>
+                )}
                 estimatedItemSize={200}
                 extraData={{ getUserGrade }}
             />
