@@ -1,66 +1,64 @@
 {
-  "expo": {
-    "owner": "robindalmy",
-    "name": "bouldernana",
-    "slug": "bouldernana",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.robindalmy.bouldernana",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "permissions": [
-        "android.permission.RECORD_AUDIO",
-        "android.permission.RECORD_AUDIO"
-      ],
-      "package": "com.robindalmy.bouldernana"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+    "expo": {
+        "owner": "robindalmy",
+        "name": "bouldernana",
+        "slug": "bouldernana",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/bouldernana-icon.png",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "newArchEnabled": true,
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.robindalmy.bouldernana",
+            "infoPlist": {
+                "ITSAppUsesNonExemptEncryption": false,
+                "NSPhotoLibraryUsageDescription": "The app accesses your photos to allow you to log them to your sends."
+            },
+            "appleTeamId": "Y57C3DJV8Q"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/bouldernana-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "permissions": [
+                "android.permission.RECORD_AUDIO",
+                "android.permission.READ_EXTERNAL_STORAGE"
+            ],
+            "package": "com.robindalmy.bouldernana"
+        },
+        "plugins": [
+            "expo-router",
+            [
+                "expo-splash-screen",
+                {
+                    "image": "./assets/images/bouldernana-splashscreen.png",
+                    "imageWidth": 200,
+                    "resizeMode": "contain",
+                    "backgroundColor": "#ffffff"
+                }
+            ],
+            [
+                "expo-image-picker",
+                {
+                    "photosPermission": "The app accesses your photos to allow you to log them to your sends."
+                }
+            ],
+            "expo-video",
+            "expo-font"
+        ],
+        "experiments": {
+            "typedRoutes": true
+        },
+        "extra": {
+            "router": {
+                "origin": false
+            },
+            "eas": {
+                "projectId": "13d26f8c-e8de-4a24-a15c-f9dffa166bd4"
+            }
         }
-      ],
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to allow you to log them to your sends."
-        }
-      ],
-      "expo-video"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "13d26f8c-e8de-4a24-a15c-f9dffa166bd4"
-      }
     }
-  }
 }
