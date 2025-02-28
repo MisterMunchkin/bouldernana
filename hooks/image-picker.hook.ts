@@ -4,7 +4,7 @@ import { ImagePickerAsset } from "expo-image-picker";
 export const useImagePicker = () => {
     const [, requestPermission] = ImagePicker.useMediaLibraryPermissions();
 
-    const pickVideo = async (): Promise<string | undefined> => {
+    const pickVideo = async (): Promise<ImagePickerAsset | undefined> => {
         const status = await requestPermission();
         if (!status.granted) return;
 
@@ -17,7 +17,7 @@ export const useImagePicker = () => {
         //NOTE: If the user cancels the picker, return
         if (result.canceled) return;
 
-        return result.assets[0].uri;
+        return result.assets[0];
     };
 
     return {

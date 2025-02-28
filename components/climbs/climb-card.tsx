@@ -1,4 +1,4 @@
-import { ClimbSchema, LoggedClimb } from "@/stores/user-climb-record.store";
+import { LoggedClimb } from "@/stores/user-climb-record.store";
 import { View } from "react-native";
 import { useCreateThumbnail } from "@/hooks/create-thumbnail.hook";
 import { Image } from "expo-image";
@@ -9,11 +9,11 @@ import { router } from "expo-router";
 
 type Props = {
     displayedGrade: string;
-} & Pick<LoggedClimb, "date" | "videoSources" | "id">;
+} & Pick<LoggedClimb, "date" | "videoUris" | "id">;
 
-const ClimbCard = ({ date, displayedGrade, videoSources, id }: Props) => {
+const ClimbCard = ({ date, displayedGrade, videoUris, id }: Props) => {
     const { thumbnail } = useCreateThumbnail({
-        videoSource: videoSources?.at(0) ?? "",
+        videoSource: videoUris?.at(0) ?? "",
     });
 
     return (

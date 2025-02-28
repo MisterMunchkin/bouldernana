@@ -1,25 +1,20 @@
-import { FieldValues, FieldPath, PathValue } from "react-hook-form";
-import { View } from "react-native";
-import { cn } from "@/utils/cn.util";
-import PressableOpacity from "../core/pressable-opacity";
-import VideoThumbnailView from "./video-thumbnail-view";
-import { Field, FieldProps } from "../core/field";
+import { FieldPath, FieldValues, PathValue } from "react-hook-form";
 import { useImagePicker } from "@/hooks/image-picker.hook";
-import AppText from "../core/app-text";
-import React, { useState } from "react";
-import { FlashList } from "@shopify/flash-list";
-import PressableIcon from "../ui/pressable-icon";
-import { useVideoPlayer, VideoView } from "expo-video";
-import VideoList from "./video-list";
+import { View } from "react-native";
+import { Field, FieldProps } from "../core/field";
+import { ImagePickerAsset } from "expo-image-picker";
+import VideoList from "../video/video-list";
+import PressableIcon from "@/components/ui/pressable-icon";
+import PressableOpacity from "@/components/core/pressable-opacity";
+import AppText from "@/components/core/app-text";
+import { cn } from "@/utils/cn.util";
 
 export type VideoFieldProps<
     TFieldValues extends FieldValues = FieldValues,
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> = PathValue<TFieldValues, TName> extends string[]
-    ? Omit<FieldProps<TFieldValues, TName>, "render">
-    : never;
+> = Omit<FieldProps<TFieldValues, TName>, "render">;
 
-const VideoField = <
+const CreateVideoList = <
     TFieldValues extends FieldValues = FieldValues,
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
@@ -33,25 +28,22 @@ const VideoField = <
             <Field
                 {...fieldProps}
                 render={({ field: { onChange, value } }) => {
-                    //TODO: VideoFieldProps already restricts parent
-                    // to only pass pathname if type is of string[].
-                    // this is just a workaround but try to get the value
-                    //to be inferred.
-                    const videoUris = value as string[];
+                    const videos = value as ImagePickerAsset[];
 
                     const removeVideo = (videoUri: string) =>
-                        onChange(videoUris.filter((uri) => uri !== videoUri));
-
+                        onChange(
+                            videos.filter((video) => video.uri !== videoUri)
+                        );
                     const addVideo = async () => {
                         const video = await pickVideo();
                         if (!video) return;
 
-                        onChange([...value, video.uri]);
+                        onChange([...videos, video]);
                     };
 
                     return (
                         <VideoList
-                            videoUris={videoUris}
+                            videoUris={videos.map((video) => video.uri)}
                             thumbnailChildrenRender={(uri) => (
                                 <PressableIcon
                                     name="remove"
@@ -82,4 +74,4 @@ const VideoField = <
     );
 };
 
-export default VideoField;
+export default CreateVideoList;

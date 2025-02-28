@@ -21,8 +21,7 @@ export type ClimbLogLocalParams = {
 const index = ({}: Props) => {
     const { id } = useLocalSearchParams<ClimbLogLocalParams>();
     const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
-    const { date, whereDidYouClimb, typeOfClimb, videoSources } =
-        climbLog ?? {};
+    const { date, whereDidYouClimb, typeOfClimb, videoUris } = climbLog ?? {};
     const destroyLog = useUserClimbRecordStore((store) => store.destroy);
     const { getUserGrade } = useUserGradeOptions();
 
@@ -80,7 +79,7 @@ const index = ({}: Props) => {
                         />
                     </View>
                 </PressableOpacity>
-                <UpdateVideoList id={id} videoSources={videoSources ?? []} />
+                <UpdateVideoList id={id} videoSources={videoUris ?? []} />
                 <View className="flex-row px-4 gap-2 flex-wrap flex-1">
                     <PressableOpacity
                         onPress={() =>

@@ -7,7 +7,10 @@ import { TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import { day } from "@/utils/day-js.util";
 import VideoField from "@/components/video/video-field";
-import { addClimbSchema } from "@/constants/zod-schema.const";
+import {
+    addClimbSchema,
+    videoSourcesObjectSchema,
+} from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
@@ -24,11 +27,15 @@ import { ClassValue } from "clsx";
 import AppText from "@/components/core/app-text";
 import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
 import { router } from "expo-router";
+import * as FileSystem from "expo-file-system";
+import * as DocumentPicker from "expo-document-picker";
+import CreateVideoList from "@/components/log-new-climb/create-video-list";
+import { FileSystemUtil } from "@/utils/file-system.util";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
 const DEFAULT_VALUES: AddClimbSchema = {
-    videoSources: [],
+    videos: [],
     typeOfClimb: "Boulder",
     whereDidYouClimb: "Indoor",
     grade: "",
@@ -65,7 +72,7 @@ export default function Index() {
         <KeyboardAwareScrollView className="px-4">
             <View className="gap-8 flex-grow py-safe-offset-20">
                 <FormProvider {...form}>
-                    <VideoField control={control} name="videoSources" />
+                    <CreateVideoList control={control} name="videos" />
 
                     <ClimbTypeGrade />
                     <DropdownField

@@ -9,14 +9,32 @@ import {
     WHERE,
 } from "./core.const";
 
-export const videoSourceSchema = {
-    videoSources: z.array(z.string()),
+export const videoUrisSchema = {
+    videoUris: z.array(z.string()),
 };
+
+export const videoSourcesObjectSchema = {
+    videoSources: z.array(
+        z.object({
+            uri: z.string(),
+            fileName: z.string(),
+            fileSize: z.number(),
+        })
+    ),
+};
+
+export const imagePickerAssetSchema = z.object({
+    uri: z.string(),
+    width: z.number(),
+    height: z.number(),
+    fileName: z.string().nullable().optional(),
+    fileSize: z.number().optional(),
+});
 
 export const ClimbTypeEnum = z.enum(["Board", "Boulder", "Route", "Trad"]);
 
 export const addClimbSchema = z.object({
-    ...videoSourceSchema,
+    videos: z.array(imagePickerAssetSchema),
     typeOfClimb: ClimbTypeEnum.default("Boulder"), //boulder, route, board, trad
     whereDidYouClimb: z.enum(WHERE).default("Indoor"), //indoor, outdoor
     grade: z.string(),
@@ -49,7 +67,11 @@ export const settingsSchema = z.object({
     }),
 });
 
+const { videos, ...climbSchema } = addClimbSchema.shape;
+
 export const jsonExportSchema = z.object({
-    climbLogs: z.array(z.object({ ...addClimbSchema.shape, id: z.string() })),
+    climbLogs: z.array(
+        z.object({ ...climbSchema, id: z.string(), ...videoUrisSchema })
+    ),
     ...settingsSchema.shape,
 });

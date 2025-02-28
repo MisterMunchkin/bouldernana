@@ -6,6 +6,7 @@ import { z } from "zod";
 import { jsonExportSchema } from "@/constants/zod-schema.const";
 import * as FileSystem from "expo-file-system";
 import { ImagePickerAsset } from "expo-image-picker";
+import uuid from "react-native-uuid";
 
 export class FileSystemUtil {
     private static readonly INIT_FOLDER_PROFILE =
@@ -39,9 +40,10 @@ export class FileSystemUtil {
         uri,
         fileName,
         fileSize,
-    }: Pick<ImagePickerAsset, "uri" | "fileName" | "fileSize">): Promise<
-        string | undefined
-    > {
+    }: Pick<
+        ImagePickerAsset,
+        "uri" | "fileName" | "fileSize"
+    >): Promise<string> {
         const hasEnoughStorage =
             !!fileSize && (await this.hasEnoughStorage(fileSize));
         if (!hasEnoughStorage)
@@ -50,7 +52,8 @@ export class FileSystemUtil {
             );
 
         try {
-            const newUri = `${this.VIDEOS_DIR}${fileName}`;
+            const fileExt = fileName?.split(".").pop();
+            const newUri = `${this.VIDEOS_DIR}${uuid.v4()}.${fileExt}`;
             await FileSystem.copyAsync({ from: uri, to: newUri });
 
             console.info(
@@ -59,6 +62,7 @@ export class FileSystemUtil {
             return newUri;
         } catch (err) {
             console.error(`${this.SAVE_VIDEO_PROFILE}: `, err);
+            return "";
         }
     }
 
