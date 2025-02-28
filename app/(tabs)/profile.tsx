@@ -14,7 +14,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 type Props = {};
 
 const profile = ({}: Props) => {
-    const [isImporting, setIsImporting] = useState<boolean>(false);
+    const [isFileActionStarted, setIsFileActionStarted] =
+        useState<boolean>(false);
 
     const climbLogs = useUserClimbRecordStore((store) => store.climbs);
     const restoreClimbRecord = useUserClimbRecordStore(
@@ -25,10 +26,10 @@ const profile = ({}: Props) => {
         useUserSettingsStore((store) => store);
 
     const handleImport = async () => {
-        setIsImporting((prev) => !prev);
+        setIsFileActionStarted((prev) => !prev);
         const result = await FileSystemUtil.importJSON();
         if (!result) {
-            setIsImporting((prev) => !prev);
+            setIsFileActionStarted((prev) => !prev);
             return;
         }
         const { boulderSettings, routeSettings, climbLogs } = result;
@@ -38,13 +39,25 @@ const profile = ({}: Props) => {
             boulderSettings,
             routeSettings,
         });
-        setIsImporting((prev) => !prev);
+        setIsFileActionStarted((prev) => !prev);
+    };
+
+    const handleExport = async () => {
+        setIsFileActionStarted((prev) => !prev);
+        await FileSystemUtil.saveJSON({
+            data: JSON.stringify({
+                climbLogs,
+                boulderSettings,
+                routeSettings,
+            }),
+        });
+        setIsFileActionStarted((prev) => !prev);
     };
 
     return (
         <KeyboardAwareScrollView className="px-4">
             <View className="gap-8 flex-grow py-safe-offset-20">
-                {isImporting ? (
+                {isFileActionStarted ? (
                     <ProfileLoader />
                 ) : (
                     <>
@@ -59,15 +72,7 @@ const profile = ({}: Props) => {
                             <PressableOpacity
                                 color={"submit"}
                                 rounded={"lg"}
-                                onPress={() =>
-                                    FileSystemUtil.saveJSON({
-                                        data: JSON.stringify({
-                                            climbLogs,
-                                            boulderSettings,
-                                            routeSettings,
-                                        }),
-                                    })
-                                }
+                                onPress={handleExport}
                             >
                                 <AppText size={"xs"}>Export as Data</AppText>
                             </PressableOpacity>
