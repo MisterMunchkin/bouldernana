@@ -4,16 +4,17 @@ import React from "react";
 import { Image } from "expo-image";
 import { View } from "react-native";
 import {} from "@expo/vector-icons";
+import { MediaLibraryUtil } from "@/utils/media-library.util";
 
 type Props = {
-    videoSource: string;
+    videoAssetId: string;
     //new width that will respect the aspectRatio of the original height.
     height?: number;
     children?: ReactNode;
 };
 
 const VideoThumbnailView = ({
-    videoSource,
+    videoAssetId,
     children,
     height: heightProp,
 }: // width: widthProp,
@@ -22,20 +23,17 @@ Props) => {
         useState<VideoThumbnails.VideoThumbnailsResult>();
 
     useEffect(() => {
-        const generate = async (videoSource: string) => {
-            try {
-                const result = await VideoThumbnails.getThumbnailAsync(
-                    videoSource
-                );
-
-                setThumbnail(result);
-            } catch (e) {
-                console.error(e);
+        const generate = async (videoAssetId: string) => {
+            const result = await MediaLibraryUtil.getThumbnail(videoAssetId);
+            if (!result) {
+                console.error("Failed to get thumbnail");
+                return;
             }
+            setThumbnail(result);
         };
 
-        videoSource && generate(videoSource);
-    }, [videoSource]);
+        videoAssetId && generate(videoAssetId);
+    }, [videoAssetId]);
 
     const renderThumbnail = (
         thumbnail: VideoThumbnails.VideoThumbnailsResult

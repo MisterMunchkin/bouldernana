@@ -44,11 +44,6 @@ const Tab = ({}: Props) => {
                 }}
                 ItemSeparatorComponent={() => <View className="h-4" />}
                 renderItem={({ item }) => renderItem(item)}
-                ListFooterComponent={() => (
-                    <PressableOpacity onPress={() => FileSystemUtil.test()}>
-                        <AppText>Log video dir_</AppText>
-                    </PressableOpacity>
-                )}
                 estimatedItemSize={200}
                 extraData={{ getUserGrade }}
             />

@@ -22,14 +22,11 @@ export default function RootLayout() {
     const [isAppReady, setIsAppReady] = useState<boolean>(false);
 
     useEffect(() => {
+        /**
+         * Just in case we have async functions to init the app
+         */
         const initApp = async () => {
-            try {
-                await FileSystemUtil.initFileFolder();
-            } catch (e) {
-                console.warn(e);
-            } finally {
-                setIsAppReady(true);
-            }
+            setIsAppReady(true);
         };
 
         initApp();

@@ -6,11 +6,7 @@ import React from "react";
 import { TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import { day } from "@/utils/day-js.util";
-import VideoField from "@/components/video/video-field";
-import {
-    addClimbSchema,
-    videoSourcesObjectSchema,
-} from "@/constants/zod-schema.const";
+import { addClimbSchema } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
@@ -27,15 +23,14 @@ import { ClassValue } from "clsx";
 import AppText from "@/components/core/app-text";
 import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
 import { router } from "expo-router";
-import * as FileSystem from "expo-file-system";
-import * as DocumentPicker from "expo-document-picker";
-import CreateVideoList from "@/components/log-new-climb/create-video-list";
-import { FileSystemUtil } from "@/utils/file-system.util";
+import VideoField from "@/components/video/video-field";
 
-export type AddClimbSchema = z.infer<typeof addClimbSchema>;
+export type AddClimbSchema = z.infer<typeof addClimbSchema> & {
+    videoAssetIds: string[];
+};
 
 const DEFAULT_VALUES: AddClimbSchema = {
-    videos: [],
+    videoAssetIds: [],
     typeOfClimb: "Boulder",
     whereDidYouClimb: "Indoor",
     grade: "",
@@ -52,7 +47,6 @@ const DEFAULT_VALUES: AddClimbSchema = {
 };
 
 export default function Index() {
-    // const bottomTabBarHeight = useBottomTabBarHeight();
     const form = useForm({
         resolver: zodResolver(addClimbSchema),
         defaultValues: DEFAULT_VALUES,
@@ -72,7 +66,7 @@ export default function Index() {
         <KeyboardAwareScrollView className="px-4">
             <View className="gap-8 flex-grow py-safe-offset-20">
                 <FormProvider {...form}>
-                    <CreateVideoList control={control} name="videos" />
+                    <VideoField control={control} name="videoAssetIds" />
 
                     <ClimbTypeGrade />
                     <DropdownField

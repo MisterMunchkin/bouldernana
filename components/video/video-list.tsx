@@ -12,9 +12,13 @@ import {
 } from "react";
 import React from "react";
 import { createVideoPlayer, useVideoPlayer, VideoView } from "expo-video";
+import { MediaLibraryUtil } from "@/utils/media-library.util";
 
 type Props = {
-    videoUris: string[];
+    /**
+     * Asset Ids coming from the ImagePickerAsset to be displayed
+     */
+    videoAssetIds: string[];
     /**Render within the thumbnail view. ideally absolute renders */
     thumbnailChildrenRender?: (uri: string) => ReactNode;
     /**set a height for each thumbnail in the list */
@@ -30,7 +34,7 @@ type Props = {
 const DEFAULT_THUMBNAIL_HEIGHT = 300;
 
 const VideoList = ({
-    videoUris,
+    videoAssetIds,
     thumbnailChildrenRender,
     thumbnailHeight,
     ...flashListProps
@@ -38,15 +42,20 @@ const VideoList = ({
     const videoRef = useRef<VideoView>(null);
     const player = useVideoPlayer("");
 
-    const loadVideo = async (videoUri: string) => {
+    const loadVideo = async (videoAssetId: string) => {
+        const uri = await MediaLibraryUtil.getPlayableVideoUri(videoAssetId);
+        if (!uri) {
+            return;
+        }
+
         await videoRef.current?.enterFullscreen();
-        player.replace(videoUri);
+        player.replace(uri);
     };
 
     return (
         <>
             <FlashList
-                data={videoUris}
+                data={videoAssetIds}
                 keyExtractor={(item, index) => `${item}-${index}`}
                 renderItem={({ item }) => (
                     <PressableOpacity
@@ -55,7 +64,7 @@ const VideoList = ({
                     >
                         <VideoThumbnailView
                             height={thumbnailHeight ?? DEFAULT_THUMBNAIL_HEIGHT}
-                            videoSource={item}
+                            videoAssetId={item}
                         >
                             {thumbnailChildrenRender &&
                                 thumbnailChildrenRender(item)}

@@ -2,22 +2,17 @@ import { FieldValues, FieldPath, PathValue } from "react-hook-form";
 import { View } from "react-native";
 import { cn } from "@/utils/cn.util";
 import PressableOpacity from "../core/pressable-opacity";
-import VideoThumbnailView from "./video-thumbnail-view";
 import { Field, FieldProps } from "../core/field";
 import { useImagePicker } from "@/hooks/image-picker.hook";
 import AppText from "../core/app-text";
 import React, { useState } from "react";
-import { FlashList } from "@shopify/flash-list";
 import PressableIcon from "../ui/pressable-icon";
-import { useVideoPlayer, VideoView } from "expo-video";
 import VideoList from "./video-list";
 
 export type VideoFieldProps<
     TFieldValues extends FieldValues = FieldValues,
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> = PathValue<TFieldValues, TName> extends string[]
-    ? Omit<FieldProps<TFieldValues, TName>, "render">
-    : never;
+> = Omit<FieldProps<TFieldValues, TName>, "render">;
 
 const VideoField = <
     TFieldValues extends FieldValues = FieldValues,
@@ -37,21 +32,21 @@ const VideoField = <
                     // to only pass pathname if type is of string[].
                     // this is just a workaround but try to get the value
                     //to be inferred.
-                    const videoUris = value as string[];
+                    const assetIds = value as string[];
 
-                    const removeVideo = (videoUri: string) =>
-                        onChange(videoUris.filter((uri) => uri !== videoUri));
+                    const removeVideo = (assetId: string) =>
+                        onChange(assetIds.filter((id) => id !== assetId));
 
                     const addVideo = async () => {
                         const video = await pickVideo();
                         if (!video) return;
 
-                        onChange([...value, video.uri]);
+                        onChange([...value, video.assetId]);
                     };
 
                     return (
                         <VideoList
-                            videoUris={videoUris}
+                            videoAssetIds={assetIds}
                             thumbnailChildrenRender={(uri) => (
                                 <PressableIcon
                                     name="remove"

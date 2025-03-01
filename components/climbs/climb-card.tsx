@@ -1,20 +1,34 @@
 import { LoggedClimb } from "@/stores/user-climb-record.store";
 import { View } from "react-native";
-import { useCreateThumbnail } from "@/hooks/create-thumbnail.hook";
 import { Image } from "expo-image";
 import AppText from "../core/app-text";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { MediaLibraryUtil } from "@/utils/media-library.util";
 
 type Props = {
     displayedGrade: string;
-} & Pick<LoggedClimb, "date" | "videoUris" | "id">;
+} & Pick<LoggedClimb, "date" | "videoAssetIds" | "id">;
 
-const ClimbCard = ({ date, displayedGrade, videoUris, id }: Props) => {
-    const { thumbnail } = useCreateThumbnail({
-        videoSource: videoUris?.at(0) ?? "",
-    });
+const ClimbCard = ({ date, displayedGrade, videoAssetIds, id }: Props) => {
+    const [thumbnail, setThumbnail] = useState<string>("");
+
+    useEffect(() => {
+        const generate = async () => {
+            const video = videoAssetIds?.at(0);
+            if (!video) return;
+
+            const thumbnailResult = await MediaLibraryUtil.getThumbnail(video);
+            setThumbnail(
+                thumbnailResult?.uri ??
+                    require("@/assets/images/default-thumbnail.jpg")
+            );
+        };
+
+        generate();
+    }, []);
 
     return (
         <PressableOpacity
@@ -22,10 +36,7 @@ const ClimbCard = ({ date, displayedGrade, videoUris, id }: Props) => {
             onPress={() => router.push(`/climb-log/${id}`)}
         >
             <Image
-                source={
-                    thumbnail?.uri ??
-                    require("@/assets/images/default-thumbnail.jpg")
-                }
+                source={thumbnail}
                 contentFit="cover"
                 style={{
                     width: "100%",
