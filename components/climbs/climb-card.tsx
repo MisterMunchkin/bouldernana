@@ -13,7 +13,9 @@ type Props = {
 } & Pick<LoggedClimb, "date" | "videoAssetIds" | "id">;
 
 const ClimbCard = ({ date, displayedGrade, videoAssetIds, id }: Props) => {
-    const [thumbnail, setThumbnail] = useState<string>("");
+    const [thumbnail, setThumbnail] = useState<string>(
+        require("@/assets/images/default-thumbnail.jpg")
+    );
 
     useEffect(() => {
         const generate = async () => {
