@@ -6,12 +6,12 @@ import {
     LoggedClimb,
     useUserClimbRecordStore,
 } from "@/stores/user-climb-record.store";
-import { FileSystemUtil } from "@/utils/file-system.util";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { FlashList } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as FileSystem from "expo-file-system";
 
 type Props = {};
 
@@ -46,6 +46,36 @@ const Tab = ({}: Props) => {
                 renderItem={({ item }) => renderItem(item)}
                 estimatedItemSize={200}
                 extraData={{ getUserGrade }}
+                ListFooterComponent={() => (
+                    <PressableOpacity
+                        onPress={async () => {
+                            let videoThumb;
+                            let imagePick;
+                            let dirr;
+                            if (FileSystem.cacheDirectory) {
+                                videoThumb =
+                                    await FileSystem.readDirectoryAsync(
+                                        FileSystem.cacheDirectory +
+                                            "VideoThumbnails/"
+                                    );
+                                imagePick = await FileSystem.readDirectoryAsync(
+                                    FileSystem.cacheDirectory + "ImagePicker/"
+                                );
+                            }
+                            if (FileSystem.documentDirectory)
+                                dirr = await FileSystem.readDirectoryAsync(
+                                    FileSystem.documentDirectory
+                                );
+
+                            console.log(
+                                "file system: ",
+                                JSON.stringify({ videoThumb, imagePick, dirr })
+                            );
+                        }}
+                    >
+                        <AppText>Log</AppText>
+                    </PressableOpacity>
+                )}
             />
         </View>
     );

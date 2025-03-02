@@ -97,7 +97,9 @@ export class MediaLibraryUtil {
         }
 
         try {
-            const result = await VideoThumbnails.getThumbnailAsync(localUri);
+            const result = await VideoThumbnails.getThumbnailAsync(localUri, {
+                quality: 0.3,
+            });
 
             return result;
         } catch (err) {
