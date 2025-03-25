@@ -6,76 +6,78 @@ import { ComponentProps, ReactNode, useState } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 
 export const pressableVariants = cva("px-2 py-4 items-center", {
-    variants: {
-        color: {
-            transparent: "bg-transparent",
-            white: "bg-white",
-            black: "bg-black",
-            red: "bg-core-imperial-red",
-            blue: "bg-core-caribbean-current",
-            submit: "bg-core-nyanza-300",
-        },
-        border: {
-            none: "",
-            gray: "border-gray-400 border-[1px]",
-        },
-        rounded: {
-            lg: "rounded-lg",
-            full: "rounded-full",
-        },
-        defaultVariants: {
-            color: "red",
-            rounded: "lg",
-            border: "none",
-        },
-    },
+	variants: {
+		color: {
+			transparent: "bg-transparent",
+			white: "bg-white",
+			black: "bg-black",
+			red: "bg-core-imperial-red",
+			blue: "bg-core-caribbean-current",
+			submit: "bg-core-nyanza-300",
+		},
+		border: {
+			none: "",
+			gray: "border-gray-400 border-[1px]",
+		},
+		rounded: {
+			lg: "rounded-lg",
+			full: "rounded-full",
+		},
+		defaultVariants: {
+			color: "red",
+			rounded: "lg",
+			border: "none",
+		},
+	},
 });
 
 type Props = {
-    twClassName?: ClassValue;
-    children: ReactNode;
-    haptics?: boolean;
+	twClassName?: ClassValue;
+	children: ReactNode;
+	haptics?: boolean;
 } & Omit<ComponentProps<typeof Pressable>, "className"> &
-    VariantProps<typeof pressableVariants>;
+	VariantProps<typeof pressableVariants>;
 
 const PressableOpacity = ({
-    rounded,
-    color,
-    border,
-    children,
-    twClassName,
-    onPress,
-    haptics = true,
-    ...props
+	rounded,
+	color,
+	border,
+	children,
+	twClassName,
+	onPress,
+	haptics = true,
+	...props
 }: Props) => {
-    const [isPressedIn, setIsPressedIn] = useState<boolean>(false);
-    const handleOnPress = async (event: GestureResponderEvent) => {
-        // HapticsUtil
-        // .mediumImpactAsync();
-        onPress && onPress(event);
-    };
+	const [isPressedIn, setIsPressedIn] = useState<boolean>(false);
+	const handleOnPress = async (event: GestureResponderEvent) => {
+		// HapticsUtil
+		// .mediumImpactAsync();
+		onPress && onPress(event);
+	};
+	const { disabled } = props;
 
-    return (
-        <Pressable
-            {...props}
-            onPressIn={() => {
-                setIsPressedIn(true);
-                haptics && HapticsUtil.mediumImpactAsync();
-            }}
-            onPressOut={() => {
-                setIsPressedIn(false);
-                haptics && HapticsUtil.rigidImpactAsync();
-            }}
-            onPress={handleOnPress}
-            className={cn(
-                pressableVariants({ rounded, color, border }),
-                twClassName,
-                isPressedIn ? "opacity-50" : ""
-            )}
-        >
-            {children}
-        </Pressable>
-    );
+	return (
+		<Pressable
+			{...props}
+			onPressIn={() => {
+				setIsPressedIn(true);
+				haptics && HapticsUtil.mediumImpactAsync();
+			}}
+			onPressOut={() => {
+				setIsPressedIn(false);
+				haptics && HapticsUtil.rigidImpactAsync();
+			}}
+			onPress={handleOnPress}
+			className={cn(
+				pressableVariants({ rounded, color, border }),
+				twClassName,
+				isPressedIn ? "opacity-50" : "",
+				disabled ? "opacity-50" : ""
+			)}
+		>
+			{children}
+		</Pressable>
+	);
 };
 
 export default PressableOpacity;

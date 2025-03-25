@@ -7,59 +7,59 @@ import {} from "@expo/vector-icons";
 import { MediaLibraryUtil } from "@/utils/media-library.util";
 
 type Props = {
-    videoAssetId: string;
-    //new width that will respect the aspectRatio of the original height.
-    height?: number;
-    children?: ReactNode;
+	videoAssetId: string;
+	//new width that will respect the aspectRatio of the original height.
+	height?: number;
+	children?: ReactNode;
 };
 
 const VideoThumbnailView = ({
-    videoAssetId,
-    children,
-    height: heightProp,
+	videoAssetId,
+	children,
+	height: heightProp,
 }: // width: widthProp,
 Props) => {
-    const [thumbnail, setThumbnail] =
-        useState<VideoThumbnails.VideoThumbnailsResult>();
+	const [thumbnail, setThumbnail] =
+		useState<VideoThumbnails.NativeVideoThumbnail>();
 
-    useEffect(() => {
-        const generate = async (videoAssetId: string) => {
-            const result = await MediaLibraryUtil.getThumbnail(videoAssetId);
-            if (!result) {
-                console.error("Failed to get thumbnail");
-                return;
-            }
-            setThumbnail(result);
-        };
+	useEffect(() => {
+		const generate = async (videoAssetId: string) => {
+			const result = await MediaLibraryUtil.getThumbnailRef(videoAssetId);
+			if (!result) {
+				console.error("Failed to get thumbnail");
+				return;
+			}
+			setThumbnail(result);
+		};
 
-        videoAssetId && generate(videoAssetId);
-    }, [videoAssetId]);
+		videoAssetId && generate(videoAssetId);
+	}, [videoAssetId]);
 
-    const renderThumbnail = (
-        thumbnail: VideoThumbnails.VideoThumbnailsResult
-    ) => {
-        const { height: originalHeight, uri, width: originalWidth } = thumbnail;
-        const aspectRatio = originalWidth / originalHeight;
+	const renderThumbnail = (
+		thumbnail: VideoThumbnails.NativeVideoThumbnail
+	) => {
+		const { height: originalHeight, width: originalWidth } = thumbnail;
+		const aspectRatio = originalWidth / originalHeight;
 
-        // const width = widthProp ?? 200;
-        const height = heightProp ?? 300;
-        const width = height * aspectRatio;
+		// const width = widthProp ?? 200;
+		const height = heightProp ?? 300;
+		const width = height * aspectRatio;
 
-        return (
-            <View
-                className="relative"
-                style={{ width, height, aspectRatio, borderRadius: 12 }}
-            >
-                <Image
-                    source={uri}
-                    style={{ width, height, aspectRatio, borderRadius: 12 }}
-                />
-                {children}
-            </View>
-        );
-    };
+		return (
+			<View
+				className="relative"
+				style={{ width, height, aspectRatio, borderRadius: 12 }}
+			>
+				<Image
+					source={thumbnail}
+					style={{ width, height, aspectRatio, borderRadius: 12 }}
+				/>
+				{children}
+			</View>
+		);
+	};
 
-    return <>{thumbnail && renderThumbnail(thumbnail)}</>;
+	return <>{thumbnail && renderThumbnail(thumbnail)}</>;
 };
 
 export default VideoThumbnailView;
