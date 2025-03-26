@@ -43,10 +43,9 @@ const VideoField = <
 					const addVideo = async () => {
 						try {
 							setIsLoading(true);
-							const video = await pickVideo();
-							if (!video) return;
-
-							onChange([video.assetId, ...value]);
+							const videoAssetId = await pickVideo();
+							if (!videoAssetId) return;
+							onChange([videoAssetId, ...value]);
 						} catch (err) {
 							if (AppError.isAppError(err)) {
 								console.warn(

@@ -37,13 +37,13 @@ const VideoList = ({
 
 	const loadVideo = async (videoAssetId: string) => {
 		const media = await new Media(videoAssetId).getAsset();
-		const { localUri } = media.assetInfo ?? {};
-		if (!localUri) {
+		const { useableUri } = media.assetInfo ?? {};
+		if (!useableUri) {
 			return;
 		}
 
 		await videoRef.current?.enterFullscreen();
-		player.replace(localUri);
+		player.replace(useableUri); //TODO: Should ensure that player is released and unmounted
 	};
 
 	return (
