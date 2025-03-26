@@ -1,6 +1,7 @@
 import * as MediaLibrary from "expo-media-library";
 import * as VideoThumbnails from "expo-video-thumbnails";
 import { NativeVideoThumbnail } from "expo-video-thumbnails";
+import { Toast } from "./toast.class";
 
 export type ResizeArgs = {
 	original: { height: number; width: number };
@@ -26,6 +27,7 @@ export class Media {
 			this.assetInfo = asset;
 		} catch (error) {
 			Media.errorHandler(error, "Failed to get album assets");
+			Toast.error();
 		} finally {
 			return this;
 		}
@@ -39,18 +41,25 @@ export class Media {
 			console.error(
 				"Failed to get video with assetId: " + this.videoAssetId
 			);
+			Toast.error({
+				description: "Failed to get the video",
+			});
 			return this;
 		}
 
-		console.log("assetInfo", JSON.stringify(this.assetInfo));
 		try {
-			const result = await VideoThumbnails.getThumbnailAsync(localUri, {
-				quality: 0.3,
-			});
-			console.log("result", result);
-			// this.thumbnailRefRef = result;
+			const result = await VideoThumbnails.getNativeThumbnailAsync(
+				localUri,
+				{
+					quality: 0.3,
+				}
+			);
+			this.thumbnailRef = result;
 		} catch (err) {
 			Media.errorHandler(err, "Failed to get video thumbnail");
+			Toast.error({
+				description: "Could not generate a thumbnail for the video",
+			});
 		} finally {
 			return this;
 		}

@@ -12,7 +12,7 @@ export const useImagePicker = () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ["videos"],
 			allowsEditing: false,
-			quality: 1,
+			quality: 0.6,
 		});
 
 		//NOTE: If the user cancels the picker, return

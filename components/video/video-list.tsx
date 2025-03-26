@@ -3,9 +3,8 @@ import { View } from "react-native";
 import PressableOpacity from "../core/pressable-opacity";
 import { ComponentProps, ReactNode, useRef } from "react";
 import React from "react";
-import { createVideoPlayer, useVideoPlayer, VideoView } from "expo-video";
+import { useVideoPlayer, VideoView } from "expo-video";
 import { Media } from "@/classes/media.class";
-import AppText from "../core/app-text";
 import VideoThumbnailView from "./video-thumbnail-view";
 
 type Props = {

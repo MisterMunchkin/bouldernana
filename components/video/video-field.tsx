@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import PressableIcon from "../ui/pressable-icon";
 import VideoList from "./video-list";
 import { AppError } from "@/utils/app-error.util";
+import { Toast } from "@/classes/toast.class";
 
 export type VideoFieldProps<
 	TFieldValues extends FieldValues = FieldValues,
@@ -47,13 +48,18 @@ const VideoField = <
 
 							onChange([video.assetId, ...value]);
 						} catch (err) {
-							AppError.isAppError(err) &&
+							if (AppError.isAppError(err)) {
 								console.warn(
 									"Error while adding video: " +
 										err.message +
 										"\n" +
 										JSON.stringify(err.cause)
 								);
+								Toast.error({
+									description:
+										"Retrieving video failed, please ensure that the video is not from a cloud storage and is playable on your phone.",
+								});
+							}
 						} finally {
 							setIsLoading(false);
 						}
@@ -77,7 +83,7 @@ const VideoField = <
 								<PressableOpacity
 									onPress={addVideo}
 									twClassName={cn(
-										"border-[1px] border-dashed px-8 rounded-lg justify-center h-[300px] mr-4 relative"
+										"border-[1px] border-dashed aspect-portrait rounded-lg justify-center h-[300px] mr-4 relative"
 									)}
 									disabled={isLoading}
 								>

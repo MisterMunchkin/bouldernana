@@ -8,6 +8,7 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "@/constants/colors.const";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
+import { Toaster } from "sonner-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -77,6 +78,7 @@ export default function RootLayout() {
 						}}
 					/>
 				</Stack>
+				<Toaster />
 			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
 	);

@@ -19,16 +19,17 @@ const VideoThumbnailView = ({
 	height: heightProp,
 }: // width: widthProp,
 Props) => {
-	const [thumbnail, setThumbnail] = useState<
-		VideoThumbnails.NativeVideoThumbnail | false
-	>();
+	const [thumbnail, setThumbnail] =
+		useState<VideoThumbnails.NativeVideoThumbnail>();
+	const [showDefault, setShowDefault] = useState<boolean>(false);
 
 	useEffect(() => {
 		const generate = async (videoAssetId: string) => {
 			const media = await new Media(videoAssetId).getThumbnailRef();
 			const { thumbnailRef } = media;
+
 			if (!thumbnailRef) {
-				setThumbnail(false);
+				setShowDefault(true);
 				return;
 			}
 			setThumbnail(thumbnailRef);
@@ -37,32 +38,31 @@ Props) => {
 		videoAssetId && generate(videoAssetId);
 	}, [videoAssetId]);
 
-	const renderThumbnail = (
-		thumbnail: VideoThumbnails.NativeVideoThumbnail
-	) => {
-		const { height: originalHeight, width: originalWidth } = thumbnail;
-		const aspectRatio = originalWidth / originalHeight;
-
-		// const width = widthProp ?? 200;
-		const height = heightProp ?? 300;
-		const width = height * aspectRatio;
-
-		return (
-			<View
-				className="relative"
-				style={{ width, height, aspectRatio, borderRadius: 12 }}
-			>
+	return (
+		<View className="relative" style={{ height: heightProp }}>
+			{showDefault ? (
+				<Image
+					source={require("@/assets/images/default-thumbnail.jpg")}
+					style={{
+						height: heightProp,
+						aspectRatio: 9 / 16,
+						borderRadius: 12,
+					}}
+				/>
+			) : (
 				<Image
 					source={thumbnail}
-					style={{ width, height, aspectRatio, borderRadius: 12 }}
+					style={{
+						height: heightProp,
+						aspectRatio: 9 / 16,
+						borderRadius: 12,
+					}}
 				/>
+			)}
 
-				{children}
-			</View>
-		);
-	};
-
-	return <>{thumbnail && renderThumbnail(thumbnail)}</>;
+			{children}
+		</View>
+	);
 };
 
 export default VideoThumbnailView;
