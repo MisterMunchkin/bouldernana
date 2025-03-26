@@ -67,7 +67,7 @@ export default function Index() {
 			<View className="gap-8 flex-grow py-safe-offset-20">
 				<FormProvider {...form}>
 					{/* TODO: Hide inside subscriber toggle */}
-					{/* <VideoField control={control} name="videoAssetIds" /> */}
+					<VideoField control={control} name="videoAssetIds" />
 
 					<ClimbTypeGrade />
 					<DropdownField

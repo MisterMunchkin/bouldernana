@@ -1,13 +1,9 @@
 import { LoggedClimb } from "@/stores/user-climb-record.store";
 import { ScrollView, View } from "react-native";
-import { Image } from "expo-image";
 import AppText from "../core/app-text";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { MediaLibraryUtil } from "@/utils/media-library.util";
-import { NativeVideoThumbnail } from "expo-video-thumbnails";
 
 type Props = {
 	displayedGrade: string;

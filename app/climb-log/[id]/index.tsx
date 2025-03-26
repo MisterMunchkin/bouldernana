@@ -83,7 +83,7 @@ const index = ({}: Props) => {
 					</View>
 				</PressableOpacity>
 				{/* TODO: Hide inside Subscriber Toggle */}
-				{/* <UpdateVideoList id={id} videoAssetIds={videoAssetIds ?? []} /> */}
+				<UpdateVideoList id={id} videoAssetIds={videoAssetIds ?? []} />
 				<View className="flex-row px-4 gap-2 flex-wrap flex-1">
 					<PressableOpacity
 						onPress={() =>

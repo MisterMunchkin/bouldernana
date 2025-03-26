@@ -4,7 +4,7 @@ import React from "react";
 import { Image } from "expo-image";
 import { View } from "react-native";
 import {} from "@expo/vector-icons";
-import { MediaLibraryUtil } from "@/utils/media-library.util";
+import { Media } from "@/classes/media.class";
 
 type Props = {
 	videoAssetId: string;
@@ -19,17 +19,19 @@ const VideoThumbnailView = ({
 	height: heightProp,
 }: // width: widthProp,
 Props) => {
-	const [thumbnail, setThumbnail] =
-		useState<VideoThumbnails.NativeVideoThumbnail>();
+	const [thumbnail, setThumbnail] = useState<
+		VideoThumbnails.NativeVideoThumbnail | false
+	>();
 
 	useEffect(() => {
 		const generate = async (videoAssetId: string) => {
-			const result = await MediaLibraryUtil.getThumbnailRef(videoAssetId);
-			if (!result) {
-				console.error("Failed to get thumbnail");
+			const media = await new Media(videoAssetId).getThumbnailRef();
+			const { thumbnailRef } = media;
+			if (!thumbnailRef) {
+				setThumbnail(false);
 				return;
 			}
-			setThumbnail(result);
+			setThumbnail(thumbnailRef);
 		};
 
 		videoAssetId && generate(videoAssetId);
@@ -54,6 +56,7 @@ Props) => {
 					source={thumbnail}
 					style={{ width, height, aspectRatio, borderRadius: 12 }}
 				/>
+
 				{children}
 			</View>
 		);
