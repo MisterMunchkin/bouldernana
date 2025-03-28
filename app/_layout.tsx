@@ -9,6 +9,7 @@ import { COLORS } from "@/constants/colors.const";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "sonner-native";
+import { Media } from "@/classes/media.class";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,6 +27,7 @@ export default function RootLayout() {
 		 * Just in case we have async functions to init the app
 		 */
 		const initApp = async () => {
+			Media.ensurePermissions();
 			setIsAppReady(true);
 		};
 

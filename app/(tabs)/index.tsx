@@ -28,16 +28,18 @@ const Tab = ({}: Props) => {
 				displayedGrade={getUserGrade({ grade: climb.grade })}
 			/>
 		),
-		[climbs, getUserGrade]
+		[getUserGrade]
 	);
+	const sortedClimbs = climbs
+		.slice()
+		.sort(
+			(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+		);
 
 	return (
 		<View className="flex-1 px-2">
 			<FlashList
-				data={climbs.sort(
-					(a, b) =>
-						new Date(b.date).getTime() - new Date(a.date).getTime()
-				)}
+				data={sortedClimbs}
 				contentContainerClassName="pt-safe-offset-20"
 				contentContainerStyle={{
 					paddingBottom: bottom + bottomTabBarHeight,
