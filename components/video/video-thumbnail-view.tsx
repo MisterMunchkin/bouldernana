@@ -3,65 +3,69 @@ import * as VideoThumbnails from "expo-video-thumbnails";
 import React from "react";
 import { Image } from "expo-image";
 import { View } from "react-native";
-import {} from "@expo/vector-icons";
+import { Media } from "@/classes/media.class";
 
 type Props = {
-    videoSource: string;
-    //new width that will respect the aspectRatio of the original height.
-    height?: number;
-    children?: ReactNode;
+	videoAssetId: string;
+	//new width that will respect the aspectRatio of the original height.
+	height?: number;
+	children?: ReactNode;
 };
 
 const VideoThumbnailView = ({
-    videoSource,
-    children,
-    height: heightProp,
+	videoAssetId,
+	children,
+	height: heightProp,
 }: // width: widthProp,
 Props) => {
-    const [thumbnail, setThumbnail] =
-        useState<VideoThumbnails.VideoThumbnailsResult>();
+	const [thumbnail, setThumbnail] =
+		useState<VideoThumbnails.NativeVideoThumbnail>();
+	const [showDefault, setShowDefault] = useState<boolean>(false);
 
-    useEffect(() => {
-        const generate = async (videoSource: string) => {
-            try {
-                const result = await VideoThumbnails.getThumbnailAsync(
-                    videoSource
-                );
+	useEffect(() => {
+		const generate = async (videoAssetId: string) => {
+			const media = await new Media(videoAssetId).getThumbnailRef();
+			const { thumbnailRef } = media;
 
-                setThumbnail(result);
-            } catch (e) {
-                console.error(e);
-            }
-        };
+			if (!thumbnailRef) {
+				setShowDefault(true);
+				return;
+			}
+			setThumbnail(thumbnailRef);
+		};
 
-        videoSource && generate(videoSource);
-    }, [videoSource]);
+		videoAssetId && generate(videoAssetId);
 
-    const renderThumbnail = (
-        thumbnail: VideoThumbnails.VideoThumbnailsResult
-    ) => {
-        const { height: originalHeight, uri, width: originalWidth } = thumbnail;
-        const aspectRatio = originalWidth / originalHeight;
+		return () => {
+			thumbnail?.release();
+		};
+	}, [videoAssetId]);
 
-        // const width = widthProp ?? 200;
-        const height = heightProp ?? 300;
-        const width = height * aspectRatio;
+	return (
+		<View className="relative" style={{ height: heightProp }}>
+			{showDefault ? (
+				<Image
+					source={require("@/assets/images/default-thumbnail.jpg")}
+					style={{
+						height: heightProp,
+						aspectRatio: 9 / 16,
+						borderRadius: 12,
+					}}
+				/>
+			) : (
+				<Image
+					source={thumbnail}
+					style={{
+						height: heightProp,
+						aspectRatio: 9 / 16,
+						borderRadius: 12,
+					}}
+				/>
+			)}
 
-        return (
-            <View
-                className="relative"
-                style={{ width, height, aspectRatio, borderRadius: 12 }}
-            >
-                <Image
-                    source={uri}
-                    style={{ width, height, aspectRatio, borderRadius: 12 }}
-                />
-                {children}
-            </View>
-        );
-    };
-
-    return <>{thumbnail && renderThumbnail(thumbnail)}</>;
+			{children}
+		</View>
+	);
 };
 
 export default VideoThumbnailView;

@@ -1,27 +1,24 @@
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
-import VideoField from "../video/video-field";
 import { z } from "zod";
-import { videoSourceSchema } from "@/constants/zod-schema.const";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { View } from "react-native";
+import { addClimbSchema } from "@/constants/zod-schema.const";
+import VideoField from "../video/video-field";
 
 type Props = {
-    videoSources: string[];
+    videoAssetIds: string[];
     id: string;
 };
 
-const schema = z.object({
-    ...videoSourceSchema,
-});
+const schema = addClimbSchema.pick({ videoAssetIds: true });
 
 type UpdateVideoSchema = z.infer<typeof schema>;
 
-const UpdateVideoList = ({ videoSources, id }: Props) => {
-    const updateVideos = useUserClimbRecordStore((store) => store.setVideos);
+const UpdateVideoList = ({ videoAssetIds, id }: Props) => {
+    const setVideos = useUserClimbRecordStore((store) => store.setVideos);
     const defaultValues: UpdateVideoSchema = {
-        videoSources,
+        videoAssetIds,
     };
 
     const { control } = useForm({
@@ -31,14 +28,14 @@ const UpdateVideoList = ({ videoSources, id }: Props) => {
 
     const videoSourcesChanges = useWatch({
         control,
-        name: "videoSources",
+        name: "videoAssetIds",
     });
 
     useEffect(() => {
-        updateVideos({ id, videoSources: videoSourcesChanges });
-    }, [videoSourcesChanges]);
+        setVideos({ id, videoAssetIds: videoSourcesChanges });
+    }, [videoSourcesChanges, id, setVideos]);
 
-    return <VideoField control={control} name="videoSources" />;
+    return <VideoField control={control} name="videoAssetIds" />;
 };
 
 export default UpdateVideoList;

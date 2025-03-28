@@ -6,13 +6,12 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import uuid from "react-native-uuid";
 import { produce } from "immer";
 
-export type ClimbSchema = z.infer<typeof addClimbSchema>;
-export type LoggedClimb = ClimbSchema & { id: string };
-
-type SetVideosArgs = {
+type ClimbSchema = z.infer<typeof addClimbSchema>;
+export type LoggedClimb = ClimbSchema & {
     id: string;
-    videoSources: string[];
 };
+
+type SetVideosArgs = Pick<LoggedClimb, "id" | "videoAssetIds">;
 
 type State = {
     climbs: LoggedClimb[];
@@ -36,7 +35,13 @@ export const useUserClimbRecordStore = create<State & Actions>()(
             climbs: Array<LoggedClimb>(),
             logClimb: (climb) =>
                 set((state) => ({
-                    climbs: [...state.climbs, { ...climb, id: uuid.v4() }],
+                    climbs: [
+                        ...state.climbs,
+                        {
+                            ...climb,
+                            id: uuid.v4(),
+                        },
+                    ],
                 })),
             updateClimb: (id, update) => {
                 const index = get().climbs.findIndex(
@@ -64,18 +69,19 @@ export const useUserClimbRecordStore = create<State & Actions>()(
                 set((state) => ({
                     climbs: state.climbs.filter((climb) => climb.id !== id),
                 })),
-            setVideos: ({ id, videoSources }) => {
+            setVideos: ({ id, videoAssetIds }) => {
                 const climbLogIndex = get().climbs.findIndex(
                     (log) => log.id === id
                 );
                 if (climbLogIndex === -1) {
-                    console.warn(`Could not find climb log with id: ${id}`);
+                    console.error(`Could not find climb log with id: ${id}`);
                     return;
                 }
 
                 set(
                     produce((state: State) => {
-                        state.climbs[climbLogIndex].videoSources = videoSources;
+                        state.climbs[climbLogIndex].videoAssetIds =
+                            videoAssetIds;
                     })
                 );
             },

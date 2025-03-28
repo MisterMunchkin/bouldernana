@@ -4,8 +4,10 @@ import * as Sharing from "expo-sharing";
 import * as DocumentPicker from "expo-document-picker";
 import { z } from "zod";
 import { jsonExportSchema } from "@/constants/zod-schema.const";
+import * as FileSystem from "expo-file-system";
 
 export namespace FileSystemUtil {
+    export const VIDEOS_DIR = `${FileSystem.documentDirectory}videos/`;
     /**
      * Save a JSON object to the device's cache directory.
      * @param data The JSON object to save.

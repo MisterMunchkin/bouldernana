@@ -9,14 +9,10 @@ import {
     WHERE,
 } from "./core.const";
 
-export const videoSourceSchema = {
-    videoSources: z.array(z.string()),
-};
-
 export const ClimbTypeEnum = z.enum(["Board", "Boulder", "Route", "Trad"]);
 
 export const addClimbSchema = z.object({
-    ...videoSourceSchema,
+    videoAssetIds: z.array(z.string()).optional(),
     typeOfClimb: ClimbTypeEnum.default("Boulder"), //boulder, route, board, trad
     whereDidYouClimb: z.enum(WHERE).default("Indoor"), //indoor, outdoor
     grade: z.string(),
