@@ -1,7 +1,7 @@
 import { FlashList } from "@shopify/flash-list";
 import { View } from "react-native";
 import PressableOpacity from "../core/pressable-opacity";
-import { ComponentProps, ReactNode, useRef } from "react";
+import { ComponentProps, ReactNode, useEffect, useRef } from "react";
 import React from "react";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { Media } from "@/classes/media.class";
@@ -34,6 +34,12 @@ const VideoList = ({
 }: Props) => {
 	const videoRef = useRef<VideoView>(null);
 	const player = useVideoPlayer("");
+
+	useEffect(() => {
+		return () => {
+			player.release();
+		};
+	}, []);
 
 	const loadVideo = async (videoAssetId: string) => {
 		const media = await new Media(videoAssetId).getAsset();

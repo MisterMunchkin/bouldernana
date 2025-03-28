@@ -3,7 +3,6 @@ import * as VideoThumbnails from "expo-video-thumbnails";
 import React from "react";
 import { Image } from "expo-image";
 import { View } from "react-native";
-import {} from "@expo/vector-icons";
 import { Media } from "@/classes/media.class";
 
 type Props = {
@@ -36,6 +35,10 @@ Props) => {
 		};
 
 		videoAssetId && generate(videoAssetId);
+
+		return () => {
+			thumbnail?.release();
+		};
 	}, [videoAssetId]);
 
 	return (
