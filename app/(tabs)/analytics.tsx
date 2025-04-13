@@ -4,17 +4,16 @@ import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { Dimensions, ScrollView, View } from "react-native";
 
 import { LineChart, PieChart } from "react-native-chart-kit";
+import { COLORS } from "../../constants/colors.const";
+import ClimbsPerWeek from "@/components/analytics/climbs-per-week";
 
 type Props = {};
 
-const screenWidth = 400;
-const chartHeight = 250;
-const chartConfig = {
-	backgroundGradientFrom: "#1E2923",
-	backgroundGradientFromOpacity: 0,
-	backgroundGradientTo: "#08130D",
-	backgroundGradientToOpacity: 0.5,
-	color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+export const SCREEN_WIDTH = 400;
+export const CHART_HEIGHT = 250;
+export const CHART_CONFIG = {
+	// color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+	color: (opacity = 1) => COLORS.core["caribbean-current"].DEFAULT,
 	strokeWidth: 2, // optional, default 3
 	barPercentage: 0.5,
 	useShadowColorFromDataset: false, // optional
@@ -25,7 +24,7 @@ const analytics = ({}: Props) => {
 	// const totalTypesOfClimbs = new ClimbAnalytic(
 	// 	climbs
 	// ).getTotalTypesOfClimbs();
-	const typeOfCLimbAnalytic = new Analytics({
+	const climbAnalytic = new Analytics({
 		data: climbs,
 	});
 
@@ -33,9 +32,9 @@ const analytics = ({}: Props) => {
 		<ScrollView className="flex-1">
 			<View className="py-safe-offset-20 items-center gap-6">
 				<AppText>Coming Soon!</AppText>
-				<AppText size={"xs"}>
+				{/* <AppText size={"xs"}>
 					Some features I'm thinking of including:
-				</AppText>
+				</AppText> */}
 				{/* <View className="flex-col items-start gap-4 px-4">
 					<AppText size={"xs"}>
 						- Number of climbs logged this month
@@ -52,29 +51,15 @@ const analytics = ({}: Props) => {
 						if you project it or flash it
 					</AppText>
 				</View> */}
-				{/* <LineChart
-					data={{
-						labels: [],
-						datasets: [
-							{
-								data: [],
-							},
-						],
-					}}
-					width={screenWidth}
-					height={chartHeight}
-					verticalLabelRotation={30}
-					chartConfig={chartConfig}
-					bezier
-				/> */}
+				<ClimbsPerWeek />
 				<PieChart
 					accessor="value"
-					data={typeOfCLimbAnalytic.toPieChartData("typeOfClimb")}
-					width={screenWidth}
-					height={chartHeight}
+					data={climbAnalytic.toPieChartData("typeOfClimb")}
+					width={SCREEN_WIDTH}
+					height={CHART_HEIGHT}
 					backgroundColor="transparent"
 					paddingLeft="15"
-					chartConfig={chartConfig}
+					chartConfig={CHART_CONFIG}
 				/>
 			</View>
 		</ScrollView>

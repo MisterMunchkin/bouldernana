@@ -44,6 +44,4 @@ export class Analytics<T extends object> {
 
 		return result;
 	}
-
-	toLineChartData<TAccessor extends keyof T>(accessor: TAccessor) {}
 }
