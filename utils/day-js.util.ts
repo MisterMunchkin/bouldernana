@@ -23,4 +23,11 @@ export namespace DayJsUtils {
 		Array.from({ length: 3 }, (_, i) => {
 			return day().subtract(i, "month").format("MMMM");
 		});
+	export const getFirstDayOfEachMonthFrom = (monthsAgo: number) => {
+		const dates = [];
+		for (let i = monthsAgo - 1; i >= 0; i--) {
+			dates.push(day().subtract(i, "month").startOf("month"));
+		}
+		return dates;
+	};
 }

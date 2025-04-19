@@ -1,4 +1,3 @@
-import { Analytics } from "@/classes/climb-analytic.class";
 import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import AppText from "../core/app-text";
 import { COLORS } from "@/constants/colors.const";
@@ -19,45 +18,34 @@ const ClimbsPerWeek = ({}: Props) => {
 	const [selectedIndex, setSelectedIndex] = useState<number>();
 	const climbs = useUserClimbRecordStore((store) => store.climbs);
 
-	const { monthLabels, climbsPerWeekDataSet, climbsPerWeekRecordMap } =
-		useMemo(() => {
-			const threeMMonthsAgo = day().subtract(3, "month");
+	const { monthLabels, climbsPerMonth } = useMemo(() => {
+		const acc: Record<string, number> = {};
 
-			const filteredClimbs = climbs.filter((climb) =>
-				day(climb.date).isAfter(threeMMonthsAgo)
-			);
+		const firstDayOfMonths = DayJsUtils.getFirstDayOfEachMonthFrom(3);
+		firstDayOfMonths.reduce((acc, date) => {
+			const monthLabel = day(date).format("MMMM");
+			acc[monthLabel] = climbs.filter((climb) =>
+				day(climb.date).isSame(date, "month")
+			).length;
 
-			const acc: Record<string, number> = {};
-			const result = filteredClimbs.reduce((acc, climb) => {
-				const date = day(climb["date"]);
-				const dateRange = DayJsUtils.getWeekRange(date);
+			return acc;
+		}, acc);
 
-				if (!acc[dateRange]) {
-					acc[dateRange] = 1;
-				} else {
-					acc[dateRange] += 1;
-				}
+		const monthLabels = Object.keys(acc);
+		const climbsPerMonth = Object.values(acc);
 
-				return acc;
-			}, acc);
-
-			const climbsPerWeekDataSet = Object.values(result);
-			const climbsPerWeekRecordMap = Object.entries(result);
-			const monthLabels = DayJsUtils.getMonthLabelsFrom(3).toReversed();
-
-			return {
-				climbsPerWeekDataSet,
-				climbsPerWeekRecordMap,
-				monthLabels,
-			};
-		}, [climbs]);
+		return {
+			climbsPerMonth,
+			monthLabels,
+		};
+	}, [climbs]);
 
 	return (
 		<>
 			{selectedIndex !== undefined ? (
 				<AppText
 					size={"xs"}
-				>{`${climbsPerWeekRecordMap[selectedIndex][1]} climbs on ${climbsPerWeekRecordMap[selectedIndex][0]}`}</AppText>
+				>{`${climbsPerMonth[selectedIndex]} climbs on ${monthLabels[selectedIndex]}`}</AppText>
 			) : (
 				<AppText size={"xs"}>
 					{climbs.length} Total logged climbs
@@ -68,14 +56,13 @@ const ClimbsPerWeek = ({}: Props) => {
 					labels: monthLabels,
 					datasets: [
 						{
-							data: climbsPerWeekDataSet,
+							data: climbsPerMonth,
 							color: () =>
 								COLORS.core["caribbean-current"].DEFAULT,
 						},
 					],
 				}}
 				onDataPointClick={({ dataset, index, x, y }) => {
-					// setPerWeekLabel(climbsPerWeekRecordMap[index]);
 					HapticsUtil.selectionAsync();
 					setSelectedIndex(index);
 				}}
@@ -84,7 +71,13 @@ const ClimbsPerWeek = ({}: Props) => {
 						? COLORS.core["vanilla"][300]
 						: COLORS.core["caribbean-current"].DEFAULT;
 				}}
+				yAxisInterval={1}
 				verticalLabelRotation={10}
+				fromNumber={
+					Math.max(...climbsPerMonth) > 4
+						? Math.max(...climbsPerMonth)
+						: 4
+				}
 				fromZero
 				withInnerLines={false}
 				width={Dimensions.get("screen").width}
