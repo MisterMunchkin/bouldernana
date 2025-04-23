@@ -135,6 +135,7 @@ export namespace Media {
 				message: "Limited access to media library",
 				description:
 					"You can update the videos you would like bouldernana to access in your phone's settings.",
+				autoClose: false,
 			});
 		}
 
