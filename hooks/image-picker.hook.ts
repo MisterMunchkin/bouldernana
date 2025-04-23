@@ -21,8 +21,7 @@ export const useImagePicker = () => {
 		});
 
 		//NOTE: If the user cancels the picker, return
-		if (result.canceled)
-			return Promise.reject(new AppError("User canceled", result));
+		if (result.canceled) return;
 
 		/**
 		 * ImagePicker creates new files in the cache when a user picks something
