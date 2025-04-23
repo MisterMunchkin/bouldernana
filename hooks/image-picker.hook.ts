@@ -1,5 +1,4 @@
 import { Media } from "@/classes/media.class";
-import { AppError } from "@/utils/app-error.util";
 import * as ImagePicker from "expo-image-picker";
 
 export const useImagePicker = () => {
@@ -21,8 +20,7 @@ export const useImagePicker = () => {
 		});
 
 		//NOTE: If the user cancels the picker, return
-		if (result.canceled)
-			return Promise.reject(new AppError("User canceled", result));
+		if (result.canceled) return;
 
 		/**
 		 * ImagePicker creates new files in the cache when a user picks something
