@@ -1,5 +1,4 @@
 import { Media } from "@/classes/media.class";
-import { AppError } from "@/utils/app-error.util";
 import * as ImagePicker from "expo-image-picker";
 
 export const useImagePicker = () => {

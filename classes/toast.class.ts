@@ -13,4 +13,16 @@ export class Toast {
 			position: "top-center",
 		});
 	}
+
+	public static info(options?: {
+		description?: string;
+		message?: string;
+	}): string | number {
+		const { description, message } = options ?? {};
+
+		return toast.info(message ?? "Info", {
+			description,
+			position: "top-center",
+		});
+	}
 }

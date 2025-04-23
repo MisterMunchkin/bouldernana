@@ -127,7 +127,17 @@ export namespace Media {
 		};
 	};
 	export const ensurePermissions = async (): Promise<boolean> => {
-		const { status } = await MediaLibrary.requestPermissionsAsync();
+		const { status, accessPrivileges } =
+			await MediaLibrary.requestPermissionsAsync();
+
+		if (accessPrivileges === "limited") {
+			Toast.info({
+				message: "Limited access to media library",
+				description:
+					"You can update the videos you would like bouldernana to access in your phone's settings.",
+			});
+		}
+
 		return status === "granted";
 	};
 }
