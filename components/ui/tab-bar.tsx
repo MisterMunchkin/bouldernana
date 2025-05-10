@@ -7,8 +7,6 @@ import { COLORS } from "@/constants/colors.const";
 import { cn } from "@/utils/cn.util";
 
 const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
-	console.log(JSON.stringify(descriptors));
-
 	return (
 		<View
 			className={cn(
@@ -38,7 +36,6 @@ const Tab = ({
 	navigation: BottomTabBarProps["navigation"];
 	descriptor: BottomTabDescriptor;
 }) => {
-	console.log(descriptor);
 	const {
 		route: { name: routeName, key },
 		options: { title, tabBarIcon },
