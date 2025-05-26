@@ -13,7 +13,9 @@
 		"lint": "expo lint",
 		"nuke:ios": "rm -rf node_modules && rm -rf ios",
 		"supabase:gen-types": "supabase gen types --lang=typescript --local > supabase/database.types.ts",
-		"supabase:db-push": "supabase db push"
+		"supabase:db-push": "supabase db push",
+		"supabase:migration-new": "supabase migration new",
+		"supabase:migrate-local": "supabase migration up --local"
 	},
 	"jest": {
 		"preset": "jest-expo"
