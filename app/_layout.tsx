@@ -10,6 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "sonner-native";
 import { Media } from "@/classes/media.class";
+import { SupaLegend } from "@/supa-legend/base.class";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,6 +29,17 @@ export default function RootLayout() {
 		 */
 		const initApp = async () => {
 			Media.ensurePermissions();
+			SupaLegend.supabase.auth.onAuthStateChange((event, session) => {
+				console.log(
+					JSON.stringify({ event, user: session?.user }, null, 2)
+				);
+				SupaLegend.userAuth$.set({
+					isAuthenticated:
+						event === "SIGNED_IN" || event === "TOKEN_REFRESHED",
+					user: session?.user ?? null,
+				});
+			});
+
 			setIsAppReady(true);
 		};
 
