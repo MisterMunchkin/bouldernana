@@ -24,13 +24,12 @@ import AppText from "@/components/core/app-text";
 import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
 import { router } from "expo-router";
 import VideoField from "@/components/video/video-field";
+import { Climbs } from "@/supa-legend/climbs.class";
 
-export type AddClimbSchema = z.infer<typeof addClimbSchema> & {
-	videoAssetIds: string[];
-};
+export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
 const DEFAULT_VALUES: AddClimbSchema = {
-	videoAssetIds: [],
+	assetIds: [],
 	typeOfClimb: "Boulder",
 	whereDidYouClimb: "Indoor",
 	grade: "",
@@ -43,10 +42,13 @@ const DEFAULT_VALUES: AddClimbSchema = {
 	// rating: "",
 	date: day().toISOString(),
 	notes: "",
+	link: "",
 	// relativeEffort: ""
 };
 
 export default function Index() {
+	const { add } = Climbs;
+
 	const form = useForm({
 		resolver: zodResolver(addClimbSchema),
 		defaultValues: DEFAULT_VALUES,
@@ -56,7 +58,9 @@ export default function Index() {
 	const getInferredDropdownItems = CoreTypesUtil.getInferredDropdownItems;
 
 	const saveRecord = (climb: AddClimbSchema) => {
-		logClimb(climb);
+		// logClimb(climb);
+		// console.log(climb);
+		add(climb);
 		reset();
 		router.back();
 	};
@@ -67,7 +71,7 @@ export default function Index() {
 			<View className="gap-8 flex-grow py-safe-offset-20">
 				<FormProvider {...form}>
 					{/* TODO: Hide inside subscriber toggle */}
-					<VideoField control={control} name="videoAssetIds" />
+					<VideoField control={control} name="assetIds" />
 
 					<ClimbTypeGrade />
 					<DropdownField

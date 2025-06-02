@@ -6,9 +6,10 @@ import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import { FlashList } from "@shopify/flash-list";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ClimbCard from "./climb-card";
 
 type Props = {
-	data$: Climbs["data$"];
+	data$: typeof Climbs.data$;
 };
 
 const ObservedClimbs = observer(({ data$ }: Props) => {
@@ -19,9 +20,10 @@ const ObservedClimbs = observer(({ data$ }: Props) => {
 
 	const renderItem = useCallback(
 		(climb: ClimbSchema) => (
-			<View className="p-4 bg-red-500">
-				<Text>{climb.grade}</Text>
-			</View>
+			<ClimbCard
+				{...climb}
+				displayedGrade={getUserGrade({ grade: climb.grade })}
+			/>
 		),
 		[getUserGrade]
 	);

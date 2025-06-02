@@ -1,21 +1,15 @@
-import { LoggedClimb } from "@/stores/user-climb-record.store";
 import { ScrollView, View } from "react-native";
 import AppText from "../core/app-text";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
+import { ClimbSchema } from "@/supa-legend/climbs.class";
 
 type Props = {
 	displayedGrade: string;
 } & Pick<
-	LoggedClimb,
-	| "date"
-	| "videoAssetIds"
-	| "id"
-	| "skill"
-	| "typeOfClimb"
-	| "steepness"
-	| "whereDidYouClimb"
+	ClimbSchema,
+	"date" | "id" | "typeOfClimb" | "skill" | "steepness" | "whereDidYouClimb"
 >;
 
 const ClimbCard = ({

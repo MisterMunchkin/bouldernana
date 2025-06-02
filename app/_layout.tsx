@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "sonner-native";
 import { Media } from "@/classes/media.class";
 import { SupaLegend } from "@/supa-legend/base.class";
+import { Climbs } from "@/supa-legend/climbs.class";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,6 +39,13 @@ export default function RootLayout() {
 						event === "SIGNED_IN" || event === "TOKEN_REFRESHED",
 					user: session?.user ?? null,
 				});
+			});
+
+			Climbs.data$.onChange((params) => {
+				console.log(
+					"Climbs data changed",
+					JSON.stringify(params, null, 2)
+				);
 			});
 
 			setIsAppReady(true);

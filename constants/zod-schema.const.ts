@@ -8,26 +8,25 @@ import {
 	VGRADES,
 	WHERE,
 } from "./core.const";
-
 export const ClimbTypeEnum = z.enum(["Board", "Boulder", "Route", "Trad"]);
 
 export const addClimbSchema = z.object({
-	videoAssetIds: z.array(z.string()).optional(),
+	assetIds: z.array(z.string()),
 	typeOfClimb: ClimbTypeEnum.default("Boulder"), //boulder, route, board, trad
 	whereDidYouClimb: z.enum(WHERE).default("Indoor"), //indoor, outdoor
 	grade: z.string(),
 	//Advanced info
-	ascentType: z.enum(ASCENT_TYPE).optional(), //redpoint, onsight, flash, project
-	attempts: z.coerce.number().optional(), //Should only show up if ascentType is redpoint or project
+	ascentType: z.enum(ASCENT_TYPE).default("Flash"), //redpoint, onsight, flash, project
+	attempts: z.coerce.number(), //Should only show up if ascentType is redpoint or project
 	hasBeenSent: z.boolean(),
-	howDidItFeel: z.enum(CLIMB_FEEL).optional(), //soft, solid, hard
-	skill: z.enum(SKILL_TYPE).array().optional(), //Cruxy, Athletic, etc..
-	steepness: z.enum(STEEPNESS).optional(), // Slab, Overhang, etc.
+	howDidItFeel: z.enum(CLIMB_FEEL).default("Solid"), //soft, solid, hard
+	skill: z.enum(SKILL_TYPE).array(), //Cruxy, Athletic, etc..
+	steepness: z.enum(STEEPNESS).default("Overhang"), // Slab, Overhang, etc.
 	//ENDOF Advanced info
 	// rating: z.string().optional(), // no rating to 5
 	date: z.string().datetime(),
-	notes: z.string().optional(),
-	link: z.string().optional(),
+	notes: z.string(),
+	link: z.string(),
 	// relativeEffort: z.string().optional(), //strava effort input
 });
 
