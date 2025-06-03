@@ -1,17 +1,17 @@
 import { addClimbSchema, jsonExportSchema } from "@/constants/zod-schema.const";
-import { asyncStorageJSON } from "@/utils/async-storage-json.util";
 import { z } from "zod";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { v7 as uuidV7 } from "uuid";
+import * as Crypto from "expo-crypto";
 import { produce } from "immer";
+import mmkvStorageJSON from "@/utils/mmkv-storage-json.util";
 
 type ClimbSchema = z.infer<typeof addClimbSchema>;
 export type LoggedClimb = ClimbSchema & {
 	id: string;
 };
 
-type SetVideosArgs = Pick<LoggedClimb, "id" | "videoAssetIds">;
+type SetVideosArgs = Pick<LoggedClimb, "id" | "assetIds">;
 
 type State = {
 	climbs: LoggedClimb[];
@@ -39,7 +39,7 @@ export const useUserClimbRecordStore = create<State & Actions>()(
 						...state.climbs,
 						{
 							...climb,
-							id: uuidV7(),
+							id: Crypto.randomUUID(),
 						},
 					],
 				})),
@@ -69,7 +69,7 @@ export const useUserClimbRecordStore = create<State & Actions>()(
 				set((state) => ({
 					climbs: state.climbs.filter((climb) => climb.id !== id),
 				})),
-			setVideos: ({ id, videoAssetIds }) => {
+			setVideos: ({ id, assetIds }) => {
 				const climbLogIndex = get().climbs.findIndex(
 					(log) => log.id === id
 				);
@@ -80,8 +80,7 @@ export const useUserClimbRecordStore = create<State & Actions>()(
 
 				set(
 					produce((state: State) => {
-						state.climbs[climbLogIndex].videoAssetIds =
-							videoAssetIds;
+						state.climbs[climbLogIndex].assetIds = assetIds;
 					})
 				);
 			},
@@ -92,7 +91,7 @@ export const useUserClimbRecordStore = create<State & Actions>()(
 		}),
 		{
 			name: "user-climb-record",
-			storage: createJSONStorage(() => asyncStorageJSON),
+			storage: createJSONStorage(() => mmkvStorageJSON),
 		}
 	)
 );

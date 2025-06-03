@@ -4,9 +4,14 @@ import { Database, Tables } from "@/supabase/database.types";
 
 export type ClimbSchema = Tables<"climbs">;
 
+/**
+ * @todo Still trying to figure out how to have offline first
+ * local persistance when user is unauthenticated, then move to db sync when
+ * they are authenticated.
+ */
 export class Climbs extends SupaLegend {
 	static data$ = observable(
-		SupaLegend.customSynced({
+		SupaLegend.supaLegendSynced({
 			supabase: SupaLegend.supabase,
 			collection: "climbs",
 			select: (from) => from.select(`*`),
