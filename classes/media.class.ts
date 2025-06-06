@@ -1,7 +1,7 @@
 import * as MediaLibrary from "expo-media-library";
-import * as VideoThumbnails from "expo-video-thumbnails";
+import * as VideoThumbnails from "custom-expo-video-thumbnails";
 import * as FileSystem from "expo-file-system";
-import { NativeVideoThumbnail } from "expo-video-thumbnails";
+import { NativeVideoThumbnail } from "custom-expo-video-thumbnails";
 import { Toast } from "./toast.class";
 
 export type ResizeArgs = {
@@ -14,7 +14,7 @@ export type ResizeArgs = {
 export class Media {
 	videoAssetId: string;
 	assetInfo: (MediaLibrary.AssetInfo & { useableUri: string }) | null = null;
-	thumbnailRef: NativeVideoThumbnail | null = null;
+	thumbnailRef: NativeVideoThumbnail | null | undefined = null;
 	static readonly VIDEO_THUMBNAILS_CACHE_DIR =
 		FileSystem.cacheDirectory + "VideoThumbnails/";
 	static readonly IMAGE_PICKER_CACHE_DIR =
