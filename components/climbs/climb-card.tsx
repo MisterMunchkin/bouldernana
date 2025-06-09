@@ -1,9 +1,9 @@
-import { LoggedClimb } from "@/stores/user-climb-record.store";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import AppText from "../core/app-text";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
+import { LoggedClimb } from "@/types/core.type";
 
 type Props = {
 	displayedGrade: string;

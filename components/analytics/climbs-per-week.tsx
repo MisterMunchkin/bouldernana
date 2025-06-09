@@ -1,22 +1,19 @@
-import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import AppText from "../core/app-text";
 import { COLORS } from "@/constants/colors.const";
-import {
-	CHART_CONFIG,
-	CHART_HEIGHT,
-	SCREEN_WIDTH,
-} from "@/app/(tabs)/analytics";
+import { CHART_CONFIG, CHART_HEIGHT } from "@/app/(tabs)/analytics";
 import { LineChart } from "react-native-chart-kit";
 import { useMemo, useState } from "react";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import { HapticsUtil } from "@/utils/expo-haptics.util";
 import { Dimensions } from "react-native";
+import { ClimbsClass } from "@/classes/climbs.class";
+import { observer } from "@legendapp/state/react";
 
 type Props = {};
 
-const ClimbsPerWeek = ({}: Props) => {
+const ClimbsPerWeek = observer(({}: Props) => {
 	const [selectedIndex, setSelectedIndex] = useState<number>();
-	const climbs = useUserClimbRecordStore((store) => store.climbs);
+	const climbs = ClimbsClass.climbs$.get();
 
 	const { monthLabels, climbsPerMonth } = useMemo(() => {
 		const acc: Record<string, number> = {};
@@ -88,6 +85,6 @@ const ClimbsPerWeek = ({}: Props) => {
 			/>
 		</>
 	);
-};
+});
 
 export default ClimbsPerWeek;

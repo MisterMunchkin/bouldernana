@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import * as VideoThumbnails from "expo-video-thumbnails";
+import * as VideoThumbnails from "custom-expo-video-thumbnails";
 import React from "react";
 import { Image } from "expo-image";
 import { View } from "react-native";

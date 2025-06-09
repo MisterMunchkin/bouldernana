@@ -1,16 +1,17 @@
+import { ClimbsClass } from "@/classes/climbs.class";
 import UpdateVideoList from "@/components/climb-log/update-video-list";
 import AppText from "@/components/core/app-text";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import Dividers from "@/components/ui/dividers";
 import { COLORS } from "@/constants/colors.const";
 import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
-import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { ClimbLogUtil } from "@/utils/climb-log.util";
 import { cn } from "@/utils/cn.util";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import { FontAwesome } from "@expo/vector-icons";
+import { observer } from "@legendapp/state/react";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { Fragment, useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { Alert, ScrollView, View } from "react-native";
 
 type Props = {};
@@ -18,12 +19,12 @@ type Props = {};
 export type ClimbLogLocalParams = {
 	id: string;
 };
-const index = ({}: Props) => {
+const index = observer(({}: Props) => {
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
-	const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
+	const climbLog = ClimbsClass.get(id);
 	const { date, whereDidYouClimb, typeOfClimb, videoAssetIds } =
 		climbLog ?? {};
-	const destroyLog = useUserClimbRecordStore((store) => store.destroy);
+	const destroyLog = ClimbsClass.destroy;
 	const { getUserGrade } = useUserGradeOptions();
 
 	const confirmDeleteLog = () =>
@@ -184,6 +185,6 @@ const index = ({}: Props) => {
 			</View>
 		</ScrollView>
 	);
-};
+});
 
 export default index;
