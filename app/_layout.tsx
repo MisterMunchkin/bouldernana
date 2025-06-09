@@ -10,6 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "sonner-native";
 import { Media } from "@/classes/media.class";
+import { ClimbsClass } from "@/classes/climbs.class";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,6 +18,40 @@ SplashScreen.setOptions({
 	duration: 1000,
 	fade: true,
 });
+
+// type Store = {
+// 	climbs: LoggedClimb[];
+// 	addClimb: (climb: AddClimbSchema) => void;
+// 	setAssets: (args: { id: string; assetIds: string[] }) => void;
+// 	getClimb: (id: string) => LoggedClimb | undefined;
+// };
+
+// export const store$ = observable<Store>({
+// 	climbs: [],
+// 	addClimb: (climb: AddClimbSchema) => {
+// 		const loggedClimb: LoggedClimb = {
+// 			...climb,
+// 			id: ExpoCrypto.randomUUID(),
+// 		};
+// 		console.log("Logging climb:", loggedClimb);
+// 		store$.climbs.push(loggedClimb);
+// 	},
+// 	setAssets: ({ id, assetIds }) => {
+// 		store$;
+// 		store$.set;
+// 	},
+// 	getClimb: (id: string) => {
+// 		const {climbs} = store$.peek();
+// 		return climbs.
+// 	},
+// });
+
+// syncObservable(store$, {
+// 	persist: {
+// 		name: "gettingStarted",
+// 		plugin: ObservablePersistMMKV,
+// 	},
+// });
 
 export default function RootLayout() {
 	//NOTE: We proably don't need to unmount the root since the file folder is used on user actions. But wanted to follow expo docs
@@ -28,6 +63,12 @@ export default function RootLayout() {
 		 */
 		const initApp = async () => {
 			Media.ensurePermissions();
+
+			ClimbsClass.climbs$.onChange((params) => {
+				//Add supabase storage sync here.
+				console.log("Store changed:", JSON.stringify(params));
+			});
+
 			setIsAppReady(true);
 		};
 

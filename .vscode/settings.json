@@ -1,12 +1,15 @@
 {
-    "tailwindCSS.experimental.classRegex": [
-        ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-    ],
-    "tailwindCSS.classAttributes": [
-        "class",
-        "className",
-        "ngClass",
-        "class:list",
-        "twClassName"
-    ]
+	"tailwindCSS.experimental.classRegex": [
+		["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+	],
+	"tailwindCSS.classAttributes": [
+		"class",
+		"className",
+		"ngClass",
+		"class:list",
+		"twClassName"
+	],
+	"editor.codeActionsOnSave": {
+		"source.removeUnusedImports": true
+	}
 }

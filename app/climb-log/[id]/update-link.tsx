@@ -1,5 +1,4 @@
 import { addClimbSchema } from "@/constants/zod-schema.const";
-import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import { router, useLocalSearchParams } from "expo-router";
 import { ClimbLogLocalParams } from ".";
 import { FormProvider, useForm } from "react-hook-form";
@@ -10,51 +9,52 @@ import { cn } from "@/utils/cn.util";
 import { TextField } from "@/components/core/field";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import AppText from "@/components/core/app-text";
+import { ClimbsClass } from "@/classes/climbs.class";
 
 const schema = addClimbSchema.pick({
-    link: true,
+	link: true,
 });
 
 type Props = {};
 
 const UpdateLink = ({}: Props) => {
-    const { id } = useLocalSearchParams<ClimbLogLocalParams>();
-    const climbLog = useUserClimbRecordStore((store) => store.getLog(id));
-    const updateLog = useUserClimbRecordStore((store) => store.updateClimb);
+	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
+	const climbLog = ClimbsClass.peek(id);
+	const updateLog = ClimbsClass.update;
 
-    const form = useForm({
-        resolver: zodResolver(schema),
-        defaultValues: schema.parse(climbLog),
-    });
-    const { handleSubmit, control } = form;
+	const form = useForm({
+		resolver: zodResolver(schema),
+		defaultValues: schema.parse(climbLog),
+	});
+	const { handleSubmit, control } = form;
 
-    const updateRecord = (update: z.infer<typeof schema>) => {
-        updateLog(id, update);
-        router.back();
-    };
+	const updateRecord = (update: z.infer<typeof schema>) => {
+		updateLog({ id, update });
+		router.back();
+	};
 
-    return (
-        <ScrollView className={cn("flex-1")}>
-            <View className="pt-safe-offset-4 gap-6 px-4">
-                <FormProvider {...form}>
-                    <TextField
-                        control={control}
-                        name="link"
-                        title="Links or resources of the climb, like TheCrag links"
-                        inputProps={{ autoCapitalize: "none" }}
-                    />
+	return (
+		<ScrollView className={cn("flex-1")}>
+			<View className="pt-safe-offset-4 gap-6 px-4">
+				<FormProvider {...form}>
+					<TextField
+						control={control}
+						name="link"
+						title="Links or resources of the climb, like TheCrag links"
+						inputProps={{ autoCapitalize: "none" }}
+					/>
 
-                    <PressableOpacity
-                        onPress={handleSubmit(updateRecord)}
-                        color={"submit"}
-                        rounded={"lg"}
-                    >
-                        <AppText size={"xs"}>Submit</AppText>
-                    </PressableOpacity>
-                </FormProvider>
-            </View>
-        </ScrollView>
-    );
+					<PressableOpacity
+						onPress={handleSubmit(updateRecord)}
+						color={"submit"}
+						rounded={"lg"}
+					>
+						<AppText size={"xs"}>Submit</AppText>
+					</PressableOpacity>
+				</FormProvider>
+			</View>
+		</ScrollView>
+	);
 };
 
 export default UpdateLink;

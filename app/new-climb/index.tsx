@@ -2,14 +2,12 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { View } from "react-native";
 import { z } from "zod";
-import React from "react";
 import { TextField } from "@/components/core/field";
 import DateTimeField from "@/components/core/date-time-field";
 import { day } from "@/utils/day-js.util";
 import { addClimbSchema } from "@/constants/zod-schema.const";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PressableOpacity from "@/components/core/pressable-opacity";
-import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
 import DropdownField from "@/components/core/dropdown-field";
 import {
 	CLIMB_FEEL,
@@ -24,6 +22,7 @@ import AppText from "@/components/core/app-text";
 import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
 import { router } from "expo-router";
 import VideoField from "@/components/video/video-field";
+import { ClimbsClass } from "@/classes/climbs.class";
 
 export type AddClimbSchema = z.infer<typeof addClimbSchema> & {
 	videoAssetIds: string[];
@@ -52,13 +51,18 @@ export default function Index() {
 		defaultValues: DEFAULT_VALUES,
 	});
 	const { control, handleSubmit, reset } = form;
-	const logClimb = useUserClimbRecordStore((store) => store.logClimb);
 	const getInferredDropdownItems = CoreTypesUtil.getInferredDropdownItems;
 
 	const saveRecord = (climb: AddClimbSchema) => {
-		logClimb(climb);
-		reset();
-		router.back();
+		// logClimb(climb);
+		try {
+			ClimbsClass.add(climb);
+			reset();
+			router.back();
+		} catch (error) {
+			console.error("Error saving climb record:", error);
+			// Handle error, e.g., show a toast or alert
+		}
 	};
 
 	const selected: ClassValue = "bg-red-500";

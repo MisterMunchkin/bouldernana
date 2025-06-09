@@ -1,11 +1,12 @@
 import { Analytics } from "@/classes/climb-analytic.class";
 import AppText from "@/components/core/app-text";
-import { useUserClimbRecordStore } from "@/stores/user-climb-record.store";
-import { Dimensions, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
-import { LineChart, PieChart } from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import { COLORS } from "../../constants/colors.const";
 import ClimbsPerWeek from "@/components/analytics/climbs-per-week";
+import { ClimbsClass } from "@/classes/climbs.class";
+import { observer } from "@legendapp/state/react";
 
 type Props = {};
 
@@ -19,11 +20,8 @@ export const CHART_CONFIG = {
 	useShadowColorFromDataset: false, // optional
 };
 
-const analytics = ({}: Props) => {
-	const climbs = useUserClimbRecordStore((store) => store.climbs);
-	// const totalTypesOfClimbs = new ClimbAnalytic(
-	// 	climbs
-	// ).getTotalTypesOfClimbs();
+const analytics = observer(({}: Props) => {
+	const climbs = ClimbsClass.climbs$.get();
 	const climbAnalytic = new Analytics({
 		data: climbs,
 	});
@@ -64,6 +62,6 @@ const analytics = ({}: Props) => {
 			</View>
 		</ScrollView>
 	);
-};
+});
 
 export default analytics;
