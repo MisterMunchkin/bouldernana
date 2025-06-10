@@ -29,7 +29,7 @@ const ClimbCard = ({
 }: Props) => {
 	return (
 		<PressableOpacity
-			twClassName="flex-col flex-1 px-0 py-2"
+			twClassName="flex-col flex-1 px-0 py-2 bg-core-amethyst-smoke"
 			onPress={() => router.push(`/climb-log/${id}`)}
 		>
 			<View className="w-full  flex-col items-start gap-2">

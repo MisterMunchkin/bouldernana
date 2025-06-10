@@ -64,7 +64,7 @@ const index = observer(({}: Props) => {
 					twClassName="items-start pt-0 pb-0 px-4"
 					haptics={false}
 				>
-					<AppText size={"xxs"} color={"black-50"}>
+					<AppText size={"xs"} color={"black-50"}>
 						{day(date).format(DayJsUtils.DEFAULT_FORMAT)}
 					</AppText>
 					<View className="flex-row items-start gap-4 w-full justify-between">
@@ -100,7 +100,7 @@ const index = observer(({}: Props) => {
 						{climbDetails["block-1"].map(
 							({ label, value }, index) => (
 								<Fragment key={index}>
-									<AppText size={"xxs"} twClassName="pb-4">
+									<AppText size={"xs"} twClassName="pb-4">
 										{label}
 									</AppText>
 									<AppText color={"black-50"}>
@@ -122,7 +122,7 @@ const index = observer(({}: Props) => {
 						{climbDetails["block-2"].map(
 							({ label, value }, index) => (
 								<Fragment key={index}>
-									<AppText size={"xxs"} twClassName="pb-4">
+									<AppText size={"xs"} twClassName="pb-4">
 										{label}
 									</AppText>
 									<AppText color={"black-50"}>
@@ -159,7 +159,7 @@ const index = observer(({}: Props) => {
 								key={index}
 								haptics={false}
 							>
-								<AppText size={"xxs"} twClassName={"pb-4"}>
+								<AppText size={"xs"} twClassName={"pb-4"}>
 									{label}
 								</AppText>
 								<AppText

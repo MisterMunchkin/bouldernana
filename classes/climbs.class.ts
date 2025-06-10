@@ -1,4 +1,4 @@
-import { AddClimbSchema } from "@/app/new-climb";
+import { AddClimbSchema } from "@/app/(tabs)/new-climb";
 import { observableStore$ } from "@/stores/global-observable.store";
 import { LoggedClimb } from "@/types/core.type";
 

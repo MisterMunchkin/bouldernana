@@ -1,19 +1,21 @@
 import { FontAwesome } from "@expo/vector-icons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { router, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { BlurView } from "expo-blur";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PressableIcon from "@/components/ui/pressable-icon";
 import TabBar from "@/components/ui/tab-bar";
 import { TailwindUtil } from "@/utils/tailwind.util";
+import PressableOpacity from "@/components/core/pressable-opacity";
+import AppText from "@/components/core/app-text";
 
 type Props = {};
 
 const TabLayout = ({}: Props) => {
 	const renderBlurView = () => (
 		<BlurView
-			intensity={60}
-			tint="systemThinMaterialDark"
+			intensity={30}
+			tint="systemThickMaterialDark"
 			style={{
 				...StyleSheet.absoluteFillObject,
 				overflow: "hidden",
@@ -34,17 +36,44 @@ const TabLayout = ({}: Props) => {
 			<Tabs.Screen
 				name="index"
 				options={{
-					title: "Climbs",
+					title: "",
 					tabBarIcon: ({ color }) => (
 						<FontAwesome size={28} name="home" color={color} />
 					),
 					headerRight: ({ tintColor }) => (
+						<View className="flex-row items-center gap-6">
+							<PressableOpacity>
+								<AppText
+									color={"white"}
+									// twClassName="text-xs"
+									size={"base"}
+								>
+									Filter
+								</AppText>
+							</PressableOpacity>
+							<PressableOpacity>
+								<AppText color={"white"} size={"base"}>
+									Profile
+								</AppText>
+							</PressableOpacity>
+							<PressableOpacity>
+								<AppText color={"white"} size={"base"}>
+									Help
+								</AppText>
+							</PressableOpacity>
+						</View>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="new-climb"
+				options={{
+					title: "New Climb",
+					tabBarIcon: ({ color }) => (
 						<PressableIcon
-							name="plus-square-o"
+							name="plus-circle"
 							size={28}
-							color={tintColor}
-							className="pr-4"
-							onPress={() => router.push("/new-climb")}
+							color={color}
 						/>
 					),
 				}}

@@ -32,7 +32,7 @@ const Tab = observer(({}: Props) => {
 	console.log("Climbs:", JSON.stringify(climbs));
 
 	return (
-		<View className="flex-1 px-2">
+		<View className="flex-1 px-2 bg-core-cod-gray">
 			<FlatList
 				data={climbs}
 				contentContainerClassName="pt-safe-offset-20"

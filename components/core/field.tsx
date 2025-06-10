@@ -1,42 +1,41 @@
 import { cn } from "@/utils/cn.util";
 import { ErrorMessage } from "@hookform/error-message";
 import { ClassValue } from "clsx";
-import React, { ComponentProps, useCallback, useRef, useState } from "react";
+import { ComponentProps } from "react";
 import {
-    Controller,
-    ControllerProps,
-    FieldPath,
-    FieldValues,
+	Controller,
+	ControllerProps,
+	FieldPath,
+	FieldValues,
 } from "react-hook-form";
 import { View, Text, TextInput } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
 import AppText from "./app-text";
 
 export type FieldProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+	TFieldValues extends FieldValues = FieldValues,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
-    title?: string;
-    className?: ClassValue;
+	title?: string;
+	className?: ClassValue;
 } & ControllerProps<TFieldValues, TName>;
 
 /**
  * Base component for creating fields
  */
 const Field = <
-    TFieldValues extends FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+	TFieldValues extends FieldValues,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
-    title,
-    ...controllerProps
+	title,
+	...controllerProps
 }: FieldProps<TFieldValues, TName>) => {
-    return (
-        //NOTE: Type of value in field gets fucked up. shows value as type of all types in the schema instead of the type from the name
-        <View className="flex-col  w-full gap-4">
-            <Text>{title}</Text>
-            <Controller {...controllerProps} />
-        </View>
-    );
+	return (
+		//NOTE: Type of value in field gets fucked up. shows value as type of all types in the schema instead of the type from the name
+		<View className="flex-col  w-full gap-4">
+			<Text>{title}</Text>
+			<Controller {...controllerProps} />
+		</View>
+	);
 };
 Field.displayName = "Field";
 
@@ -44,44 +43,44 @@ Field.displayName = "Field";
  * Text field using Field
  */
 const TextField = <TFieldValues extends FieldValues>({
-    className,
-    inputProps,
-    ...fieldProps
+	className,
+	inputProps,
+	...fieldProps
 }: Omit<FieldProps<TFieldValues>, "render"> & {
-    inputProps?: ComponentProps<typeof TextInput>;
+	inputProps?: ComponentProps<typeof TextInput>;
 }) => {
-    const { name } = fieldProps;
-    return (
-        <Field
-            render={({
-                field: { onChange, value, ref },
-                fieldState: { error },
-            }) => (
-                <>
-                    <TextInput
-                        className={cn(
-                            "w-full border-[1px] px-4 py-2 rounded-lg border-gray-400 text-2xl leading-tight",
-                            className
-                        )}
-                        onChangeText={onChange}
-                        value={`${value ? value : ""}`} //NOTE: Quick way to coerce non string values to string
-                        ref={ref}
-                        {...inputProps}
-                    />
-                    <ErrorMessage
-                        errors={error}
-                        name={name}
-                        render={({ message }) => (
-                            <AppText size={"xxs"} color={"red"}>
-                                {message}
-                            </AppText>
-                        )}
-                    />
-                </>
-            )}
-            {...fieldProps}
-        />
-    );
+	const { name } = fieldProps;
+	return (
+		<Field
+			render={({
+				field: { onChange, value, ref },
+				fieldState: { error },
+			}) => (
+				<>
+					<TextInput
+						className={cn(
+							"w-full border-[1px] px-4 py-2 rounded-lg border-gray-400 text-2xl leading-tight",
+							className
+						)}
+						onChangeText={onChange}
+						value={`${value ? value : ""}`} //NOTE: Quick way to coerce non string values to string
+						ref={ref}
+						{...inputProps}
+					/>
+					<ErrorMessage
+						errors={error}
+						name={name}
+						render={({ message }) => (
+							<AppText size={"xs"} color={"red"}>
+								{message}
+							</AppText>
+						)}
+					/>
+				</>
+			)}
+			{...fieldProps}
+		/>
+	);
 };
 TextField.displayname = "TextField";
 

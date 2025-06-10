@@ -13,6 +13,9 @@ export default {
 			aspectRatio: {
 				portrait: 9 / 16,
 			},
+			fontFamily: {
+				kosugi: ["Kosugi"],
+			},
 		},
 	},
 	plugins: [],
