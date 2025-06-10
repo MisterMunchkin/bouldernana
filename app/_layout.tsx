@@ -5,12 +5,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import { StyleSheet } from "react-native";
-import { COLORS } from "@/constants/colors.const";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "sonner-native";
 import { Media } from "@/classes/media.class";
 import { ClimbsClass } from "@/classes/climbs.class";
+import { TailwindUtil } from "@/utils/tailwind.util";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -115,7 +115,8 @@ export default function RootLayout() {
 						options={{
 							headerTransparent: true,
 							headerBackground: () => renderBlurView(),
-							headerTintColor: COLORS.core.nyanza.DEFAULT,
+							headerTintColor:
+								TailwindUtil.getCoreColor("amethyst-smoke.100"),
 							presentation: "card",
 							title: "Log Climb",
 						}}

@@ -3,10 +3,10 @@ import AppText from "@/components/core/app-text";
 import { ScrollView, View } from "react-native";
 
 import { PieChart } from "react-native-chart-kit";
-import { COLORS } from "../../constants/colors.const";
 import ClimbsPerWeek from "@/components/analytics/climbs-per-week";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { observer } from "@legendapp/state/react";
+import { TailwindUtil } from "@/utils/tailwind.util";
 
 type Props = {};
 
@@ -14,7 +14,7 @@ export const SCREEN_WIDTH = 400;
 export const CHART_HEIGHT = 250;
 export const CHART_CONFIG = {
 	// color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-	color: (opacity = 1) => COLORS.core["caribbean-current"].DEFAULT,
+	color: (opacity = 1) => TailwindUtil.getCoreColor("cod-gray.100"),
 	strokeWidth: 2, // optional, default 3
 	barPercentage: 0.5,
 	useShadowColorFromDataset: false, // optional

@@ -26,6 +26,7 @@ export class ClimbsClass {
 		climb.assign(update);
 	}
 
+	/**Returns the raw data of the climb. untracked */
 	static peek(id: string): LoggedClimb | undefined {
 		return ClimbsClass.climbs$.find((c) => c.id.peek() === id)?.peek();
 	}

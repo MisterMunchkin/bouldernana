@@ -3,11 +3,11 @@ import UpdateVideoList from "@/components/climb-log/update-video-list";
 import AppText from "@/components/core/app-text";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import Dividers from "@/components/ui/dividers";
-import { COLORS } from "@/constants/colors.const";
 import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import { ClimbLogUtil } from "@/utils/climb-log.util";
 import { cn } from "@/utils/cn.util";
 import { day, DayJsUtils } from "@/utils/day-js.util";
+import { TailwindUtil } from "@/utils/tailwind.util";
 import { FontAwesome } from "@expo/vector-icons";
 import { observer } from "@legendapp/state/react";
 import { router, useLocalSearchParams } from "expo-router";
@@ -79,7 +79,9 @@ const index = observer(({}: Props) => {
 						<FontAwesome
 							name="pencil-square-o"
 							size={32}
-							color={COLORS.core["caribbean-current"][300]}
+							color={TailwindUtil.getCoreColor(
+								"amethyst-smoke.100"
+							)}
 						/>
 					</View>
 				</PressableOpacity>
@@ -178,7 +180,7 @@ const index = observer(({}: Props) => {
 						<FontAwesome
 							name="trash"
 							size={30}
-							color={COLORS.core.vanilla[900]}
+							color={TailwindUtil.getCoreColor("white-rock.400")}
 						/>
 					</PressableOpacity>
 				</View>

@@ -2,10 +2,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { router, Tabs } from "expo-router";
 import { BlurView } from "expo-blur";
-import { Pressable, StyleSheet, View } from "react-native";
-import { COLORS } from "@/constants/colors.const";
+import { StyleSheet } from "react-native";
 import PressableIcon from "@/components/ui/pressable-icon";
 import TabBar from "@/components/ui/tab-bar";
+import { TailwindUtil } from "@/utils/tailwind.util";
 
 type Props = {};
 
@@ -26,7 +26,8 @@ const TabLayout = ({}: Props) => {
 			screenOptions={{
 				headerTransparent: true,
 				headerBackground: () => renderBlurView(),
-				headerTintColor: COLORS.core.nyanza.DEFAULT,
+				headerTintColor:
+					TailwindUtil.getCoreColor("amethyst-smoke.100"),
 			}}
 			tabBar={(props) => <TabBar {...props} />}
 		>
