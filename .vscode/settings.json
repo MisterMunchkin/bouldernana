@@ -10,6 +10,6 @@
 		"twClassName"
 	],
 	"editor.codeActionsOnSave": {
-		"source.removeUnusedImports": true
+		"source.removeUnusedImports": "explicit"
 	}
 }
