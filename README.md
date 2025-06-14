@@ -50,12 +50,3 @@ Join our community of developers creating universal apps.
 -   [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
 ## Unused packages
-
--   @shopify/react-native-skia
--   expo-linking
--   expo-symbols
--   expo-system-ui
--   expo-web-browser
--   react-native-dropdown-picker
--   react-native-screens
--

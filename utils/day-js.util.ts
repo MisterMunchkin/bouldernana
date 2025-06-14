@@ -1,8 +1,24 @@
 import dayjs, { Dayjs } from "dayjs";
 var localizedFormat = require("dayjs/plugin/localizedFormat");
 
+export type StrictFormat =
+	| "YYYY-MM-DDTHH:mm:ssZ"
+	| "YYYY-MM-DD"
+	| "DD MMM, YYYY";
+
 export const day = dayjs;
 day.extend(localizedFormat);
+declare module "dayjs" {
+	export interface Dayjs {
+		strictFormat(format: StrictFormat): string;
+	}
+}
+
+day.extend((option, day) => {
+	day.prototype.strictFormat = function (format: StrictFormat): string {
+		return this.format(format);
+	};
+});
 
 export namespace DayJsUtils {
 	/**Thu, Aug 16, 2018 8:02 PM */

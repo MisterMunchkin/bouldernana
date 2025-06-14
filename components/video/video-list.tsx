@@ -1,11 +1,9 @@
-import { FlashList } from "@shopify/flash-list";
-import { View } from "react-native";
 import PressableOpacity from "../core/pressable-opacity";
 import { ComponentProps, ReactNode, useEffect, useRef } from "react";
-import React from "react";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { Media } from "@/classes/media.class";
 import VideoThumbnailView from "./video-thumbnail-view";
+import { LegendList, LegendListRenderItemProps } from "@legendapp/list";
 
 type Props = {
 	/**
@@ -17,7 +15,7 @@ type Props = {
 	/**set a height for each thumbnail in the list */
 	thumbnailHeight?: number;
 } & Pick<
-	ComponentProps<typeof FlashList>,
+	ComponentProps<typeof LegendList>,
 	| "ListFooterComponent"
 	| "ListFooterComponentStyle"
 	| "ListHeaderComponent"
@@ -52,26 +50,26 @@ const VideoList = ({
 		player.replace(useableUri); //TODO: Should ensure that player is released and unmounted
 	};
 
+	const renderItem = ({ item }: LegendListRenderItemProps<string>) => {
+		return (
+			<PressableOpacity twClassName="p-0" onPress={() => loadVideo(item)}>
+				<VideoThumbnailView
+					height={thumbnailHeight ?? DEFAULT_THUMBNAIL_HEIGHT}
+					videoAssetId={item}
+				>
+					{thumbnailChildrenRender && thumbnailChildrenRender(item)}
+				</VideoThumbnailView>
+			</PressableOpacity>
+		);
+	};
+
 	return (
 		<>
-			<FlashList
+			<LegendList
 				data={videoAssetIds}
+				renderItem={renderItem}
 				keyExtractor={(item, index) => `${item}-${index}`}
-				renderItem={({ item }) => (
-					<PressableOpacity
-						twClassName="p-0"
-						onPress={() => loadVideo(item)}
-					>
-						<VideoThumbnailView
-							height={thumbnailHeight ?? DEFAULT_THUMBNAIL_HEIGHT}
-							videoAssetId={item}
-						>
-							{thumbnailChildrenRender &&
-								thumbnailChildrenRender(item)}
-						</VideoThumbnailView>
-					</PressableOpacity>
-				)}
-				ItemSeparatorComponent={() => <View className="w-4" />}
+				contentContainerStyle={{ paddingHorizontal: 16 }}
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				estimatedItemSize={thumbnailHeight ?? DEFAULT_THUMBNAIL_HEIGHT}
