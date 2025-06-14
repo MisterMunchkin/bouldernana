@@ -7,7 +7,7 @@ const config = resolveConfig(tailwindConfig);
 type CoreColorName = keyof typeof COLORS.core;
 type ShadeKey = keyof (typeof COLORS.core)[CoreColorName];
 
-type ColorPath = `${CoreColorName}.${ShadeKey}`;
+export type ColorPath = `${CoreColorName}.${ShadeKey}`;
 
 export class TailwindUtil {
 	static getColor(key: keyof (typeof config)["theme"]["colors"]) {
