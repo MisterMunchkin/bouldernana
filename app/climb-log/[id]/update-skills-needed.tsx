@@ -1,6 +1,6 @@
 import { addClimbSchema } from "@/constants/zod-schema.const";
 import { router, useLocalSearchParams } from "expo-router";
-import { ClimbLogLocalParams } from ".";
+import { ClimbLogLocalParams } from "./_index";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,7 +19,7 @@ const schema = addClimbSchema.pick({
 });
 
 type Props = {};
-
+/**@deprecated */
 const UpdateSkillsNeeded = ({}: Props) => {
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
 

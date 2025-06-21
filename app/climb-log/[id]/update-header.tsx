@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { ClimbLogLocalParams } from "../[id]";
+import { ClimbLogLocalParams } from "./_index";
 import AppText from "@/components/core/app-text";
 import { ScrollView, View } from "react-native";
 import { cn } from "@/utils/cn.util";
@@ -25,6 +25,7 @@ const schema = addClimbSchema.pick({
 
 type Props = {};
 
+/**@deprecated */
 const UpdateHeader = ({}: Props) => {
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
 
