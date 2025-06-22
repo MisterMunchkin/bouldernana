@@ -2,17 +2,19 @@ import { ClimbLogLocalParams } from "./_index";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import AssetCarousel from "@/components/video/asset-carousel";
+import AssetCarousel from "@/components/video/asset-carousel/asset-carousel";
 import {
 	BottomSheetModal,
 	BottomSheetBackgroundProps,
 	BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { View } from "react-native";
-import AppText from "@/components/core/app-text";
 import { TailwindUtil } from "@/utils/tailwind.util";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import { EvilIcons } from "@expo/vector-icons";
+import ClimbDetails from "@/components/climb-log/climb-details";
+import AppText from "@/components/core/app-text";
+import { day } from "@/utils/day-js.util";
 
 type Props = {};
 
@@ -27,7 +29,7 @@ const Index = ({}: Props) => {
 	}, [bottomSheetRef]);
 
 	const {
-		climb: { videoAssetIds, grade, date },
+		climb: { videoAssetIds, name, date },
 	} = climbInstance;
 
 	const renderBackground = useCallback(
@@ -71,14 +73,17 @@ const Index = ({}: Props) => {
 				enableDynamicSizing={false}
 				backgroundComponent={renderBackground}
 			>
-				{/* <BottomSheetFlashList className="flex-row items-center justify-between"> */}
-				<AppText font={"semibold"} color={"black"}>
-					{grade}
-				</AppText>
-				{/* <AppText font={"semibold"} color={"black"}>
-						{date}
-					</AppText> */}
-				{/* </BottomSheetFlashList> */}
+				<View className="flex-row items-start justify-between px-4 pb-4">
+					<AppText
+						size={"xl"}
+						font={"bold"}
+						twClassName="text-pretty flex-1"
+					>
+						{name}
+					</AppText>
+					<AppText>{day(date).strictFormat("DD MMM, YYYY")}</AppText>
+				</View>
+				<ClimbDetails id={id} />
 			</BottomSheetModal>
 		</View>
 	);
