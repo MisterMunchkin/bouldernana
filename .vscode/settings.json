@@ -7,7 +7,8 @@
 		"className",
 		"ngClass",
 		"class:list",
-		"twClassName"
+		"twClassName",
+		"contentContainerClassName"
 	],
 	"editor.codeActionsOnSave": {
 		"source.removeUnusedImports": "explicit"

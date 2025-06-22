@@ -5,8 +5,8 @@ import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
 import { LoggedClimb } from "@/types/core.type";
 import { cn } from "@/utils/cn.util";
-import { TailwindUtil } from "@/utils/tailwind.util";
-import { COLOR_CLIMB_TYPE } from "@/constants/core.const";
+import { useMemo } from "react";
+import { ClimbsClass } from "@/classes/climbs.class";
 
 type Props = {
 	displayedGrade: string;
@@ -30,13 +30,15 @@ const ClimbCard = ({
 	steepness,
 	whereDidYouClimb,
 }: Props) => {
+	const climbInstance = useMemo(() => {
+		return new ClimbsClass(id);
+	}, [id]);
+
 	return (
 		<PressableOpacity
 			twClassName={cn("flex-col flex-1 px-0 py-2")}
 			style={{
-				backgroundColor: TailwindUtil.getCoreColor(
-					COLOR_CLIMB_TYPE[typeOfClimb]
-				),
+				backgroundColor: climbInstance.colorType,
 			}}
 			onPress={() => router.push(`/climb-log/${id}`)}
 		>

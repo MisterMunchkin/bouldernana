@@ -1,6 +1,8 @@
 import { AddClimbSchema } from "@/app/(tabs)/new-climb";
+import { COLOR_CLIMB_TYPE } from "@/constants/core.const";
 import { observableStore$ } from "@/stores/global-observable.store";
 import { LoggedClimb } from "@/types/core.type";
+import { TailwindUtil } from "@/utils/tailwind.util";
 
 import * as ExpoCrypto from "expo-crypto";
 
@@ -42,5 +44,26 @@ export class ClimbsClass {
 
 	static flashRecordFromJSON(climbs: LoggedClimb[]) {
 		ClimbsClass.climbs$.set(climbs);
+	}
+
+	/**Instance of LoggedClimb helper class */
+	climb: LoggedClimb;
+
+	/**initiate an instance by logged climb id */
+	constructor(id: string) {
+		const climb = ClimbsClass.peek(id);
+		if (!climb) {
+			console.error(`Could not find logged climb with id: ${id}`);
+			throw new Error(`Could not find logged climb with id: ${id}`);
+		}
+
+		this.climb = climb;
+	}
+
+	/**Get the color of a climb by its type */
+	get colorType() {
+		return TailwindUtil.getCoreColor(
+			COLOR_CLIMB_TYPE[this.climb.typeOfClimb]
+		);
 	}
 }
