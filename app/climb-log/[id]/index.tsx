@@ -66,13 +66,10 @@ const Index = ({}: Props) => {
 			</View>
 			<BottomSheetModal
 				ref={bottomSheetRef}
-				snapPoints={["20%", "50%", "80%"]}
+				snapPoints={["18%", "50%", "80%"]}
 				enablePanDownToClose={false}
 				enableDynamicSizing={false}
 				backgroundComponent={renderBackground}
-				backgroundStyle={{
-					backgroundColor: "red",
-				}}
 			>
 				{/* <BottomSheetFlashList className="flex-row items-center justify-between"> */}
 				<AppText font={"semibold"} color={"black"}>

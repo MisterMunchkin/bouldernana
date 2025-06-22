@@ -9,6 +9,12 @@ export type ResizeArgs = {
 	width: number;
 };
 
+export type GetDimensionsArgs = {
+	aspectRatio: number;
+	width?: number;
+	height?: number;
+};
+
 //NOTE: We should probably change this to an OOP approach.
 // new Media().getThumbnail
 export class Media {
@@ -124,6 +130,24 @@ export namespace Media {
 			width,
 			height,
 			aspectRatio,
+		};
+	};
+	export const getDimensions = ({
+		aspectRatio,
+		height,
+		width,
+	}: GetDimensionsArgs) => {
+		const result = {
+			width,
+			height,
+		};
+
+		result.height ??= (result.width ?? 0) / aspectRatio;
+		result.width ??= result.height * aspectRatio;
+
+		return {
+			width: result.width ?? 0,
+			height: result.height ?? 0,
 		};
 	};
 	export const ensurePermissions = async (): Promise<boolean> => {

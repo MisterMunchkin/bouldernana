@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Dimensions } from "react-native";
 import SideSwipe from "react-native-sideswipe";
-import VideoThumbnailView from "./video-thumbnail-view";
+
+import { Media } from "@/classes/media.class";
+import VideoView from "./video-view";
 
 type Props = {
 	assetIds: string[];
@@ -16,6 +18,10 @@ const AssetCarousel = ({
 	itemWidth = Dimensions.get("screen").width,
 }: Props) => {
 	const [index, setIndex] = useState<number>(defaultIndex);
+	const { height } = Media.getDimensions({
+		aspectRatio: 9 / 16,
+		width: itemWidth,
+	});
 
 	return (
 		<SideSwipe
@@ -24,12 +30,15 @@ const AssetCarousel = ({
 			style={{ width: "100%" }}
 			data={assetIds}
 			onIndexChange={(index: number) => setIndex(index)}
-			renderItem={({ itemIndex, currentIndex, item, animatedValue }) => (
-				<VideoThumbnailView
-					videoAssetId={item}
-					height={itemWidth / (9 / 16)}
-				/>
-			)}
+			renderItem={({ itemIndex, currentIndex, item, animatedValue }) => {
+				return (
+					<VideoView
+						assetId={item}
+						width={itemWidth}
+						height={height}
+					/>
+				);
+			}}
 			extractKey={(item, index) => `${item}_${index}`}
 		/>
 	);
