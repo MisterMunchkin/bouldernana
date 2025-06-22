@@ -24,11 +24,10 @@ import { router } from "expo-router";
 import VideoField from "@/components/video/video-field";
 import { ClimbsClass } from "@/classes/climbs.class";
 
-export type AddClimbSchema = z.infer<typeof addClimbSchema> & {
-	videoAssetIds: string[];
-};
+export type AddClimbSchema = z.infer<typeof addClimbSchema>;
 
 const DEFAULT_VALUES: AddClimbSchema = {
+	name: "",
 	videoAssetIds: [],
 	typeOfClimb: "Boulder",
 	whereDidYouClimb: "Indoor",
@@ -54,14 +53,12 @@ export default function Index() {
 	const getInferredDropdownItems = CoreTypesUtil.getInferredDropdownItems;
 
 	const saveRecord = (climb: AddClimbSchema) => {
-		// logClimb(climb);
 		try {
 			ClimbsClass.add(climb);
 			reset();
 			router.back();
 		} catch (error) {
 			console.error("Error saving climb record:", error);
-			// Handle error, e.g., show a toast or alert
 		}
 	};
 
@@ -72,6 +69,11 @@ export default function Index() {
 				<FormProvider {...form}>
 					{/* TODO: Hide inside subscriber toggle */}
 					<VideoField control={control} name="videoAssetIds" />
+					<TextField
+						control={control}
+						name="name"
+						title="Name of the climb"
+					/>
 
 					<ClimbTypeGrade />
 					<DropdownField

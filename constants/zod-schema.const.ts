@@ -2,16 +2,15 @@ import { z } from "zod";
 import {
 	ASCENT_TYPE,
 	CLIMB_FEEL,
-	FRENCH_GRADES,
 	SKILL_TYPE,
 	STEEPNESS,
-	VGRADES,
 	WHERE,
 } from "./core.const";
 
 export const ClimbTypeEnum = z.enum(["Board", "Boulder", "Route", "Trad"]);
 
 export const addClimbSchema = z.object({
+	name: z.string().min(1),
 	videoAssetIds: z.array(z.string()).optional(),
 	typeOfClimb: ClimbTypeEnum.default("Boulder"), //boulder, route, board, trad
 	whereDidYouClimb: z.enum(WHERE).default("Indoor"), //indoor, outdoor
