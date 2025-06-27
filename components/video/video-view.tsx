@@ -46,10 +46,6 @@ const VideoView = ({
 		getSource();
 	}, [assetId]);
 
-	console.log(
-		"video view data",
-		JSON.stringify({ source, height, width, style })
-	);
 	const player = useVideoPlayer(source ?? "");
 
 	return <ExpoVideoView player={player} style={[{ height, width }, style]} />;

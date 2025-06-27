@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn.util";
 import { BlurView } from "expo-blur";
 import { Stack } from "expo-router";
-import { Platform, StyleSheet } from "react-native";
+import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {};
@@ -11,16 +11,6 @@ export const unstable_settings = {
 };
 const Layout = ({}: Props) => {
 	const insets = useSafeAreaInsets();
-	const renderBlurView = () => (
-		<BlurView
-			intensity={60}
-			tint="systemThinMaterialDark"
-			style={{
-				...StyleSheet.absoluteFillObject,
-				overflow: "hidden",
-			}}
-		/>
-	);
 
 	return (
 		<Stack

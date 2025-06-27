@@ -1,81 +1,48 @@
-import { ClimbsClass } from "@/classes/climbs.class";
-import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
-import { ClimbLogUtil } from "@/utils/climb-log.util";
-import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { useRouter } from "expo-router";
-import { Fragment, useMemo } from "react";
+import { LoggedClimb } from "@/types/core.type";
 import { View } from "react-native";
-import PressableOpacity from "@/components/core/pressable-opacity";
-import AppText from "@/components/core/app-text";
+import AppText from "../core/app-text";
 
-type Props = {
-	id: string;
-};
+type Props = Pick<
+	LoggedClimb,
+	"hasBeenSent" | "ascentType" | "howDidItFeel" | "attempts" | "steepness"
+>;
 
-const ClimbDetails = ({ id }: Props) => {
-	const router = useRouter();
-
-	const { getUserGrade } = useUserGradeOptions();
-	const climbInstance = useMemo(() => new ClimbsClass(id), [id]);
-	const { climb, colorType } = climbInstance;
-
-	const grade = useMemo(
-		() => getUserGrade({ grade: climb?.grade ?? "" }),
-		[climb?.grade]
-	);
-
-	const climbDetails = ClimbLogUtil.getClimbLogDataStructure(climb);
+const ClimbDetails = ({
+	hasBeenSent,
+	ascentType,
+	attempts,
+	howDidItFeel,
+	steepness,
+}: Props) => {
 	return (
-		<BottomSheetScrollView className="flex-1">
-			<View className="gap-4">
-				<View className="flex-row px-4 gap-2 flex-wrap flex-1">
-					<PressableOpacity
-						onPress={() =>
-							router.navigate(
-								`/climb-log/${id}/update-ascent-info`
-							)
-						}
-						twClassName="rounded-lg bg-core-vanilla-600 px-4 py-2 items-start"
-						haptics={false}
-					>
-						{climbDetails["block-1"].map(
-							({ label, value }, index) => (
-								<Fragment key={index}>
-									<AppText size={"xs"} twClassName="pb-4">
-										{label}
-									</AppText>
-									<AppText color={"black-50"}>
-										{value}
-									</AppText>
-								</Fragment>
-							)
-						)}
-					</PressableOpacity>
-					<PressableOpacity
-						onPress={() =>
-							router.navigate(
-								`/climb-log/${id}/update-climb-feel`
-							)
-						}
-						twClassName="rounded-lg bg-core-nyanza-400 px-4 py-2 flex-1 items-start"
-						haptics={false}
-					>
-						{climbDetails["block-2"].map(
-							({ label, value }, index) => (
-								<Fragment key={index}>
-									<AppText size={"xs"} twClassName="pb-4">
-										{label}
-									</AppText>
-									<AppText color={"black-50"}>
-										{value}
-									</AppText>
-								</Fragment>
-							)
-						)}
-					</PressableOpacity>
+		<View className="flex-row  gap-4 flex-wrap flex-1 justify-between">
+			<View className="px-4 py-2 items-start gap-4">
+				<View>
+					<AppText size={"base"}>Ascent Type</AppText>
+					<AppText size={"xl"}>{ascentType}</AppText>
+				</View>
+				<View>
+					<AppText size={"base"}>Attemps</AppText>
+					<AppText size={"xl"}>{attempts}</AppText>
+				</View>
+				<View>
+					<AppText size={"base"}>Has this been sent?</AppText>
+					<AppText size={"xl"}>
+						{hasBeenSent ? "Sent!" : "Not yet..."}
+					</AppText>
 				</View>
 			</View>
-		</BottomSheetScrollView>
+			<View className="px-4 py-2 flex-1 items-start gap-4">
+				<View>
+					<AppText size={"base"}>Steepness</AppText>
+					<AppText size={"xl"}>{steepness}</AppText>
+				</View>
+				<View>
+					<AppText size={"base"}>How did it feel?</AppText>
+					<AppText size={"xl"}>{howDidItFeel}</AppText>
+				</View>
+			</View>
+		</View>
 	);
 };
 
