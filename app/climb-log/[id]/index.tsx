@@ -91,7 +91,7 @@ const Index = ({}: Props) => {
 				enableDynamicSizing={false}
 				backgroundComponent={renderBackground}
 			>
-				<View className="flex-row items-start justify-between px-4 pb-4">
+				<View className="flex-row items-start justify-between px-4 pb-1">
 					<AppText
 						size={"xl"}
 						font={"bold"}
@@ -99,13 +99,16 @@ const Index = ({}: Props) => {
 					>
 						{name}
 					</AppText>
-					<AppText>{day(date).strictFormat("DD MMM, YYYY")}</AppText>
+					<View className="flex-col items-start">
+						<AppText>
+							{day(date).strictFormat("DD MMM, YYYY")}
+						</AppText>
+
+						<AppText
+							size={"xl"}
+						>{`${userGrade} (${grade})`}</AppText>
+					</View>
 				</View>
-				<View className="px-4 pb-4">
-					<AppText size={"base"}>{`Grade`}</AppText>
-					<AppText size={"xl"}>{`${userGrade} (${grade})`}</AppText>
-				</View>
-				{/* <ClimbDetails id={id} /> */}
 				<BottomSheetScrollView
 					className={"flex-1"}
 					contentContainerClassName={"gap-4"}

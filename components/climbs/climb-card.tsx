@@ -36,7 +36,7 @@ const ClimbCard = ({
 
 	return (
 		<PressableOpacity
-			twClassName={cn("flex-col flex-1 px-0 py-2")}
+			twClassName={cn("flex-col flex-1 p-2 rounded-md")}
 			style={{
 				backgroundColor: climbInstance.colorType,
 			}}
@@ -52,14 +52,9 @@ const ClimbCard = ({
 					)}`}
 				</AppText>
 				<View className="flex-row gap-2">
-					{skill?.slice(0, 4).map((s, index) => (
-						<View
-							key={index}
-							className="border-[1px] border-gray-400 rounded-full px-4 py-1"
-						>
-							<AppText twClassName="text-base">{s}</AppText>
-						</View>
-					))}
+					<AppText size={"sm"}>
+						{skill?.slice(0, 4).join(" - ")}
+					</AppText>
 				</View>
 			</View>
 		</PressableOpacity>
