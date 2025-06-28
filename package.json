@@ -11,7 +11,10 @@
 		"web": "expo start --web",
 		"test": "jest --watchAll",
 		"lint": "expo lint",
-		"nuke:ios": "rm -rf node_modules && rm -rf ios"
+		"nuke:ios": "rm -rf node_modules && rm -rf ios",
+		"preview-build:ios": "eas build --profile preview --platform ios",
+		"prod-build:ios": "eas build --profile production --platform ios",
+		"submit:ios": "eas submit --platform ios"
 	},
 	"jest": {
 		"preset": "jest-expo"
