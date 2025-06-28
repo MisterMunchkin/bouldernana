@@ -1,10 +1,9 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
 import PressableOpacity from "../core/pressable-opacity";
-import AppText from "../core/app-text";
 import { BottomTabDescriptor } from "@react-navigation/bottom-tabs/lib/typescript/commonjs/src/types";
-import { COLORS } from "@/constants/colors.const";
 import { cn } from "@/utils/cn.util";
+import { TailwindUtil } from "@/utils/tailwind.util";
 
 const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
 	return (
@@ -40,6 +39,10 @@ const Tab = ({
 		route: { name: routeName, key },
 		options: { title, tabBarIcon },
 	} = descriptor;
+
+	const focusedColor = TailwindUtil.getCoreColor("white-rock.DEFAULT");
+	const unfocusedColor = TailwindUtil.getCoreColor("amethyst-smoke.DEFAULT");
+
 	return (
 		<PressableOpacity
 			key={key}
@@ -57,9 +60,7 @@ const Tab = ({
 		>
 			{tabBarIcon &&
 				tabBarIcon({
-					color: focused
-						? COLORS.core["imperial-red"][500]
-						: COLORS.core["caribbean-current"][500],
+					color: focused ? focusedColor : unfocusedColor,
 					focused: focused ?? false, //NOTE: This is useless, but it's required by the type
 					size: 30, //NOTE: This is useless, but it's required by the type
 				})}

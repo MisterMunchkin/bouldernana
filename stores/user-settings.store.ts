@@ -1,4 +1,4 @@
-import { asyncStorageJSON } from "@/utils/async-storage-json.util";
+import mmkvZustandStorage from "@/utils/mmkv-zustand-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import {
@@ -37,7 +37,7 @@ export const useUserSettingsStore = create<States & Actions>()(
 		}),
 		{
 			name: "user-settings",
-			storage: createJSONStorage(() => asyncStorageJSON),
+			storage: createJSONStorage(() => mmkvZustandStorage),
 		}
 	)
 );

@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants/colors.const";
+import { TailwindUtil } from "@/utils/tailwind.util";
 
 type PieChartType = {
 	name: string;
@@ -15,10 +15,10 @@ export class Analytics<T extends object> {
 	data: T[] = [];
 
 	private colors: string[] = [
-		COLORS.core["caribbean-current"].DEFAULT,
-		COLORS.core["nyanza"][400],
-		COLORS.core["vanilla"][400],
-		COLORS.core["imperial-red"][700],
+		TailwindUtil.getCoreColor("amethyst-smoke.DEFAULT"),
+		TailwindUtil.getCoreColor("white-rock.DEFAULT"),
+		TailwindUtil.getCoreColor("green-smoke.DEFAULT"),
+		TailwindUtil.getCoreColor("cod-gray.500"),
 	];
 
 	constructor({ data }: ConstructorProps<T>) {

@@ -1,7 +1,7 @@
 import { addClimbSchema } from "@/constants/zod-schema.const";
 import { router, useLocalSearchParams } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
-import { ClimbLogLocalParams } from ".";
+import { ClimbLogLocalParams } from "./_index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AscentField } from "@/components/log-new-climb/ascent-field";
 import PressableOpacity from "@/components/core/pressable-opacity";
@@ -18,6 +18,7 @@ const schema = addClimbSchema.pick({
 });
 type Props = {};
 
+/**@deprecated */
 const UpdateAscentInfo = ({}: Props) => {
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
 	const climbLog = ClimbsClass.peek(id);

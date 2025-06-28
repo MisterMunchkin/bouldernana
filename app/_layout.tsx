@@ -5,12 +5,13 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import { StyleSheet } from "react-native";
-import { COLORS } from "@/constants/colors.const";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "sonner-native";
 import { Media } from "@/classes/media.class";
 import { ClimbsClass } from "@/classes/climbs.class";
+import { TailwindUtil } from "@/utils/tailwind.util";
+import { useFonts, Kosugi_400Regular } from "@expo-google-fonts/kosugi";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,41 +20,11 @@ SplashScreen.setOptions({
 	fade: true,
 });
 
-// type Store = {
-// 	climbs: LoggedClimb[];
-// 	addClimb: (climb: AddClimbSchema) => void;
-// 	setAssets: (args: { id: string; assetIds: string[] }) => void;
-// 	getClimb: (id: string) => LoggedClimb | undefined;
-// };
-
-// export const store$ = observable<Store>({
-// 	climbs: [],
-// 	addClimb: (climb: AddClimbSchema) => {
-// 		const loggedClimb: LoggedClimb = {
-// 			...climb,
-// 			id: ExpoCrypto.randomUUID(),
-// 		};
-// 		console.log("Logging climb:", loggedClimb);
-// 		store$.climbs.push(loggedClimb);
-// 	},
-// 	setAssets: ({ id, assetIds }) => {
-// 		store$;
-// 		store$.set;
-// 	},
-// 	getClimb: (id: string) => {
-// 		const {climbs} = store$.peek();
-// 		return climbs.
-// 	},
-// });
-
-// syncObservable(store$, {
-// 	persist: {
-// 		name: "gettingStarted",
-// 		plugin: ObservablePersistMMKV,
-// 	},
-// });
-
 export default function RootLayout() {
+	const [fontsLoaded] = useFonts({
+		Kosugi_400Regular,
+	});
+
 	//NOTE: We proably don't need to unmount the root since the file folder is used on user actions. But wanted to follow expo docs
 	const [isAppReady, setIsAppReady] = useState<boolean>(false);
 
@@ -76,12 +47,12 @@ export default function RootLayout() {
 	}, []);
 
 	const onLayoutRootView = useCallback(() => {
-		if (isAppReady) {
+		if (isAppReady && fontsLoaded) {
 			SplashScreen.hideAsync();
 		}
-	}, [isAppReady]);
+	}, [isAppReady, fontsLoaded]);
 
-	if (!isAppReady) {
+	if (!isAppReady || !fontsLoaded) {
 		return null;
 	}
 
@@ -115,7 +86,8 @@ export default function RootLayout() {
 						options={{
 							headerTransparent: true,
 							headerBackground: () => renderBlurView(),
-							headerTintColor: COLORS.core.nyanza.DEFAULT,
+							headerTintColor:
+								TailwindUtil.getCoreColor("amethyst-smoke.100"),
 							presentation: "card",
 							title: "Log Climb",
 						}}

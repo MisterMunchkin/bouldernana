@@ -1,5 +1,4 @@
 import AppText from "../core/app-text";
-import { COLORS } from "@/constants/colors.const";
 import { CHART_CONFIG, CHART_HEIGHT } from "@/app/(tabs)/analytics";
 import { LineChart } from "react-native-chart-kit";
 import { useMemo, useState } from "react";
@@ -8,6 +7,7 @@ import { HapticsUtil } from "@/utils/expo-haptics.util";
 import { Dimensions } from "react-native";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { observer } from "@legendapp/state/react";
+import { TailwindUtil } from "@/utils/tailwind.util";
 
 type Props = {};
 
@@ -55,7 +55,9 @@ const ClimbsPerWeek = observer(({}: Props) => {
 						{
 							data: climbsPerMonth,
 							color: () =>
-								COLORS.core["caribbean-current"].DEFAULT,
+								TailwindUtil.getCoreColor(
+									"amethyst-smoke.DEFAULT"
+								),
 						},
 					],
 				}}
@@ -65,8 +67,8 @@ const ClimbsPerWeek = observer(({}: Props) => {
 				}}
 				getDotColor={(__, index) => {
 					return index === selectedIndex
-						? COLORS.core["vanilla"][300]
-						: COLORS.core["caribbean-current"].DEFAULT;
+						? TailwindUtil.getCoreColor("white-rock.DEFAULT")
+						: TailwindUtil.getCoreColor("amethyst-smoke.DEFAULT");
 				}}
 				yAxisInterval={1}
 				verticalLabelRotation={10}

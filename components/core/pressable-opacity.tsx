@@ -5,7 +5,7 @@ import { ClassValue } from "clsx";
 import { ComponentProps, ReactNode, useState } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 
-export const pressableVariants = cva("px-2 py-4 items-center", {
+export const pressableVariants = cva("", {
 	variants: {
 		color: {
 			transparent: "bg-transparent",

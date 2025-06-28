@@ -1,48 +1,43 @@
-import ClimbCard from "@/components/climbs/climb-card";
 import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { useCallback } from "react";
-import { FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { observer, use$ } from "@legendapp/state/react";
+import { observer } from "@legendapp/state/react";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { LoggedClimb } from "@/types/core.type";
+import { FlatList, ListRenderItem, View } from "react-native";
+import { useHeaderHeight } from "@react-navigation/elements";
+import { useCallback } from "react";
+import ClimbCard from "@/components/climbs/climb-card";
 
 type Props = {};
 
 const Tab = observer(({}: Props) => {
+	const headerHeight = useHeaderHeight();
 	const bottomTabBarHeight = useBottomTabBarHeight();
 	const { bottom } = useSafeAreaInsets();
 	const { getUserGrade } = useUserGradeOptions();
 
-	const renderItem = useCallback(
-		(climb: LoggedClimb) => (
+	const renderItem: ListRenderItem<LoggedClimb> = useCallback(
+		({ index, item }) => (
 			<ClimbCard
-				{...climb}
-				displayedGrade={getUserGrade({ grade: climb.grade })}
+				displayedGrade={getUserGrade({ grade: item.grade })}
+				{...item}
 			/>
 		),
 		[getUserGrade]
 	);
 
-	const climbs = use$(ClimbsClass.climbs$).sort(
-		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-	);
-
-	console.log("Climbs:", JSON.stringify(climbs));
-
 	return (
-		<View className="flex-1 px-2">
+		<View className="px-2 bg-core-cod-gray flex-1">
 			<FlatList
-				data={climbs}
-				contentContainerClassName="pt-safe-offset-20"
+				data={ClimbsClass.climbs$.get()}
 				contentContainerStyle={{
-					paddingBottom: bottom + bottomTabBarHeight,
+					paddingBottom: bottom + bottomTabBarHeight + 20,
+					paddingTop: headerHeight,
 				}}
 				ItemSeparatorComponent={() => <View className="h-2" />}
-				renderItem={({ item }) => renderItem(item)}
+				renderItem={renderItem}
 				keyExtractor={(item) => item.id}
-				extraData={getUserGrade}
 			/>
 		</View>
 	);
