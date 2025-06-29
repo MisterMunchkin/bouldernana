@@ -1,3 +1,5 @@
+import { ClimbLogLocalParams } from "@/app/climb-log/[id]";
+import { ClimbsClass } from "@/classes/climbs.class";
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
@@ -7,10 +9,36 @@ import {
 } from "@/lib/modules/dropdown-menu";
 import { TailwindUtil } from "@/utils/tailwind.util";
 import { Feather } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { Alert } from "react-native";
 
 type Props = {};
 
 const DropdownMenu = ({}: Props) => {
+	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
+	const destroyLog = ClimbsClass.destroy;
+	const router = useRouter();
+
+	const confirmDeleteLog = () =>
+		Alert.alert(
+			"This action cannot be undone",
+			`Are you sure you want to delete this climb? \n\nBrother... please reconsider.`,
+			[
+				{
+					text: "Nevermind",
+					style: "cancel",
+				},
+				{
+					text: "Delete Climb",
+					style: "destructive",
+					onPress: () => {
+						router.back();
+						destroyLog(id);
+					},
+				},
+			]
+		);
+
 	return (
 		<DropdownMenuRoot>
 			<DropdownMenuTrigger>
@@ -33,10 +61,7 @@ const DropdownMenu = ({}: Props) => {
 				>
 					<DropdownMenuItemTitle>Add Media</DropdownMenuItemTitle>
 				</DropdownMenuItem>
-				<DropdownMenuItem
-					key={"delete"}
-					onSelect={() => console.log("Delete")}
-				>
+				<DropdownMenuItem key={"delete"} onSelect={confirmDeleteLog}>
 					<DropdownMenuItemTitle>Delete</DropdownMenuItemTitle>
 				</DropdownMenuItem>
 			</DropdownMenuContent>

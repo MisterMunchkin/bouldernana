@@ -1,4 +1,3 @@
-import { ClimbLogLocalParams } from "./_index";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { useCallback, useEffect, useMemo, useRef } from "react";
@@ -24,7 +23,9 @@ import Notes from "@/components/climb-log/notes";
 import DropdownMenu from "@/components/climb-log/dropdown-menu";
 
 type Props = {};
-
+export type ClimbLogLocalParams = {
+	id: string;
+};
 const Index = ({}: Props) => {
 	const bottomSheetRef = useRef<BottomSheetModal>(null);
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
