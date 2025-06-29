@@ -1,6 +1,6 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { ClimbsClass } from "@/classes/climbs.class";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import AssetCarousel from "@/components/video/asset-carousel/asset-carousel";
 import {
 	BottomSheetModal,
@@ -21,21 +21,28 @@ import ClimbDetails from "@/components/climb-log/climb-details";
 import SkillsNeeded from "@/components/climb-log/skills-needed";
 import Notes from "@/components/climb-log/notes";
 import DropdownMenu from "@/components/climb-log/dropdown-menu";
+import { observer } from "@legendapp/state/react";
 
 type Props = {};
 export type ClimbLogLocalParams = {
 	id: string;
 };
-const Index = ({}: Props) => {
+const Index = observer(({}: Props) => {
 	const bottomSheetRef = useRef<BottomSheetModal>(null);
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
-	const climbInstance = useMemo(() => new ClimbsClass(id), [id]);
+	const climbInstance = new ClimbsClass(id, { isTrackable: true });
+
 	const router = useRouter();
 	const { getUserGrade } = useUserGradeOptions();
 
-	useEffect(() => {
-		bottomSheetRef.current?.present();
-	}, [bottomSheetRef]);
+	useFocusEffect(
+		useCallback(() => {
+			bottomSheetRef.current?.present();
+			return () => {
+				bottomSheetRef.current?.dismiss();
+			};
+		}, [])
+	);
 
 	const { climb } = climbInstance;
 	const { name, date, grade, videoAssetIds } = climb ?? {};
@@ -54,7 +61,10 @@ const Index = ({}: Props) => {
 				opacity={1}
 				style={[
 					props.style,
-					{ backgroundColor: climbInstance.colorType, opacity: 1 },
+					{
+						backgroundColor: climbInstance.colorType,
+						opacity: 1,
+					},
 				]}
 			/>
 		),
@@ -128,6 +138,6 @@ const Index = ({}: Props) => {
 			</BottomSheetModal>
 		</View>
 	);
-};
+});
 
 export default Index;

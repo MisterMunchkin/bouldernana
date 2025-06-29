@@ -51,7 +51,7 @@ const DropdownMenu = ({}: Props) => {
 			<DropdownMenuContent>
 				<DropdownMenuItem
 					key={"edit"}
-					onSelect={() => console.log("Edit")}
+					onSelect={() => router.push(`/climb-log/${id}/update`)}
 				>
 					<DropdownMenuItemTitle>Edit</DropdownMenuItemTitle>
 				</DropdownMenuItem>
