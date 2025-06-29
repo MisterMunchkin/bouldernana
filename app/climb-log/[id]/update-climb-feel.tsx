@@ -1,4 +1,4 @@
-import { addClimbSchema } from "@/constants/zod-schema.const";
+import { climbSchema } from "@/constants/zod-schema.const";
 import { cn } from "@/utils/cn.util";
 import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
@@ -14,7 +14,7 @@ import PressableOpacity from "@/components/core/pressable-opacity";
 import AppText from "@/components/core/app-text";
 import { ClimbsClass } from "@/classes/climbs.class";
 
-const schema = addClimbSchema.pick({
+const schema = climbSchema.pick({
 	howDidItFeel: true,
 	steepness: true,
 });

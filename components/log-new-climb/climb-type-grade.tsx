@@ -1,4 +1,4 @@
-import { AddClimbSchema } from "@/app/(tabs)/new-climb";
+import { ClimbSchema } from "@/app/(tabs)/new-climb";
 import { useFormContext, useWatch } from "react-hook-form";
 import DropdownField from "@/components/core/dropdown-field";
 import { CoreTypesUtil } from "@/utils/core-types.util";
@@ -12,7 +12,7 @@ const ClimbTypeGrade = ({}: Props) => {
 	const { getBoulderGradeOptions, getRouteGradeOptions } =
 		useUserGradeOptions();
 
-	const { control } = useFormContext<AddClimbSchema>();
+	const { control } = useFormContext<ClimbSchema>();
 	const typeOfClimb = useWatch({
 		control,
 		name: "typeOfClimb",

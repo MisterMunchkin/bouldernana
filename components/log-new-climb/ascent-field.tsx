@@ -5,13 +5,13 @@ import { CoreTypesUtil } from "@/utils/core-types.util";
 import { ASCENT_TYPE } from "@/constants/core.const";
 import { Field, TextField } from "../core/field";
 import { View } from "react-native";
-import { AddClimbSchema } from "@/app/(tabs)/new-climb";
+import { ClimbSchema } from "@/app/(tabs)/new-climb";
 import PressableOpacity from "../core/pressable-opacity";
 import { cn } from "@/utils/cn.util";
 import AppText from "../core/app-text";
 
 export const AscentField = () => {
-	const { control } = useFormContext<AddClimbSchema>();
+	const { control } = useFormContext<ClimbSchema>();
 	const ascentType = useWatch({
 		control,
 		name: "ascentType",

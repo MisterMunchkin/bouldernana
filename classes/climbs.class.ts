@@ -1,4 +1,4 @@
-import { AddClimbSchema } from "@/app/(tabs)/new-climb";
+import { ClimbSchema } from "@/app/(tabs)/new-climb";
 import { COLOR_CLIMB_TYPE } from "@/constants/core.const";
 import { observableStore$ } from "@/stores/global-observable.store";
 import { LoggedClimb } from "@/types/core.type";
@@ -8,7 +8,7 @@ import * as ExpoCrypto from "expo-crypto";
 
 export class ClimbsClass {
 	static readonly climbs$ = observableStore$.climbs;
-	static add(climb: AddClimbSchema) {
+	static add(climb: ClimbSchema) {
 		const loggedClimb: LoggedClimb = {
 			...climb,
 			id: ExpoCrypto.randomUUID(),

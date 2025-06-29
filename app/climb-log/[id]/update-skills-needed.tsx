@@ -1,4 +1,4 @@
-import { addClimbSchema } from "@/constants/zod-schema.const";
+import { climbSchema } from "@/constants/zod-schema.const";
 import { router, useLocalSearchParams } from "expo-router";
 import { ClimbLogLocalParams } from "./_index";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import { SKILL_TYPE } from "@/constants/core.const";
 import { ClassValue } from "clsx";
 import { ClimbsClass } from "@/classes/climbs.class";
 
-const schema = addClimbSchema.pick({
+const schema = climbSchema.pick({
 	skill: true,
 });
 

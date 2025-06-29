@@ -2,7 +2,7 @@ import { z } from "zod";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { addClimbSchema } from "@/constants/zod-schema.const";
+import { climbSchema } from "@/constants/zod-schema.const";
 import VideoField from "../video/video-field";
 import { ClimbsClass } from "@/classes/climbs.class";
 
@@ -11,7 +11,7 @@ type Props = {
 	id: string;
 };
 
-const schema = addClimbSchema.pick({ videoAssetIds: true });
+const schema = climbSchema.pick({ videoAssetIds: true });
 
 type UpdateVideoSchema = z.infer<typeof schema>;
 
