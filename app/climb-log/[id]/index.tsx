@@ -12,7 +12,7 @@ import {
 import { View } from "react-native";
 import { TailwindUtil } from "@/utils/tailwind.util";
 import PressableOpacity from "@/components/core/pressable-opacity";
-import { EvilIcons } from "@expo/vector-icons";
+import { EvilIcons, Feather } from "@expo/vector-icons";
 
 import AppText from "@/components/core/app-text";
 import { day } from "@/utils/day-js.util";
@@ -66,10 +66,7 @@ const Index = ({}: Props) => {
 					className="absolute z-50 top-safe-offset-5 left-5"
 					tint="prominent"
 				>
-					<PressableOpacity
-						onPress={router.back}
-						twClassName="rounded-sm  "
-					>
+					<PressableOpacity onPress={router.back}>
 						<EvilIcons
 							name="chevron-left"
 							color={TailwindUtil.getCoreColor(
@@ -83,12 +80,32 @@ const Index = ({}: Props) => {
 					</PressableOpacity>
 				</BlurView>
 				<AssetCarousel assetIds={videoAssetIds ?? []} />
+				<BlurView
+					className="absolute z-50 top-safe-offset-5 right-5 px-4 py-2"
+					tint="prominent"
+				>
+					<PressableOpacity
+						onPress={() => router.push("/(tabs)/new-climb")}
+					>
+						<Feather
+							name="edit"
+							color={TailwindUtil.getCoreColor(
+								"cod-gray.DEFAULT"
+							)}
+							style={{
+								textAlign: "center",
+							}}
+							size={20}
+						/>
+					</PressableOpacity>
+				</BlurView>
 			</View>
 			<BottomSheetModal
 				ref={bottomSheetRef}
 				snapPoints={["18%", "50%", "80%"]}
 				enablePanDownToClose={false}
 				enableDynamicSizing={false}
+				enableOverDrag={false}
 				backgroundComponent={renderBackground}
 			>
 				<View className="flex-row items-start justify-between px-4 pb-1">

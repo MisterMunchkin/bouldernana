@@ -49,7 +49,7 @@ const AssetCarousel = ({
 				extractKey={(item, index) => `${item}_${index}`}
 			/>
 			<CarouselIndicator
-				className="absolute bottom-5 left-[50%] -translate-x-[50%]"
+				className="absolute top-safe-offset-5 left-[50%] -translate-x-[50%]"
 				totalItems={assetIds.length}
 				currentIndex={index}
 			/>
