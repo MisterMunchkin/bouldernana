@@ -3,7 +3,7 @@ import { ClimbLogLocalParams } from "./_index";
 import AppText from "@/components/core/app-text";
 import { ScrollView, View } from "react-native";
 import { cn } from "@/utils/cn.util";
-import { addClimbSchema } from "@/constants/zod-schema.const";
+import { climbSchema } from "@/constants/zod-schema.const";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import DropdownField from "@/components/core/dropdown-field";
@@ -16,7 +16,7 @@ import { z } from "zod";
 import ClimbTypeGrade from "@/components/log-new-climb/climb-type-grade";
 import { ClimbsClass } from "@/classes/climbs.class";
 
-const schema = addClimbSchema.pick({
+const schema = climbSchema.pick({
 	date: true,
 	grade: true,
 	typeOfClimb: true,

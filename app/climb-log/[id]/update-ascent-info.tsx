@@ -1,4 +1,4 @@
-import { addClimbSchema } from "@/constants/zod-schema.const";
+import { climbSchema } from "@/constants/zod-schema.const";
 import { router, useLocalSearchParams } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { ClimbLogLocalParams } from "./_index";
@@ -11,7 +11,7 @@ import { ScrollView, View } from "react-native";
 import { cn } from "@/utils/cn.util";
 import { ClimbsClass } from "@/classes/climbs.class";
 
-const schema = addClimbSchema.pick({
+const schema = climbSchema.pick({
 	ascentType: true,
 	attempts: true,
 	hasBeenSent: true,

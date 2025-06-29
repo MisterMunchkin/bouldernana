@@ -1,7 +1,6 @@
-import { ClimbLogLocalParams } from "./_index";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { ClimbsClass } from "@/classes/climbs.class";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import AssetCarousel from "@/components/video/asset-carousel/asset-carousel";
 import {
 	BottomSheetModal,
@@ -21,19 +20,29 @@ import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import ClimbDetails from "@/components/climb-log/climb-details";
 import SkillsNeeded from "@/components/climb-log/skills-needed";
 import Notes from "@/components/climb-log/notes";
+import DropdownMenu from "@/components/climb-log/dropdown-menu";
+import { observer } from "@legendapp/state/react";
 
 type Props = {};
-
-const Index = ({}: Props) => {
+export type ClimbLogLocalParams = {
+	id: string;
+};
+const Index = observer(({}: Props) => {
 	const bottomSheetRef = useRef<BottomSheetModal>(null);
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
-	const climbInstance = useMemo(() => new ClimbsClass(id), [id]);
+	const climbInstance = new ClimbsClass(id, { isTrackable: true });
+
 	const router = useRouter();
 	const { getUserGrade } = useUserGradeOptions();
 
-	useEffect(() => {
-		bottomSheetRef.current?.present();
-	}, [bottomSheetRef]);
+	useFocusEffect(
+		useCallback(() => {
+			bottomSheetRef.current?.present();
+			return () => {
+				bottomSheetRef.current?.dismiss();
+			};
+		}, [])
+	);
 
 	const { climb } = climbInstance;
 	const { name, date, grade, videoAssetIds } = climb ?? {};
@@ -52,7 +61,10 @@ const Index = ({}: Props) => {
 				opacity={1}
 				style={[
 					props.style,
-					{ backgroundColor: climbInstance.colorType, opacity: 1 },
+					{
+						backgroundColor: climbInstance.colorType,
+						opacity: 1,
+					},
 				]}
 			/>
 		),
@@ -66,10 +78,7 @@ const Index = ({}: Props) => {
 					className="absolute z-50 top-safe-offset-5 left-5"
 					tint="prominent"
 				>
-					<PressableOpacity
-						onPress={router.back}
-						twClassName="rounded-sm  "
-					>
+					<PressableOpacity onPress={router.back}>
 						<EvilIcons
 							name="chevron-left"
 							color={TailwindUtil.getCoreColor(
@@ -83,12 +92,17 @@ const Index = ({}: Props) => {
 					</PressableOpacity>
 				</BlurView>
 				<AssetCarousel assetIds={videoAssetIds ?? []} />
+
+				<BlurView className="absolute z-50 top-safe-offset-5 right-5 px-2 py-1">
+					<DropdownMenu />
+				</BlurView>
 			</View>
 			<BottomSheetModal
 				ref={bottomSheetRef}
 				snapPoints={["18%", "50%", "80%"]}
 				enablePanDownToClose={false}
 				enableDynamicSizing={false}
+				enableOverDrag={false}
 				backgroundComponent={renderBackground}
 			>
 				<View className="flex-row items-start justify-between px-4 pb-1">
@@ -124,6 +138,6 @@ const Index = ({}: Props) => {
 			</BottomSheetModal>
 		</View>
 	);
-};
+});
 
 export default Index;

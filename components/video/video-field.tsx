@@ -1,11 +1,11 @@
-import { FieldValues, FieldPath, PathValue } from "react-hook-form";
+import { FieldValues, FieldPath } from "react-hook-form";
 import { ActivityIndicator, View } from "react-native";
 import { cn } from "@/utils/cn.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { Field, FieldProps } from "../core/field";
 import { useImagePicker } from "@/hooks/image-picker.hook";
 import AppText from "../core/app-text";
-import React, { useState } from "react";
+import { useState } from "react";
 import PressableIcon from "../ui/pressable-icon";
 import VideoList from "./video-list";
 import { AppError } from "@/utils/app-error.util";
@@ -45,7 +45,7 @@ const VideoField = <
 							setIsLoading(true);
 							const videoAssetId = await pickVideo();
 							if (!videoAssetId) return;
-							onChange([videoAssetId, ...value]);
+							onChange([...videoAssetId, ...value]);
 						} catch (err) {
 							if (AppError.isAppError(err)) {
 								console.warn(

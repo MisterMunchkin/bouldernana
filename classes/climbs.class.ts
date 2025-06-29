@@ -1,4 +1,4 @@
-import { AddClimbSchema } from "@/app/(tabs)/new-climb";
+import { ClimbSchema } from "@/components/forms/climb-log-form";
 import { COLOR_CLIMB_TYPE } from "@/constants/core.const";
 import { observableStore$ } from "@/stores/global-observable.store";
 import { LoggedClimb } from "@/types/core.type";
@@ -8,7 +8,7 @@ import * as ExpoCrypto from "expo-crypto";
 
 export class ClimbsClass {
 	static readonly climbs$ = observableStore$.climbs;
-	static add(climb: AddClimbSchema) {
+	static add(climb: ClimbSchema) {
 		const loggedClimb: LoggedClimb = {
 			...climb,
 			id: ExpoCrypto.randomUUID(),
@@ -50,8 +50,9 @@ export class ClimbsClass {
 	climb: LoggedClimb;
 
 	/**initiate an instance by logged climb id */
-	constructor(id: string) {
-		const climb = ClimbsClass.peek(id);
+	constructor(id: string, options?: { isTrackable?: boolean }) {
+		const { isTrackable } = options ?? {};
+		const climb = isTrackable ? ClimbsClass.get(id) : ClimbsClass.peek(id);
 		if (!climb) {
 			console.error(`Could not find logged climb with id: ${id}`);
 			throw new Error(`Could not find logged climb with id: ${id}`);

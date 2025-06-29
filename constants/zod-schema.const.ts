@@ -9,7 +9,7 @@ import {
 
 export const ClimbTypeEnum = z.enum(["Board", "Boulder", "Route", "Trad"]);
 
-export const addClimbSchema = z.object({
+export const climbSchema = z.object({
 	name: z.string().min(1),
 	videoAssetIds: z.array(z.string()).optional(),
 	typeOfClimb: ClimbTypeEnum.default("Boulder"), //boulder, route, board, trad
@@ -45,6 +45,6 @@ export const settingsSchema = z.object({
 });
 
 export const jsonExportSchema = z.object({
-	climbLogs: z.array(z.object({ ...addClimbSchema.shape, id: z.string() })),
+	climbLogs: z.array(z.object({ ...climbSchema.shape, id: z.string() })),
 	...settingsSchema.shape,
 });

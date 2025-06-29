@@ -8,12 +8,13 @@ export const useImagePicker = () => {
 	 * Shows a video picker and returns the asset id of the video picked
 	 * @returns AssetId of the video picked
 	 */
-	const pickVideo = async (): Promise<string | undefined> => {
+	const pickVideo = async (): Promise<string[] | undefined> => {
 		const status = await requestPermission();
 		if (!status.granted) return;
 
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ["videos"],
+			allowsMultipleSelection: true,
 			allowsEditing: false,
 			quality: 0.6,
 			videoQuality: ImagePicker.UIImagePickerControllerQualityType.Medium,
@@ -27,7 +28,16 @@ export const useImagePicker = () => {
 		 * from the library, We need to clean the cache when this is done.
 		 */
 		await Media.cleanCache();
-		return result.assets[0].assetId ?? undefined;
+		let assets: string[] = [];
+
+		result.assets.forEach(({ assetId }) => {
+			if (!assetId) return;
+			assets.push(assetId);
+		});
+
+		if (assets.length === 0) return;
+
+		return assets;
 	};
 
 	return {
