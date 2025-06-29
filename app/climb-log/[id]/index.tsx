@@ -12,7 +12,7 @@ import {
 import { View } from "react-native";
 import { TailwindUtil } from "@/utils/tailwind.util";
 import PressableOpacity from "@/components/core/pressable-opacity";
-import { EvilIcons, Feather } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 
 import AppText from "@/components/core/app-text";
 import { day } from "@/utils/day-js.util";
@@ -21,6 +21,7 @@ import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import ClimbDetails from "@/components/climb-log/climb-details";
 import SkillsNeeded from "@/components/climb-log/skills-needed";
 import Notes from "@/components/climb-log/notes";
+import DropdownMenu from "@/components/climb-log/dropdown-menu";
 
 type Props = {};
 
@@ -80,24 +81,9 @@ const Index = ({}: Props) => {
 					</PressableOpacity>
 				</BlurView>
 				<AssetCarousel assetIds={videoAssetIds ?? []} />
-				<BlurView
-					className="absolute z-50 top-safe-offset-5 right-5 px-4 py-2"
-					tint="prominent"
-				>
-					<PressableOpacity
-						onPress={() => router.push("/(tabs)/new-climb")}
-					>
-						<Feather
-							name="edit"
-							color={TailwindUtil.getCoreColor(
-								"cod-gray.DEFAULT"
-							)}
-							style={{
-								textAlign: "center",
-							}}
-							size={20}
-						/>
-					</PressableOpacity>
+
+				<BlurView className="absolute z-50 top-safe-offset-5 right-5 px-2 py-1">
+					<DropdownMenu />
 				</BlurView>
 			</View>
 			<BottomSheetModal
