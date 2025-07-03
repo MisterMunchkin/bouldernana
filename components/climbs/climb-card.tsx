@@ -1,12 +1,14 @@
 import { View } from "react-native";
 import AppText from "../core/app-text";
-import { day, DayJsUtils } from "@/utils/day-js.util";
+import { day } from "@/utils/day-js.util";
 import PressableOpacity from "../core/pressable-opacity";
 import { router } from "expo-router";
 import { LoggedClimb } from "@/types/core.type";
 import { cn } from "@/utils/cn.util";
 import { useMemo } from "react";
 import { ClimbsClass } from "@/classes/climbs.class";
+import ContextMenuWrapper from "../ui/context-menu-wrapper";
+import AssetCarousel from "../video/asset-carousel/asset-carousel";
 
 type Props = {
 	displayedGrade: string;
@@ -35,29 +37,39 @@ const ClimbCard = ({
 	}, [id]);
 
 	return (
-		<PressableOpacity
-			twClassName={cn("flex-col flex-1 p-2 rounded-md")}
-			style={{
-				backgroundColor: climbInstance.colorType,
-			}}
-			onPress={() => router.push(`/climb-log/${id}`)}
+		<ContextMenuWrapper
+			preview={
+				<AssetCarousel
+					assetIds={climbInstance.climb.videoAssetIds ?? []}
+				/>
+			}
 		>
-			<View className="w-full  flex-col items-start gap-2">
-				<AppText size={"xs"}>{`${typeOfClimb} - ${
-					displayedGrade || "No Grade"
-				} - ${steepness || "No Steepness"}`}</AppText>
-				<AppText twClassName="text-lg text-core-caribbean-current-200">
-					{`${whereDidYouClimb} • ${day(date).format(
-						DayJsUtils.DEFAULT_FORMAT
-					)}`}
-				</AppText>
-				<View className="flex-row gap-2">
-					<AppText size={"sm"}>
-						{skill?.slice(0, 4).join(" - ")}
+			<PressableOpacity
+				twClassName={cn("flex-col flex-1 p-2 rounded-md")}
+				style={{
+					backgroundColor: climbInstance.colorType,
+				}}
+				onPress={() => router.push(`/climb-log/${id}`)}
+			>
+				<View className="w-full  flex-col items-start gap-2">
+					<AppText size={"xs"}>{`${typeOfClimb} - ${
+						displayedGrade || "No Grade"
+					} - ${steepness || "No Steepness"}`}</AppText>
+					<AppText twClassName="text-lg text-core-caribbean-current-200">
+						{`${climbInstance.climb.name} • ${day(
+							date
+						).strictFormat("DD MMM, YYYY")}`}
 					</AppText>
+					{skill && skill.length > 0 && (
+						<View className="flex-row gap-2">
+							<AppText size={"sm"}>
+								{skill?.slice(0, 4).join(" - ")}
+							</AppText>
+						</View>
+					)}
 				</View>
-			</View>
-		</PressableOpacity>
+			</PressableOpacity>
+		</ContextMenuWrapper>
 	);
 };
 
