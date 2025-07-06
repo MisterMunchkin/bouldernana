@@ -840,10 +840,10 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
-"@expo-google-fonts/kosugi@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/kosugi/-/kosugi-0.4.0.tgz#ef14d324b31eca504e5019c8276fbf87fbe5f68c"
-  integrity sha512-pTeVgOEBb48C1S5sMlHggxgQRdCf36q0Bu+Yl/qipT9Q1jPOXR7uP2fzakjvASPS7XhfzNM3/pCnyYEXyCt7AQ==
+"@expo-google-fonts/dm-mono@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/dm-mono/-/dm-mono-0.4.1.tgz#d32dd703b8b427cef313a2068aae7e179784c5a4"
+  integrity sha512-vG9z/pbvvYuHdv6bQpztUZQodUR9+jZZhsJ+oGOwyJySgQ70YNkS9+pUNTB5GGzZouh3GVspipsc8uvwxZ/KAw==
 
 "@expo/bunyan@^4.0.0":
   version "4.0.1"

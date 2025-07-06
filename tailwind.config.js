@@ -14,7 +14,8 @@ export default {
 				portrait: 9 / 16,
 			},
 			fontFamily: {
-				kosugi: ["Kosugi"],
+				// kosugi: ["Kosugi"],
+				dmmono: ["DM Mono"],
 			},
 		},
 	},

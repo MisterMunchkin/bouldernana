@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { ClassValue } from "clsx";
 import { cn } from "@/utils/cn.util";
 
-export const textVariants = cva("font-kosugi", {
+export const textVariants = cva("font-dmmono", {
 	variants: {
 		color: {
 			white: "text-core-white-rock",

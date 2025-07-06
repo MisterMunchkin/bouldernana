@@ -11,7 +11,13 @@ import { Toaster } from "sonner-native";
 import { Media } from "@/classes/media.class";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { TailwindUtil } from "@/utils/tailwind.util";
-import { useFonts, Kosugi_400Regular } from "@expo-google-fonts/kosugi";
+import { useFonts } from "@expo-google-fonts/dm-mono";
+import { DMMono_300Light } from "@expo-google-fonts/dm-mono/300Light";
+import { DMMono_300Light_Italic } from "@expo-google-fonts/dm-mono/300Light_Italic";
+import { DMMono_400Regular } from "@expo-google-fonts/dm-mono/400Regular";
+import { DMMono_400Regular_Italic } from "@expo-google-fonts/dm-mono/400Regular_Italic";
+import { DMMono_500Medium } from "@expo-google-fonts/dm-mono/500Medium";
+import { DMMono_500Medium_Italic } from "@expo-google-fonts/dm-mono/500Medium_Italic";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,7 +28,12 @@ SplashScreen.setOptions({
 
 export default function RootLayout() {
 	const [fontsLoaded] = useFonts({
-		Kosugi_400Regular,
+		DMMono_300Light,
+		DMMono_300Light_Italic,
+		DMMono_400Regular,
+		DMMono_400Regular_Italic,
+		DMMono_500Medium,
+		DMMono_500Medium_Italic,
 	});
 
 	//NOTE: We proably don't need to unmount the root since the file folder is used on user actions. But wanted to follow expo docs
