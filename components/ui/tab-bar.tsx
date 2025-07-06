@@ -11,7 +11,7 @@ const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
 			className={cn(
 				"bg-black absolute left-[50%] -translate-x-[50%]",
 				"bottom-safe-offset-0 flex flex-row",
-				"gap-8 px-3 rounded-full items-center"
+				"gap-8 px-3 rounded-full items-center py-3"
 			)}
 		>
 			{state.routes.map((route) => (

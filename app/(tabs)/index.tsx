@@ -8,6 +8,7 @@ import { FlatList, ListRenderItem, View } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useCallback } from "react";
 import ClimbCard from "@/components/climbs/climb-card";
+import { day } from "@/utils/day-js.util";
 
 type Props = {};
 
@@ -30,7 +31,9 @@ const Tab = observer(({}: Props) => {
 	return (
 		<View className="px-2 bg-core-cod-gray flex-1">
 			<FlatList
-				data={ClimbsClass.climbs$.get()}
+				data={ClimbsClass.climbs$
+					.get()
+					.sort((a, b) => day(b.date).diff(day(a.date)))}
 				contentContainerStyle={{
 					paddingBottom: bottom + bottomTabBarHeight + 20,
 					paddingTop: headerHeight,
