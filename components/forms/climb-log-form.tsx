@@ -21,11 +21,11 @@ import {
 	STEEPNESS,
 	WHERE,
 } from "@/constants/core.const";
-import { ColorPath } from "@/utils/tailwind.util";
 import { AscentField } from "@/components/log-new-climb/ascent-field";
 import DateTimeField from "@/components/core/date-time-field";
 import PressableOpacity from "@/components/core/pressable-opacity";
 import AppText from "@/components/core/app-text";
+import { ClassValue } from "clsx";
 
 export type ClimbSchema = z.infer<typeof climbSchema>;
 
@@ -70,7 +70,7 @@ const ClimbLogForm = ({
 		onSubmitProp(data);
 	};
 
-	const selected: ColorPath = "mojo.500";
+	const selected: ClassValue = "bg-core-amethyst-smoke-600";
 	return (
 		<KeyboardAwareScrollView className="px-4">
 			<View className="gap-8 flex-grow py-safe-offset-20">

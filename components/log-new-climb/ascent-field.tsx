@@ -1,14 +1,13 @@
-import React from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import DropdownField, { DropDownItem } from "../core/dropdown-field";
 import { CoreTypesUtil } from "@/utils/core-types.util";
 import { ASCENT_TYPE } from "@/constants/core.const";
 import { Field, TextField } from "../core/field";
 import { View } from "react-native";
-import { ClimbSchema } from "@/app/(tabs)/new-climb";
 import PressableOpacity from "../core/pressable-opacity";
 import { cn } from "@/utils/cn.util";
 import AppText from "../core/app-text";
+import { ClimbSchema } from "@/components/forms/climb-log-form";
 
 export const AscentField = () => {
 	const { control } = useFormContext<ClimbSchema>();
@@ -43,7 +42,7 @@ export const AscentField = () => {
 				title="Did you send it?"
 				items={getInferredDropdownItems(ASCENT_TYPE)}
 				classNames={{
-					selected: "bg-red-500",
+					selected: "bg-core-amethyst-smoke-600",
 				}}
 			/>
 			{ascentType === "Project" && (
@@ -79,7 +78,7 @@ export const AscentField = () => {
 													? `${
 															value === 1
 																? "bg-green-300"
-																: "bg-core-imperial-red-600"
+																: "bg-red-500"
 													  }`
 													: ""
 											)}

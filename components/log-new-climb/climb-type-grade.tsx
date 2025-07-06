@@ -1,10 +1,9 @@
-import { ClimbSchema } from "@/app/(tabs)/new-climb";
 import { useFormContext, useWatch } from "react-hook-form";
 import DropdownField from "@/components/core/dropdown-field";
 import { CoreTypesUtil } from "@/utils/core-types.util";
-import { ClassValue } from "clsx";
 import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import { ClimbTypeEnum } from "@/constants/zod-schema.const";
+import { ClimbSchema } from "@/components/forms/climb-log-form";
 
 type Props = {};
 
@@ -17,7 +16,6 @@ const ClimbTypeGrade = ({}: Props) => {
 		control,
 		name: "typeOfClimb",
 	});
-	const selected: ClassValue = "bg-red-500";
 
 	return (
 		<>
@@ -29,7 +27,7 @@ const ClimbTypeGrade = ({}: Props) => {
 					ClimbTypeEnum.options
 				)}
 				classNames={{
-					selected,
+					selected: "bg-core-amethyst-smoke-600",
 				}}
 			/>
 			<DropdownField
@@ -42,7 +40,7 @@ const ClimbTypeGrade = ({}: Props) => {
 						: getRouteGradeOptions()
 				}
 				classNames={{
-					selected,
+					selected: "bg-core-amethyst-smoke-600",
 				}}
 				placeholder="Select a grade..."
 			/>
