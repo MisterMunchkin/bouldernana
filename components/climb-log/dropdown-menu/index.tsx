@@ -45,7 +45,8 @@ const DropdownMenu = ({}: Props) => {
 				<Feather
 					name="more-horizontal"
 					size={24}
-					color={TailwindUtil.getCoreColor("cod-gray.DEFAULT")}
+					style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+					color={TailwindUtil.getCoreColor("amethyst-smoke.100")}
 				/>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
