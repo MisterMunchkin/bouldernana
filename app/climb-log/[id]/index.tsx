@@ -15,13 +15,13 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import AppText from "@/components/core/app-text";
 import { day } from "@/utils/day-js.util";
-import { BlurView } from "expo-blur";
 import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import ClimbDetails from "@/components/climb-log/climb-details";
 import SkillsNeeded from "@/components/climb-log/skills-needed";
 import Notes from "@/components/climb-log/notes";
 import DropdownMenu from "@/components/climb-log/dropdown-menu";
 import { observer } from "@legendapp/state/react";
+import { BlurView } from "expo-blur";
 
 type Props = {};
 export type ClimbLogLocalParams = {
@@ -72,31 +72,29 @@ const Index = observer(({}: Props) => {
 	);
 
 	return (
-		<View className="absolute top-0">
-			<View>
-				<BlurView
-					className="absolute z-50 top-safe-offset-5 left-5"
-					tint="prominent"
-				>
+		/**This should probably just be a flatlist with a header instead */
+		<View className="flex-1">
+			<View className="pt-safe-offset-5 px-4 flex-row items-center justify-between">
+				<BlurView tint="dark">
 					<PressableOpacity onPress={router.back}>
 						<EvilIcons
 							name="chevron-left"
 							color={TailwindUtil.getCoreColor(
-								"cod-gray.DEFAULT"
+								"amethyst-smoke.100"
 							)}
-							style={{
-								textAlign: "center",
-							}}
 							size={40}
 						/>
 					</PressableOpacity>
 				</BlurView>
-				<AssetCarousel assetIds={videoAssetIds ?? []} />
-
-				<BlurView className="absolute z-50 top-safe-offset-5 right-5 px-2 py-1">
+				<BlurView tint="dark">
 					<DropdownMenu />
 				</BlurView>
 			</View>
+			<AssetCarousel
+				assetIds={videoAssetIds ?? []}
+				className="absolute top-0 -z-50"
+			/>
+
 			<BottomSheetModal
 				ref={bottomSheetRef}
 				snapPoints={["18%", "50%", "80%"]}

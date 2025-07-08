@@ -1,4 +1,5 @@
 import { cn } from "@/utils/cn.util";
+import { TailwindUtil } from "@/utils/tailwind.util";
 import { BlurView } from "expo-blur";
 import { Stack } from "expo-router";
 import { Platform } from "react-native";
@@ -28,7 +29,15 @@ const Layout = ({}: Props) => {
 				),
 			}}
 		>
-			<Stack.Screen name="[id]/index" />
+			<Stack.Screen
+				name="[id]/index"
+				options={{
+					contentStyle: {
+						backgroundColor:
+							TailwindUtil.getCoreColor("cod-gray.DEFAULT"),
+					},
+				}}
+			/>
 			<Stack.Screen name="[id]/update-header" />
 		</Stack>
 	);
