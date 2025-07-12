@@ -2,6 +2,7 @@ import { ClimbSchema } from "@/components/forms/climb-log-form";
 import { COLOR_CLIMB_TYPE } from "@/constants/core.const";
 import { observableStore$ } from "@/stores/global-observable.store";
 import { LoggedClimb } from "@/types/core.type";
+import { day } from "@/utils/day-js.util";
 import { TailwindUtil } from "@/utils/tailwind.util";
 import { computed } from "@legendapp/state";
 
@@ -69,10 +70,7 @@ export class ClimbsClass {
 		ClimbsClass.climbs$
 			.get()
 			.slice()
-			.sort(
-				(a, b) =>
-					new Date(b.date).getTime() - new Date(a.date).getTime()
-			)
+			.sort((a, b) => day(b.date).unix() - day(a.date).unix())
 	);
 
 	/**Instance of LoggedClimb helper class */
