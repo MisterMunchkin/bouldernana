@@ -1,7 +1,11 @@
 import { LoggedClimb } from "@/types/core.type";
 import { observable } from "@legendapp/state";
 import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
-import { syncObservable } from "@legendapp/state/sync";
+import {
+	combineTransforms,
+	syncObservable,
+	transformStringifyDates,
+} from "@legendapp/state/sync";
 import { MMKV } from "react-native-mmkv";
 
 type ObservableStore = {
@@ -19,5 +23,6 @@ syncObservable(observableStore$.climbs, {
 		name: "climbs",
 		plugin: ObservablePersistMMKV,
 		mmkv: storage,
+		transform: combineTransforms(transformStringifyDates()),
 	},
 });

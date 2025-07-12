@@ -17,6 +17,7 @@ import { DMMono_400Regular } from "@expo-google-fonts/dm-mono/400Regular";
 import { DMMono_400Regular_Italic } from "@expo-google-fonts/dm-mono/400Regular_Italic";
 import { DMMono_500Medium } from "@expo-google-fonts/dm-mono/500Medium";
 import { DMMono_500Medium_Italic } from "@expo-google-fonts/dm-mono/500Medium_Italic";
+import { enableReactTracking } from "@legendapp/state/config/enableReactTracking";
 
 if (__DEV__) {
 	require("../ReactotronConfig");
@@ -27,6 +28,10 @@ SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({
 	duration: 1000,
 	fade: true,
+});
+
+enableReactTracking({
+	auto: true,
 });
 
 export default function RootLayout() {

@@ -2,10 +2,11 @@ import { ClimbsClass } from "@/classes/climbs.class";
 import ClimbLogForm, { ClimbSchema } from "@/components/forms/climb-log-form";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ClimbLogLocalParams } from "..";
+import { use$ } from "@legendapp/state/react";
 
 export default function Index() {
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
-	const { climb: defaultValues } = new ClimbsClass(id);
+	const { climb: defaultValues } = use$(new ClimbsClass(id));
 	const router = useRouter();
 
 	const updateRecord = (climb: ClimbSchema) => {
@@ -21,7 +22,7 @@ export default function Index() {
 		<ClimbLogForm
 			onSubmit={updateRecord}
 			onError={(err) => console.error(JSON.stringify(err))}
-			defaultValues={defaultValues}
+			defaultValues={defaultValues.get()}
 		/>
 	);
 }
