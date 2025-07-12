@@ -5,18 +5,18 @@ import GradeSystemPreferences from "@/components/profile/grade-system-preference
 import ProfileLoader from "@/components/profile/profile-loader";
 import { useUserSettingsStore } from "@/stores/user-settings.store";
 import { FileSystemUtil } from "@/utils/file-system.util";
-import { observer } from "@legendapp/state/react";
+import { use$ } from "@legendapp/state/react";
 import { useState } from "react";
 import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type Props = {};
 
-const profile = observer(({}: Props) => {
+const profile = ({}: Props) => {
 	const [isFileActionStarted, setIsFileActionStarted] =
 		useState<boolean>(false);
 
-	const climbLogs = ClimbsClass.climbs$.get();
+	const climbLogs$ = use$(ClimbsClass.climbs$);
 
 	const restoreClimbRecord = ClimbsClass.flashRecordFromJSON;
 
@@ -44,7 +44,7 @@ const profile = observer(({}: Props) => {
 		setIsFileActionStarted((prev) => !prev);
 		await FileSystemUtil.saveJSON({
 			data: JSON.stringify({
-				climbLogs,
+				climbLogs: climbLogs$,
 				boulderSettings,
 				routeSettings,
 			}),
@@ -87,6 +87,6 @@ const profile = observer(({}: Props) => {
 			</View>
 		</KeyboardAwareScrollView>
 	);
-});
+};
 
 export default profile;

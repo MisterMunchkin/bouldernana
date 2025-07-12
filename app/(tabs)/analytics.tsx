@@ -5,8 +5,9 @@ import { ScrollView, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import ClimbsPerWeek from "@/components/analytics/climbs-per-week";
 import { ClimbsClass } from "@/classes/climbs.class";
-import { observer } from "@legendapp/state/react";
 import { TailwindUtil } from "@/utils/tailwind.util";
+import { computed } from "@legendapp/state";
+import { observer } from "@legendapp/state/react";
 
 type Props = {};
 
@@ -14,22 +15,28 @@ export const SCREEN_WIDTH = 400;
 export const CHART_HEIGHT = 250;
 export const CHART_CONFIG = {
 	// color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-	color: (opacity = 1) => TailwindUtil.getCoreColor("cod-gray.100"),
+	color: (opacity = 1) => TailwindUtil.getCoreColor("cod-gray.800"),
 	strokeWidth: 2, // optional, default 3
 	barPercentage: 0.5,
 	useShadowColorFromDataset: false, // optional
 };
 
 const analytics = observer(({}: Props) => {
-	const climbs = ClimbsClass.climbs$.get();
-	const climbAnalytic = new Analytics({
-		data: climbs,
-	});
+	const climbAnalytic$ = computed(
+		() =>
+			new Analytics({
+				data: ClimbsClass.climbs$.get().slice(),
+			})
+	);
 
 	return (
 		<ScrollView className="flex-1">
 			<View className="py-safe-offset-20 items-center gap-6">
-				<AppText>Coming Soon!</AppText>
+				<AppText>
+					Coming Soon! currently only have line graphs and pie charts
+					but would be nice to also include radar charts, dot charts,
+					etc.
+				</AppText>
 				{/* <AppText size={"xs"}>
 					Some features I'm thinking of including:
 				</AppText> */}
@@ -50,9 +57,40 @@ const analytics = observer(({}: Props) => {
 					</AppText>
 				</View> */}
 				<ClimbsPerWeek />
+				<AppText size={"base"}>Climbs by grade</AppText>
 				<PieChart
 					accessor="value"
-					data={climbAnalytic.toPieChartData("typeOfClimb")}
+					data={climbAnalytic$.toPieChartData("grade")}
+					width={SCREEN_WIDTH}
+					height={CHART_HEIGHT}
+					backgroundColor="transparent"
+					paddingLeft="15"
+					chartConfig={CHART_CONFIG}
+				/>
+				<AppText size={"base"}>Climbs by ascent</AppText>
+				<PieChart
+					accessor="value"
+					data={climbAnalytic$.toPieChartData("ascentType")}
+					width={SCREEN_WIDTH}
+					height={CHART_HEIGHT}
+					backgroundColor="transparent"
+					paddingLeft="15"
+					chartConfig={CHART_CONFIG}
+				/>
+				<AppText size={"base"}>Climbs by steepness</AppText>
+				<PieChart
+					accessor="value"
+					data={climbAnalytic$.toPieChartData("steepness")}
+					width={SCREEN_WIDTH}
+					height={CHART_HEIGHT}
+					backgroundColor="transparent"
+					paddingLeft="15"
+					chartConfig={CHART_CONFIG}
+				/>
+				<AppText size={"base"}>Climbs by where(?)</AppText>
+				<PieChart
+					accessor="value"
+					data={climbAnalytic$.toPieChartData("whereDidYouClimb")}
 					width={SCREEN_WIDTH}
 					height={CHART_HEIGHT}
 					backgroundColor="transparent"

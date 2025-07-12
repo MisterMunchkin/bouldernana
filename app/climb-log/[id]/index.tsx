@@ -20,17 +20,17 @@ import ClimbDetails from "@/components/climb-log/climb-details";
 import SkillsNeeded from "@/components/climb-log/skills-needed";
 import Notes from "@/components/climb-log/notes";
 import DropdownMenu from "@/components/climb-log/dropdown-menu";
-import { observer } from "@legendapp/state/react";
 import { BlurView } from "expo-blur";
+import { use$ } from "@legendapp/state/react";
 
 type Props = {};
 export type ClimbLogLocalParams = {
 	id: string;
 };
-const Index = observer(({}: Props) => {
+const Index = ({}: Props) => {
 	const bottomSheetRef = useRef<BottomSheetModal>(null);
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
-	const climbInstance = new ClimbsClass(id, { isTrackable: true });
+	const climbInstance = use$(new ClimbsClass(id, { isTrackable: true }));
 
 	const router = useRouter();
 	const { getUserGrade } = useUserGradeOptions();
@@ -136,6 +136,6 @@ const Index = observer(({}: Props) => {
 			</BottomSheetModal>
 		</View>
 	);
-});
+};
 
 export default Index;

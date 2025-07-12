@@ -32,9 +32,11 @@ export class Analytics<T extends object> {
 			acc[key] = (acc[key] || 0) + 1;
 		});
 
+		console.log(acc);
+
 		const result: PieChartType[] = Object.entries(acc).map(
 			([name, value], index) => ({
-				name,
+				name: name || "N/A",
 				value,
 				color: this.colors[index % this.colors.length],
 				legendFontColor: "#7F7F7F",
