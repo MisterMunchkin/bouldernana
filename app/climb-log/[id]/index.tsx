@@ -1,6 +1,6 @@
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { ClimbsClass } from "@/classes/climbs.class";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useRef } from "react";
 import {
 	BottomSheetModal,
 	BottomSheetBackgroundProps,
@@ -20,7 +20,7 @@ import SkillsNeeded from "@/components/climb-log/skills-needed";
 import Notes from "@/components/climb-log/notes";
 import DropdownMenu from "@/components/climb-log/dropdown-menu";
 import { BlurView } from "expo-blur";
-import { use$ } from "@legendapp/state/react";
+import { Computed, Memo, use$, useComputed } from "@legendapp/state/react";
 import AssetCarousel from "@/components/video/asset-carousel/asset-carousel";
 
 type Props = {};
@@ -30,7 +30,7 @@ export type ClimbLogLocalParams = {
 const Index = ({}: Props) => {
 	const bottomSheetRef = useRef<BottomSheetModal>(null);
 	const { id } = useLocalSearchParams<ClimbLogLocalParams>();
-	const climbInstance = use$(new ClimbsClass(id, { isTrackable: true }));
+	const climbInstance = use$(new ClimbsClass(id));
 
 	const router = useRouter();
 	const { getUserGrade } = useUserGradeOptions();
@@ -47,10 +47,7 @@ const Index = ({}: Props) => {
 	const { climb } = climbInstance;
 	const { name, date, grade, videoAssetIds } = climb ?? {};
 
-	const userGrade = useMemo(
-		() => getUserGrade({ grade: grade ?? "" }),
-		[grade, getUserGrade]
-	);
+	const userGrade = useComputed(() => getUserGrade({ grade: grade.get() }));
 
 	const renderBackground = useCallback(
 		(props: BottomSheetBackgroundProps) => (
@@ -90,11 +87,14 @@ const Index = ({}: Props) => {
 					<DropdownMenu />
 				</BlurView>
 			</View>
-			<AssetCarousel
-				assetIds={videoAssetIds ?? []}
-				className="absolute top-0 -z-50"
-			/>
-
+			<Memo>
+				{() => (
+					<AssetCarousel
+						assetIds={videoAssetIds.get() ?? []}
+						className="absolute top-0 -z-50"
+					/>
+				)}
+			</Memo>
 			<BottomSheetModal
 				ref={bottomSheetRef}
 				snapPoints={["18%", "50%", "80%"]}
@@ -103,24 +103,31 @@ const Index = ({}: Props) => {
 				enableOverDrag={false}
 				backgroundComponent={renderBackground}
 			>
-				<View className="flex-row items-start justify-between px-4 pb-1">
-					<AppText
-						size={"xl"}
-						font={"bold"}
-						twClassName="text-pretty flex-1"
-					>
-						{name}
-					</AppText>
-					<View className="flex-col items-start">
-						<AppText>
-							{day(date).strictFormat("DD MMM, YYYY")}
-						</AppText>
+				<Computed>
+					{() => (
+						<View className="flex-row items-start justify-between px-4 pb-1">
+							<AppText
+								size={"xl"}
+								font={"bold"}
+								twClassName="text-pretty flex-1"
+							>
+								{name.get()}
+							</AppText>
 
-						<AppText
-							size={"xl"}
-						>{`${userGrade} (${grade})`}</AppText>
-					</View>
-				</View>
+							<View className="flex-col items-start">
+								<AppText>
+									{day(date.get()).strictFormat(
+										"DD MMM, YYYY"
+									)}
+								</AppText>
+
+								<AppText
+									size={"xl"}
+								>{`${userGrade.get()} (${grade.get()})`}</AppText>
+							</View>
+						</View>
+					)}
+				</Computed>
 				<BottomSheetScrollView
 					className={"flex-1"}
 					contentContainerClassName={"gap-4"}
@@ -128,10 +135,16 @@ const Index = ({}: Props) => {
 					<ClimbDetails {...climb} />
 					<SkillsNeeded {...climb} />
 					<Notes {...climb} />
-					<View className="px-4 py-2 items-start">
-						<AppText size={"base"}>Link</AppText>
-						<AppText size={"xl"}>{climb.link ?? "No link"}</AppText>
-					</View>
+					<Computed>
+						{() => (
+							<View className="px-4 py-2 items-start">
+								<AppText size={"base"}>Link</AppText>
+								<AppText size={"xl"}>
+									{climb.link.get() ?? "No link"}
+								</AppText>
+							</View>
+						)}
+					</Computed>
 				</BottomSheetScrollView>
 			</BottomSheetModal>
 		</View>

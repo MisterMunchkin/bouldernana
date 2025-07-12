@@ -6,8 +6,7 @@ import { PieChart } from "react-native-chart-kit";
 import ClimbsPerWeek from "@/components/analytics/climbs-per-week";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { TailwindUtil } from "@/utils/tailwind.util";
-import { computed } from "@legendapp/state";
-import { observer } from "@legendapp/state/react";
+import { Memo, observer, useComputed } from "@legendapp/state/react";
 
 type Props = {};
 
@@ -22,7 +21,7 @@ export const CHART_CONFIG = {
 };
 
 const analytics = observer(({}: Props) => {
-	const climbAnalytic$ = computed(
+	const climbAnalytic$ = useComputed(
 		() =>
 			new Analytics({
 				data: ClimbsClass.climbs$.get().slice(),
@@ -56,47 +55,59 @@ const analytics = observer(({}: Props) => {
 						if you project it or flash it
 					</AppText>
 				</View> */}
-				<ClimbsPerWeek />
-				<AppText size={"base"}>Climbs by grade</AppText>
-				<PieChart
-					accessor="value"
-					data={climbAnalytic$.toPieChartData("grade")}
-					width={SCREEN_WIDTH}
-					height={CHART_HEIGHT}
-					backgroundColor="transparent"
-					paddingLeft="15"
-					chartConfig={CHART_CONFIG}
-				/>
-				<AppText size={"base"}>Climbs by ascent</AppText>
-				<PieChart
-					accessor="value"
-					data={climbAnalytic$.toPieChartData("ascentType")}
-					width={SCREEN_WIDTH}
-					height={CHART_HEIGHT}
-					backgroundColor="transparent"
-					paddingLeft="15"
-					chartConfig={CHART_CONFIG}
-				/>
-				<AppText size={"base"}>Climbs by steepness</AppText>
-				<PieChart
-					accessor="value"
-					data={climbAnalytic$.toPieChartData("steepness")}
-					width={SCREEN_WIDTH}
-					height={CHART_HEIGHT}
-					backgroundColor="transparent"
-					paddingLeft="15"
-					chartConfig={CHART_CONFIG}
-				/>
-				<AppText size={"base"}>Climbs by where(?)</AppText>
-				<PieChart
-					accessor="value"
-					data={climbAnalytic$.toPieChartData("whereDidYouClimb")}
-					width={SCREEN_WIDTH}
-					height={CHART_HEIGHT}
-					backgroundColor="transparent"
-					paddingLeft="15"
-					chartConfig={CHART_CONFIG}
-				/>
+				<Memo>
+					{() => (
+						<>
+							<ClimbsPerWeek />
+							<AppText size={"base"}>Climbs by grade</AppText>
+							<PieChart
+								accessor="value"
+								data={climbAnalytic$.toPieChartData("grade")}
+								width={SCREEN_WIDTH}
+								height={CHART_HEIGHT}
+								backgroundColor="transparent"
+								paddingLeft="15"
+								chartConfig={CHART_CONFIG}
+							/>
+							<AppText size={"base"}>Climbs by ascent</AppText>
+							<PieChart
+								accessor="value"
+								data={climbAnalytic$.toPieChartData(
+									"ascentType"
+								)}
+								width={SCREEN_WIDTH}
+								height={CHART_HEIGHT}
+								backgroundColor="transparent"
+								paddingLeft="15"
+								chartConfig={CHART_CONFIG}
+							/>
+							<AppText size={"base"}>Climbs by steepness</AppText>
+							<PieChart
+								accessor="value"
+								data={climbAnalytic$.toPieChartData(
+									"steepness"
+								)}
+								width={SCREEN_WIDTH}
+								height={CHART_HEIGHT}
+								backgroundColor="transparent"
+								paddingLeft="15"
+								chartConfig={CHART_CONFIG}
+							/>
+							<AppText size={"base"}>Climbs by where(?)</AppText>
+							<PieChart
+								accessor="value"
+								data={climbAnalytic$.toPieChartData(
+									"whereDidYouClimb"
+								)}
+								width={SCREEN_WIDTH}
+								height={CHART_HEIGHT}
+								backgroundColor="transparent"
+								paddingLeft="15"
+								chartConfig={CHART_CONFIG}
+							/>
+						</>
+					)}
+				</Memo>
 			</View>
 		</ScrollView>
 	);

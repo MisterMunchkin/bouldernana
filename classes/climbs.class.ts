@@ -4,7 +4,7 @@ import { observableStore$ } from "@/stores/global-observable.store";
 import { LoggedClimb } from "@/types/core.type";
 import { day } from "@/utils/day-js.util";
 import { TailwindUtil } from "@/utils/tailwind.util";
-import { computed } from "@legendapp/state";
+import { computed, Observable } from "@legendapp/state";
 
 import * as ExpoCrypto from "expo-crypto";
 
@@ -39,7 +39,10 @@ export class ClimbsClass {
 			return;
 		}
 
-		climb.assign(update);
+		climb.set((prev) => ({
+			...prev,
+			...update,
+		}));
 	}
 
 	/**Returns the raw data of the climb. untracked */
@@ -48,8 +51,8 @@ export class ClimbsClass {
 	}
 
 	/** Returns a "trackable" object that will update when climb is updated */
-	static get(id: string): LoggedClimb | undefined {
-		return ClimbsClass.climbs$.find((c) => c.id.peek() === id)?.get();
+	static get(id: string): Observable<LoggedClimb> | undefined {
+		return ClimbsClass.climbs$.find((c) => c.id.peek() === id);
 	}
 
 	static destroy(id: string) {
@@ -73,12 +76,11 @@ export class ClimbsClass {
 	);
 
 	/**Instance of LoggedClimb helper class */
-	climb: LoggedClimb;
+	climb: Observable<LoggedClimb>;
 
 	/**initiate an instance by logged climb id */
-	constructor(id: string, options?: { isTrackable?: boolean }) {
-		const { isTrackable } = options ?? {};
-		const climb = isTrackable ? ClimbsClass.get(id) : ClimbsClass.peek(id);
+	constructor(id: string) {
+		const climb = ClimbsClass.get(id);
 		if (!climb) {
 			console.error(`Could not find logged climb with id: ${id}`);
 			throw new Error(`Could not find logged climb with id: ${id}`);
@@ -90,7 +92,7 @@ export class ClimbsClass {
 	/**Get the color of a climb by its type */
 	get colorType() {
 		return TailwindUtil.getCoreColor(
-			COLOR_CLIMB_TYPE[this.climb.typeOfClimb]
+			COLOR_CLIMB_TYPE[this.climb.typeOfClimb.get()]
 		);
 	}
 }

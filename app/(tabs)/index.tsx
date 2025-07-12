@@ -1,4 +1,3 @@
-import { useUserGradeOptions } from "@/hooks/user-grade-options.hook";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { use$ } from "@legendapp/state/react";
@@ -16,18 +15,12 @@ const Tab = ({}: Props) => {
 	const headerHeight = useHeaderHeight();
 	const bottomTabBarHeight = useBottomTabBarHeight();
 	const { bottom } = useSafeAreaInsets();
-	const { getUserGrade } = useUserGradeOptions();
 
 	const sortedClimbs$ = use$(ClimbsClass.sortedClimbs$);
 
 	const renderItem = useCallback(
-		({ item }: LegendListRenderItemProps<LoggedClimb>) => {
-			return (
-				<ClimbCard
-					displayedGrade={getUserGrade({ grade: item.grade })}
-					{...item}
-				/>
-			);
+		({ item: { id } }: LegendListRenderItemProps<LoggedClimb>) => {
+			return <ClimbCard id={id} />;
 		},
 		[]
 	);
@@ -43,6 +36,7 @@ const Tab = ({}: Props) => {
 				}}
 				ItemSeparatorComponent={() => <View className="h-2" />}
 				keyExtractor={(item) => item.id}
+				recycleItems
 			/>
 		</View>
 	);
