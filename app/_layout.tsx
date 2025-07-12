@@ -9,7 +9,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 import { Toaster } from "sonner-native";
 import { Media } from "@/classes/media.class";
-import { ClimbsClass } from "@/classes/climbs.class";
 import { TailwindUtil } from "@/utils/tailwind.util";
 import { useFonts } from "@expo-google-fonts/dm-mono";
 import { DMMono_300Light } from "@expo-google-fonts/dm-mono/300Light";
@@ -18,6 +17,10 @@ import { DMMono_400Regular } from "@expo-google-fonts/dm-mono/400Regular";
 import { DMMono_400Regular_Italic } from "@expo-google-fonts/dm-mono/400Regular_Italic";
 import { DMMono_500Medium } from "@expo-google-fonts/dm-mono/500Medium";
 import { DMMono_500Medium_Italic } from "@expo-google-fonts/dm-mono/500Medium_Italic";
+
+if (__DEV__) {
+	require("../ReactotronConfig");
+}
 
 SplashScreen.preventAutoHideAsync();
 
@@ -46,10 +49,10 @@ export default function RootLayout() {
 		const initApp = async () => {
 			Media.ensurePermissions();
 
-			ClimbsClass.climbs$.onChange((params) => {
-				//Add supabase storage sync here.
-				console.log("Store changed:", JSON.stringify(params));
-			});
+			// ClimbsClass.climbs$.onChange((params) => {
+			// 	//Add supabase storage sync here.
+			// 	console.log("Store changed:", JSON.stringify(params));
+			// });
 
 			setIsAppReady(true);
 		};

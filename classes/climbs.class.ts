@@ -3,17 +3,30 @@ import { COLOR_CLIMB_TYPE } from "@/constants/core.const";
 import { observableStore$ } from "@/stores/global-observable.store";
 import { LoggedClimb } from "@/types/core.type";
 import { TailwindUtil } from "@/utils/tailwind.util";
+import { computed } from "@legendapp/state";
 
 import * as ExpoCrypto from "expo-crypto";
 
 export class ClimbsClass {
 	static readonly climbs$ = observableStore$.climbs;
 	static add(climb: ClimbSchema) {
+		const id = ExpoCrypto.randomUUID();
+
+		if (ClimbsClass.climbs$.find((c) => c.id.peek() === id)) {
+			console.warn(
+				`Climb with id ${id} already exists. Generating a new id.`
+			);
+			ClimbsClass.add(climb);
+			return;
+		}
+
 		const loggedClimb: LoggedClimb = {
 			...climb,
-			id: ExpoCrypto.randomUUID(),
+			id,
 		};
-		ClimbsClass.climbs$.push(loggedClimb);
+
+		console.log("add climb", JSON.stringify(loggedClimb));
+		ClimbsClass.climbs$.set((prev) => [...prev, loggedClimb]);
 	}
 
 	static update(args: { id: string; update: Partial<LoggedClimb> }) {
@@ -43,8 +56,24 @@ export class ClimbsClass {
 	}
 
 	static flashRecordFromJSON(climbs: LoggedClimb[]) {
+		ClimbsClass.climbs$.delete();
 		ClimbsClass.climbs$.set(climbs);
 	}
+
+	/**
+	 * Climbs sorted by date
+	 * slice() is used to avoid mutating the original observable.
+	 * We wrap it in a computed to restore reactivity
+	 */
+	static sortedClimbs$ = computed(() =>
+		ClimbsClass.climbs$
+			.get()
+			.slice()
+			.sort(
+				(a, b) =>
+					new Date(b.date).getTime() - new Date(a.date).getTime()
+			)
+	);
 
 	/**Instance of LoggedClimb helper class */
 	climb: LoggedClimb;

@@ -1,41 +1,43 @@
 import AppText from "../core/app-text";
 import { CHART_CONFIG, CHART_HEIGHT } from "@/app/(tabs)/analytics";
 import { LineChart } from "react-native-chart-kit";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { day, DayJsUtils } from "@/utils/day-js.util";
 import { HapticsUtil } from "@/utils/expo-haptics.util";
 import { Dimensions } from "react-native";
 import { ClimbsClass } from "@/classes/climbs.class";
-import { observer } from "@legendapp/state/react";
 import { TailwindUtil } from "@/utils/tailwind.util";
+import { use$ } from "@legendapp/state/react";
+import { computed } from "@legendapp/state";
 
 type Props = {};
 
-const ClimbsPerWeek = observer(({}: Props) => {
+const ClimbsPerWeek = ({}: Props) => {
 	const [selectedIndex, setSelectedIndex] = useState<number>();
-	const climbs = ClimbsClass.climbs$.get();
+	const climbs$ = use$(ClimbsClass.climbs$);
 
-	const { monthLabels, climbsPerMonth } = useMemo(() => {
+	const chartData$ = computed(() => {
 		const acc: Record<string, number> = {};
 
 		const firstDayOfMonths = DayJsUtils.getFirstDayOfEachMonthFrom(3);
 		firstDayOfMonths.reduce((acc, date) => {
 			const monthLabel = day(date).format("MMMM");
-			acc[monthLabel] = climbs.filter((climb) =>
+			acc[monthLabel] = climbs$.filter((climb) =>
 				day(climb.date).isSame(date, "month")
 			).length;
-
 			return acc;
 		}, acc);
 
-		const monthLabels = Object.keys(acc);
-		const climbsPerMonth = Object.values(acc);
-
 		return {
-			climbsPerMonth,
-			monthLabels,
+			monthLabels: Object.keys(acc),
+			climbsPerMonth: Object.values(acc),
 		};
-	}, [climbs]);
+	});
+
+	const { climbsPerMonth: climbsPerMonth$, monthLabels: monthLabels$ } =
+		chartData$;
+	const climbsPerMonth = use$(climbsPerMonth$);
+	const monthLabels = use$(monthLabels$);
 
 	return (
 		<>
@@ -45,7 +47,7 @@ const ClimbsPerWeek = observer(({}: Props) => {
 				>{`${climbsPerMonth[selectedIndex]} climbs on ${monthLabels[selectedIndex]}`}</AppText>
 			) : (
 				<AppText size={"xs"}>
-					{climbs.length} Total logged climbs
+					{climbs$.length} Total logged climbs
 				</AppText>
 			)}
 			<LineChart
@@ -87,6 +89,6 @@ const ClimbsPerWeek = observer(({}: Props) => {
 			/>
 		</>
 	);
-});
+};
 
 export default ClimbsPerWeek;
