@@ -34,11 +34,11 @@ const DateTimeField = <TFieldValues extends FieldValues>({
 					</PressableOpacity>
 					<DateTimePickerModal
 						isVisible={show}
-						date={day(value).toDate()}
+						date={value}
 						mode="datetime"
 						pickerStyleIOS={{ marginHorizontal: "auto" }}
 						onConfirm={(date) => {
-							onChange(day(date).toISOString());
+							onChange(date);
 							setShow(false);
 						}}
 						onCancel={() => setShow(false)}

@@ -42,7 +42,7 @@ const DEFAULT_VALUES: ClimbSchema = {
 	skill: [],
 	steepness: "Overhang",
 	// rating: "",
-	date: day().toISOString(),
+	date: day().toDate(),
 	notes: "",
 	// relativeEffort: ""
 };

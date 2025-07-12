@@ -6,6 +6,7 @@ import {
 	STEEPNESS,
 	WHERE,
 } from "./core.const";
+import { day } from "@/utils/day-js.util";
 
 export const ClimbTypeEnum = z.enum(["Board", "Boulder", "Route", "Trad"]);
 
@@ -24,7 +25,12 @@ export const climbSchema = z.object({
 	steepness: z.enum(STEEPNESS).optional(), // Slab, Overhang, etc.
 	//ENDOF Advanced info
 	// rating: z.string().optional(), // no rating to 5
-	date: z.string().datetime(),
+	date: z
+		.union([z.string().datetime(), z.date()])
+		.transform((val) => day(val).toDate())
+		.refine((d) => !isNaN(d.getTime()), {
+			message: "Invalid date",
+		}),
 	notes: z.string().optional(),
 	link: z.string().optional(),
 	// relativeEffort: z.string().optional(), //strava effort input
