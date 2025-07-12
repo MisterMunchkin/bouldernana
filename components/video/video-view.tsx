@@ -1,12 +1,14 @@
 import { Media } from "@/classes/media.class";
 import { useVideoPlayer, VideoView as ExpoVideoView } from "expo-video";
-import { useEffect, useState } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleProp, View, ViewStyle } from "react-native";
+import AppText from "../core/app-text";
 
 type BaseProps = {
 	height: number;
 	width: number;
 	style?: StyleProp<ViewStyle>;
+	noVideoSourceRender?: React.ReactNode;
 };
 
 type SourceProps = BaseProps & {
@@ -28,6 +30,7 @@ const VideoView = ({
 	assetId,
 	width,
 	style,
+	noVideoSourceRender,
 }: Props) => {
 	const [source, setSource] = useState<string | undefined>(sourceProp);
 
@@ -47,6 +50,21 @@ const VideoView = ({
 	}, [assetId]);
 
 	const player = useVideoPlayer(source ?? "");
+
+	if (!source) {
+		return (
+			<View style={[{ height, width }, style]}>
+				{noVideoSourceRender ?? (
+					<AppText
+						twClassName="mx-auto pt-safe-offset-24"
+						color={"white"}
+					>
+						{`No video source :(`}
+					</AppText>
+				)}
+			</View>
+		);
+	}
 
 	return <ExpoVideoView player={player} style={[{ height, width }, style]} />;
 };

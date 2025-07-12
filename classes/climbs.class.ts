@@ -57,7 +57,6 @@ export class ClimbsClass {
 	}
 
 	static flashRecordFromJSON(climbs: LoggedClimb[]) {
-		ClimbsClass.climbs$.delete();
 		ClimbsClass.climbs$.set(climbs);
 	}
 
