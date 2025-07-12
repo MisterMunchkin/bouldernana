@@ -8,7 +8,7 @@ import { cn } from "@/utils/cn.util";
 import { useMemo } from "react";
 import { ClimbsClass } from "@/classes/climbs.class";
 import ContextMenuWrapper from "../ui/context-menu-wrapper";
-import AssetCarousel from "../video/asset-carousel/asset-carousel";
+import VideoThumbnailView from "../video/video-thumbnail-view";
 
 type Props = {
 	displayedGrade: string;
@@ -39,8 +39,10 @@ const ClimbCard = ({
 	return (
 		<ContextMenuWrapper
 			preview={
-				<AssetCarousel
-					assetIds={climbInstance.climb.videoAssetIds ?? []}
+				<VideoThumbnailView
+					videoAssetId={
+						climbInstance.climb.videoAssetIds?.at(0) ?? ""
+					}
 				/>
 			}
 		>

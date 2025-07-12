@@ -1,7 +1,6 @@
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { ClimbsClass } from "@/classes/climbs.class";
 import { useCallback, useMemo, useRef } from "react";
-import AssetCarousel from "@/components/video/asset-carousel/asset-carousel";
 import {
 	BottomSheetModal,
 	BottomSheetBackgroundProps,
@@ -22,6 +21,7 @@ import Notes from "@/components/climb-log/notes";
 import DropdownMenu from "@/components/climb-log/dropdown-menu";
 import { BlurView } from "expo-blur";
 import { use$ } from "@legendapp/state/react";
+import AssetCarousel from "@/components/video/asset-carousel/asset-carousel";
 
 type Props = {};
 export type ClimbLogLocalParams = {

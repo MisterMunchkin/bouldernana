@@ -65,9 +65,6 @@ export class Media {
 			console.error(
 				"Failed to get video with assetId: " + this.videoAssetId
 			);
-			Toast.error({
-				description: "Failed to get the video",
-			});
 			return this;
 		}
 
@@ -116,6 +113,9 @@ export class Media {
 	private static getUseableUri(assetInfo: MediaLibrary.AssetInfo): string {
 		const { uri } = assetInfo ?? {};
 		const id = uri?.substring(5, 41); // to get the id of the PH asset
+
+		if (!id) return "";
+
 		const assetUri = `assets-library://asset/asset.mp4?id=${id}&ext=mp4`;
 		return assetUri;
 	}
