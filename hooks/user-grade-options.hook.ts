@@ -16,32 +16,32 @@ export const useUserGradeOptions = () => {
 	 * Get Route Grade Options based on user preferences.
 	 */
 	const getRouteGradeOptions = (): DropDownItem<string>[] => {
-		if (routeGradeSystem === "YDS")
-			return FRENCH_GRADES.map((value) => ({
+		if (routeGradeSystem === "FRENCH")
+			return FRENCH_GRADES.map((value) => ({ value, label: value }));
+		return FRENCH_GRADES.map((value) => ({
+			value,
+			label: convertGrade(
 				value,
-				label: convertGrade(
-					value,
-					GradeScales["FRENCH"],
-					GradeScales["YDS"]
-				),
-			}));
-		else return FRENCH_GRADES.map((value) => ({ value, label: value }));
+				GradeScales["FRENCH"],
+				GradeScales[routeGradeSystem]
+			),
+		}));
 	};
 
 	/**
 	 * Get Boulder Grade Options based on user preferences.
 	 */
 	const getBoulderGradeOptions = (): DropDownItem<string>[] => {
-		if (boulderGradeSystem === "FONT")
-			return VGRADES.map((value) => ({
+		if (boulderGradeSystem === "VSCALE")
+			return VGRADES.map((value) => ({ value, label: value }));
+		return VGRADES.map((value) => ({
+			value,
+			label: convertGrade(
 				value,
-				label: convertGrade(
-					value,
-					GradeScales["VSCALE"],
-					GradeScales["FONT"]
-				),
-			}));
-		else return VGRADES.map((value) => ({ value, label: value }));
+				GradeScales["VSCALE"],
+				GradeScales[boulderGradeSystem]
+			),
+		}));
 	};
 
 	/**

@@ -36,7 +36,7 @@ export const climbSchema = z.object({
 	// relativeEffort: z.string().optional(), //strava effort input
 });
 
-const SupportedRouteGrades = ["YDS", "FRENCH"] as const;
+const SupportedRouteGrades = ["YDS", "FRENCH", "EWBANK"] as const;
 const SupportedBoulderGrades = ["FONT", "VSCALE"] as const;
 export const RouteGradeSystemEnum = z.enum(SupportedRouteGrades);
 export const BoulderGradeSystemEnum = z.enum(SupportedBoulderGrades);
