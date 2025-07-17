@@ -22,6 +22,7 @@ import DropdownMenu from "@/components/climb-log/dropdown-menu";
 import { BlurView } from "expo-blur";
 import { Computed, Memo, use$, useComputed } from "@legendapp/state/react";
 import AssetCarousel from "@/components/video/asset-carousel/asset-carousel";
+import * as Linking from "expo-linking";
 
 type Props = {};
 export type ClimbLogLocalParams = {
@@ -139,9 +140,15 @@ const Index = ({}: Props) => {
 						{() => (
 							<View className="px-4 py-2 items-start">
 								<AppText size={"base"}>Link</AppText>
-								<AppText size={"xl"}>
-									{climb.link.get() ?? "No link"}
-								</AppText>
+								<PressableOpacity
+									onPress={() =>
+										Linking.openURL(climb.link.peek() ?? "")
+									}
+								>
+									<AppText size={"xl"}>
+										{climb.link.get() ?? "No link"}
+									</AppText>
+								</PressableOpacity>
 							</View>
 						)}
 					</Computed>

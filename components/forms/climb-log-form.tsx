@@ -140,6 +140,11 @@ const ClimbLogForm = ({
 						control={control}
 						name="link"
 						title="Links or resources of the climb, like TheCrag links"
+						inputProps={{
+							autoCapitalize: "none",
+							autoComplete: "off",
+							autoCorrect: false,
+						}}
 					/>
 
 					<PressableOpacity

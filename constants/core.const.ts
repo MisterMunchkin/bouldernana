@@ -86,6 +86,15 @@ export const SKILL_TYPE = [
 	"Technical",
 	"Power",
 	"Dyno",
+	"Compression",
+	"Cut Feet",
+	"Dead Point",
+	"Pumpy",
+	"Pocket",
+	"Pumpy",
+	"Reachy",
+	"Slopey",
+	"Undercling",
 ] as const;
 
 export const STEEPNESS = ["Slab", "Overhang", "Vert", "Roof"] as const;
