@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { BlurView } from "expo-blur";
 import { StyleSheet, View } from "react-native";
 import PressableIcon from "@/components/ui/pressable-icon";
@@ -51,9 +51,13 @@ const TabLayout = ({}: Props) => {
 									Filter
 								</AppText>
 							</PressableOpacity>
-							<PressableOpacity>
+							<PressableOpacity
+								onPress={() =>
+									router.push("/activities/time-on-off")
+								}
+							>
 								<AppText color={"white"} size={"base"}>
-									Profile
+									Time On/Off
 								</AppText>
 							</PressableOpacity>
 							<PressableOpacity>

@@ -111,6 +111,23 @@ export default function RootLayout() {
 							title: "Log Climb",
 						}}
 					/>
+					<Stack.Screen
+						name="activities/time-on-off/index"
+						options={{
+							headerTransparent: true,
+							headerBackground: () => renderBlurView(),
+							headerTintColor:
+								TailwindUtil.getCoreColor("amethyst-smoke.100"),
+							presentation: "modal",
+							contentStyle: {
+								backgroundColor:
+									TailwindUtil.getCoreColor(
+										"cod-gray.DEFAULT"
+									),
+							},
+							title: "Time On/Off",
+						}}
+					/>
 				</Stack>
 				<Toaster />
 			</BottomSheetModalProvider>

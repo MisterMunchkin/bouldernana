@@ -1,17 +1,18 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { View } from "react-native";
 import PressableOpacity from "../core/pressable-opacity";
 import { BottomTabDescriptor } from "@react-navigation/bottom-tabs/lib/typescript/commonjs/src/types";
 import { cn } from "@/utils/cn.util";
 import { TailwindUtil } from "@/utils/tailwind.util";
+import { BlurView } from "expo-blur";
 
 const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
 	return (
-		<View
+		<BlurView
+			tint="systemThickMaterialDark"
 			className={cn(
 				"bg-black absolute left-[50%] -translate-x-[50%]",
 				"bottom-safe-offset-0 flex flex-row",
-				"gap-8 px-3 rounded-full items-center py-3"
+				"gap-8 px-3 rounded-full items-center py-3 overflow-hidden"
 			)}
 		>
 			{state.routes.map((route) => (
@@ -22,7 +23,7 @@ const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
 					descriptor={descriptors[route.key]}
 				/>
 			))}
-		</View>
+		</BlurView>
 	);
 };
 
